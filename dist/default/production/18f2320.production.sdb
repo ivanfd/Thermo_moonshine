@@ -3,48 +3,44 @@
 [d edition pro ]
 [d chip 18F2320 ]
 [d frameptr 4065 ]
-"31 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
+"31 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
 [e E2001 . `uc
 COMMAND 0
 DATA 1
 ]
-"4 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\fleq.c
+"4 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\fleq.c
 [v ___fleq __fleq `(b  1 e 0 0 ]
-"62 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\float.c
+"62 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\float.c
 [v ___ftpack __ftpack `(f  1 e 4 0 ]
-"86 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\ftadd.c
+"86 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\ftadd.c
 [v ___ftadd __ftadd `(f  1 e 4 0 ]
-"54 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\ftdiv.c
+"54 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\ftdiv.c
 [v ___ftdiv __ftdiv `(f  1 e 4 0 ]
-"62 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\ftmul.c
+"62 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\ftmul.c
 [v ___ftmul __ftmul `(f  1 e 4 0 ]
-"19 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\ftsub.c
+"19 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\ftsub.c
 [v ___ftsub __ftsub `(f  1 e 4 0 ]
-"7 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwdiv.c
+"7 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
-"7 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwmod.c
+"7 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
-"10 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\sprcadd.c
+"10 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\sprcadd.c
 [v ___fladd __fladd `(d  1 e 4 0 ]
 "245
 [v ___flsub __flsub `(d  1 e 4 0 ]
-"11 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\sprcdiv.c
+"11 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\sprcdiv.c
 [v ___fldiv __fldiv `(d  1 e 4 0 ]
-"8 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\sprcmul.c
+"8 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\sprcmul.c
 [v ___flmul __flmul `(d  1 e 4 0 ]
-"15 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\Umul32.c
+"15 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\Umul32.c
 [v ___lmul __lmul `(ul  1 e 4 0 ]
-"91 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\Umul64.c
+"91 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\Umul64.c
 [v ___omul __omul `(ul  1 e 4 0 ]
-"13 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
+"13 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
 [v _init_ds18b20 init_ds18b20 `(v  1 e 1 0 ]
 "105
 [v _readTemp_Single readTemp_Single `(uc  1 e 1 0 ]
-"5 E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c
-[v _key_press key_press `(v  1 e 1 0 ]
-"37
-[v _key_GetKey key_GetKey `(uc  1 e 1 0 ]
-"10 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
+"10 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 "45
 [v _clearLCD clearLCD `(v  1 e 1 0 ]
@@ -56,7 +52,11 @@ DATA 1
 [v _lcd_gotoxy lcd_gotoxy `(v  1 e 1 0 ]
 "96
 [v _lcdPrint lcdPrint `(v  1 e 1 0 ]
-"24 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
+"5 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\key.c
+[v _key_press key_press `(v  1 e 1 0 ]
+"37
+[v _key_GetKey key_GetKey `(uc  1 e 1 0 ]
+"24 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
 [v _main main `(v  1 e 1 0 ]
 "151
 [v _Main_init Main_init `(v  1 e 1 0 ]
@@ -64,7 +64,7 @@ DATA 1
 [v _Delay_ms Delay_ms `(v  1 e 1 0 ]
 "197
 [v _myInt myInt `II(v  1 e 1 0 ]
-"5 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\onewire.c
+"5 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\onewire.c
 [v _ow_reset ow_reset `(uc  1 e 1 0 ]
 "22
 [v _read_bit read_bit `(uc  1 e 1 0 ]
@@ -74,7 +74,7 @@ DATA 1
 [v _read_byte read_byte `(uc  1 e 1 0 ]
 "66
 [v _write_byte write_byte `(v  1 e 1 0 ]
-"52 C:/Program Files/Microchip/xc8/v2.20/pic/include/proc\pic18f2320.h
+"52 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f2320.h
 [v _PORTA PORTA `VEuc  1 e 1 @3968 ]
 [s S113 . 1 `uc 1 RA0 1 0 :1:0 
 `uc 1 RA1 1 0 :1:1 
@@ -355,13 +355,13 @@ DATA 1
 ]
 [u S280 . 1 `S254 1 . 1 0 `S263 1 . 1 0 `S272 1 . 1 0 ]
 [v _INTCONbits INTCONbits `VES280  1 e 1 @4082 ]
-"4 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
+"4 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
 [v _scratch scratch `[9]uc  1 e 9 0 ]
-"13 E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/ds18b20.h
+"13 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.h
 [v _fract fract `C[16]uc  1 e 16 0 ]
-"2 E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c
+"2 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\key.c
 [v _key_pressed key_pressed `VEuc  1 e 1 0 ]
-"13 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
+"13 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
 [v _timer_val timer_val `uc  1 e 1 0 ]
 [v _time_flag time_flag `uc  1 e 1 0 ]
 "14
@@ -383,7 +383,7 @@ DATA 1
 {
 "149
 } 0
-"105 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
+"105 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
 [v _readTemp_Single readTemp_Single `(uc  1 e 1 0 ]
 {
 "107
@@ -398,7 +398,7 @@ DATA 1
 [v readTemp_Single@timer_val timer_val `*.30uc  1 p 1 9 ]
 "160
 } 0
-"50 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\onewire.c
+"50 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\onewire.c
 [v _read_byte read_byte `(uc  1 e 1 0 ]
 {
 "52
@@ -412,7 +412,7 @@ DATA 1
 {
 "31
 } 0
-"96 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
+"96 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
 [v _lcdPrint lcdPrint `(v  1 e 1 0 ]
 {
 [v lcdPrint@t t `*.35Cuc  1 p 2 7 ]
@@ -431,7 +431,7 @@ DATA 1
 [v lcd_gotoxy@x x `uc  1 a 1 5 ]
 "86
 } 0
-"5 E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c
+"5 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\key.c
 [v _key_press key_press `(v  1 e 1 0 ]
 {
 "8
@@ -447,7 +447,7 @@ DATA 1
 [v key_GetKey@key key `uc  1 a 1 0 ]
 "43
 } 0
-"10 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
+"10 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\hd44780.c
 [v _initLCD initLCD `(v  1 e 1 0 ]
 {
 "43
@@ -474,7 +474,7 @@ DATA 1
 [v lcdNibble@nibble nibble `uc  1 a 1 1 ]
 "74
 } 0
-"7 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwmod.c
+"7 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
 [v ___lwmod __lwmod `(ui  1 e 2 0 ]
 {
 "10
@@ -484,7 +484,7 @@ DATA 1
 [v ___lwmod@divisor divisor `ui  1 p 2 9 ]
 "25
 } 0
-"7 C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwdiv.c
+"7 C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c
 [v ___lwdiv __lwdiv `(ui  1 e 2 0 ]
 {
 "10
@@ -496,17 +496,17 @@ DATA 1
 [v ___lwdiv@divisor divisor `ui  1 p 2 2 ]
 "30
 } 0
-"151 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
+"151 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
 [v _Main_init Main_init `(v  1 e 1 0 ]
 {
 "191
 } 0
-"13 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
+"13 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\ds18b20.c
 [v _init_ds18b20 init_ds18b20 `(v  1 e 1 0 ]
 {
 "24
 } 0
-"66 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\onewire.c
+"66 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\onewire.c
 [v _write_byte write_byte `(v  1 e 1 0 ]
 {
 [v write_byte@val val `uc  1 a 1 wreg ]
@@ -536,7 +536,7 @@ DATA 1
 [v ow_reset@presence presence `uc  1 a 1 0 ]
 "17
 } 0
-"193 E:\Ivan\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
+"193 D:\Ivan\Electro\XC8\TEMPERATURE_SAMOGON\18f2320\main.c
 [v _Delay_ms Delay_ms `(v  1 e 1 0 ]
 {
 "194

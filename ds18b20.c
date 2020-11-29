@@ -2,6 +2,9 @@
 
 
 uint8_t scratch[9];
+#ifdef DS18B20_MANY
+uint8_t rom_dq[COUNT_DQ][8]; // код датчиків
+#endif
 //bit minus = 0; // знак температури
 
 
@@ -99,7 +102,7 @@ uint8_t readTemp_Single(uint16_t *buf, uint8_t *minus, uint8_t *time_flag, uint8
 
 //====================================================
 //  Читаємо температуру з датчика
-//  один багато на шині!
+//   багато на шині!
 //====================================================
 #ifdef DS18B20_MANY
 uint8_t readTemp_Single(uint8_t num_d, uint16_t *buf, uint8_t *minus, uint8_t *time_flag, uint8_t *timer_val) {

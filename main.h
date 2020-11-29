@@ -73,7 +73,7 @@
 #include "hd44780.h"
 #include "ds18b20.h"
 #include "onewire.h"
-//#include "interrupt.h"
+#include "eeprom.h"
 
 #define FALSE 0
 #define TRUE 1

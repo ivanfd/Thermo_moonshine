@@ -1,9 +1,9 @@
 
 
-Microchip MPLAB XC8 Assembler V2.20 build 20200408173844 
-                                                                                               Fri Nov 27 15:51:28 2020
+Microchip MPLAB XC8 Assembler V2.30 build 20200825195618 
+                                                                                               Sun Nov 29 13:49:22 2020
 
-Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s 
+Microchip MPLAB XC8 C Compiler v2.30 (Pro license) build 20200825195618 Og9s 
      1                           	processor	18F2320
      2                           	fnconf	rparam,??,?,0
      3                           	pagewidth 120
@@ -501,7 +501,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    487                           
    488                           ;main.c: 33: if ((PORTB & (1 << 1)) == 0) {
    489  000274  B281               	btfsc	129,1,c	;volatile
-   490  000276  D00F               	goto	l1758
+   490  000276  D00F               	goto	l1780
    491                           
    492                           ;main.c: 34: clearLCD();
    493  000278  ECF0  F004         	call	_clearLCD	;wreg free
@@ -523,7 +523,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    509                           ;main.c: 38: Delay_ms(2000);
    510  000290  D8DB               	call	PL22	;call to abstracted procedure
    511  000292  ECC1  F004         	call	_Delay_ms	;wreg free
-   512  000296                     l1758:
+   512  000296                     l1780:
    513                           
    514                           ;main.c: 42: readTemp_Single(1, &temperature, &minus, &time_flag, &timer_val);
    515  000296  0E1D               	movlw	low _temperature
@@ -538,22 +538,22 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    524                           
    525                           ;main.c: 44: if (read_key) {
    526  0002AA  A034               	btfss	(_read_key/(0+8))^0,_read_key& (0+7),c
-   527  0002AC  D003               	goto	l1766
+   527  0002AC  D003               	goto	l1788
    528                           
    529                           ;main.c: 45: key_press();
    530  0002AE  ECF4  F003         	call	_key_press	;wreg free
    531                           
    532                           ;main.c: 46: read_key = 0;
    533  0002B2  9034               	bcf	(_read_key/(0+8))^0,_read_key& (0+7),c
-   534  0002B4                     l1766:
+   534  0002B4                     l1788:
    535                           
    536                           ;main.c: 47: };main.c: 48: pressed_key = key_GetKey();
    537  0002B4  EC08  F005         	call	_key_GetKey	;wreg free
    538  0002B8  6E0C               	movwf	_pressed_key^0,c
    539                           
    540                           ;main.c: 50: switch (select) {
-   541  0002BA  D091               	goto	l1916
-   542  0002BC                     l1768:
+   541  0002BA  D091               	goto	l1938
+   542  0002BC                     l1790:
    543                           
    544                           ;main.c: 52: lcd_gotoxy(1, 1);
    545  0002BC  0E01               	movlw	1
@@ -645,7 +645,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    631                           
    632                           ;main.c: 71: if (pressed_key == 1) {
    633  000338  040C               	decf	_pressed_key^0,w,c
-   634  00033A  E10A               	bnz	l1826
+   634  00033A  E10A               	bnz	l1848
    635                           
    636                           ;main.c: 72: lcd_gotoxy(1, 2);
    637  00033C  D87E               	call	PL16	;call to abstracted procedure
@@ -676,12 +676,12 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    662                           ;main.c: 83: lcdPrint(TxtBuf);
    663  00034A  D85D               	call	PL8	;call to abstracted procedure
    664  00034C  EC1B  F003         	call	_lcdPrint	;wreg free
-   665  000350                     l1826:
+   665  000350                     l1848:
    666                           
    667                           ;main.c: 84: };main.c: 85: if (pressed_key == 2) {
    668  000350  0E02               	movlw	2
    669  000352  180C               	xorwf	_pressed_key^0,w,c
-   670  000354  E10A               	bnz	l1850
+   670  000354  E10A               	bnz	l1872
    671                           
    672                           ;main.c: 86: lcd_gotoxy(1, 2);
    673  000356  D871               	call	PL16	;call to abstracted procedure
@@ -712,12 +712,12 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    698                           ;main.c: 97: lcdPrint(TxtBuf);
    699  000364  D850               	call	PL8	;call to abstracted procedure
    700  000366  EC1B  F003         	call	_lcdPrint	;wreg free
-   701  00036A                     l1850:
+   701  00036A                     l1872:
    702                           
    703                           ;main.c: 98: };main.c: 99: if (pressed_key == 3) {
    704  00036A  0E03               	movlw	3
    705  00036C  180C               	xorwf	_pressed_key^0,w,c
-   706  00036E  E193               	bnz	l1758
+   706  00036E  E193               	bnz	l1780
    707                           
    708                           ;main.c: 100: lcd_gotoxy(1, 2);
    709  000370  D864               	call	PL16	;call to abstracted procedure
@@ -748,8 +748,8 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    734                           ;main.c: 111: lcdPrint(TxtBuf);
    735  00037E  D843               	call	PL8	;call to abstracted procedure
    736  000380  EC1B  F003         	call	_lcdPrint	;wreg free
-   737  000384  D788               	goto	l1758
-   738  000386                     l1874:
+   737  000384  D788               	goto	l1780
+   738  000386                     l1896:
    739                           
    740                           ;main.c: 116: lcd_gotoxy(1, 2);
    741  000386  D859               	call	PL16	;call to abstracted procedure
@@ -792,7 +792,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    778                           
    779                           ;main.c: 127: if (pressed_key == 1) {
    780  0003B0  040C               	decf	_pressed_key^0,w,c
-   781  0003B2  E106               	bnz	l1902
+   781  0003B2  E106               	bnz	l1924
    782                           
    783                           ;main.c: 128: dq_num++;
    784  0003B4  2A32               	incf	_dq_num^0,f,c
@@ -800,40 +800,40 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    786                           ;main.c: 129: if (dq_num == 3)
    787  0003B6  0E03               	movlw	3
    788  0003B8  1832               	xorwf	_dq_num^0,w,c
-   789  0003BA  E102               	bnz	l1902
+   789  0003BA  E102               	bnz	l1924
    790                           
    791                           ;main.c: 130: dq_num = 1;
    792  0003BC  0E01               	movlw	1
    793  0003BE  6E32               	movwf	_dq_num^0,c
-   794  0003C0                     l1902:
+   794  0003C0                     l1924:
    795                           
    796                           ;main.c: 131: };main.c: 132: if (pressed_key == 2) {
    797  0003C0  0E02               	movlw	2
    798  0003C2  180C               	xorwf	_pressed_key^0,w,c
-   799  0003C4  E105               	bnz	l1910
+   799  0003C4  E105               	bnz	l1932
    800                           
    801                           ;main.c: 133: dq_num--;
    802  0003C6  0632               	decf	_dq_num^0,f,c
    803                           
    804                           ;main.c: 134: if (dq_num == 0)
    805  0003C8  5032               	movf	_dq_num^0,w,c
-   806  0003CA  E102               	bnz	l1910
+   806  0003CA  E102               	bnz	l1932
    807                           
    808                           ;main.c: 135: dq_num = 2;
    809  0003CC  0E02               	movlw	2
    810  0003CE  6E32               	movwf	_dq_num^0,c
-   811  0003D0                     l1910:
+   811  0003D0                     l1932:
    812                           
    813                           ;main.c: 136: };main.c: 137: if (pressed_key == 3) {
    814  0003D0  0E03               	movlw	3
    815  0003D2  180C               	xorwf	_pressed_key^0,w,c
-   816  0003D4  E001 D75F          	bnz	l1758
+   816  0003D4  E001 D75F          	bnz	l1780
    817                           
    818                           ;main.c: 138: select = 3;
    819  0003D8  0E03               	movlw	3
    820  0003DA  6E33               	movwf	_select^0,c
-   821  0003DC  D75C               	goto	l1758
-   822  0003DE                     l1916:
+   821  0003DC  D75C               	goto	l1780
+   822  0003DE                     l1938:
    823  0003DE  5033               	movf	_select^0,w,c
    824                           
    825                           ; Switch size 1, requested type "space"
@@ -843,11 +843,11 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    829                           ; simple_byte           10     6 (average)
    830                           ;	Chosen strategy is simple_byte
    831  0003E0  0A01               	xorlw	1	; case 1
-   832  0003E2  E101 D76B          	bz	l1768
+   832  0003E2  E101 D76B          	bz	l1790
    833  0003E6  0A03               	xorlw	3	; case 2
-   834  0003E8  E0CE               	bz	l1874
+   834  0003E8  E0CE               	bz	l1896
    835  0003EA  0A01               	xorlw	1	; case 3
-   836  0003EC  D754               	goto	l1758
+   836  0003EC  D754               	goto	l1780
    837  0003EE                     __end_of_main:
    838                           	callstack 0
    839  0003EE                     PL2:
@@ -989,8 +989,8 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
    975  000552  6EDF               	movwf	indf2,c
    976                           
    977                           ;ds18b20.c: 111: switch (*time_flag) {
-   978  000554  D067               	goto	l1696
-   979  000556                     l1640:
+   978  000554  D067               	goto	l1718
+   979  000556                     l1662:
    980                           
    981                           ;ds18b20.c: 113: if (!ow_reset())
    982  000556  EC83  F004         	call	_ow_reset	;wreg free
@@ -1022,7 +1022,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1008                           ;ds18b20.c: 119: T1CONbits.TMR1ON = 1;
   1009  00057E  80CD               	bsf	205,0,c	;volatile
   1010  000580  0C02               	retlw	2
-  1011  000582                     l1652:
+  1011  000582                     l1674:
   1012                           
   1013                           ;ds18b20.c: 126: ow_reset();
   1014  000582  EC83  F004         	call	_ow_reset	;wreg free
@@ -1037,7 +1037,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1023                           
   1024                           ;ds18b20.c: 129: for (i = 0; i < 2; i++)
   1025  000592  6A2F               	clrf	readTemp_Single@i^0,c
-  1026  000594                     l1664:
+  1026  000594                     l1686:
   1027                           
   1028                           ;ds18b20.c: 130: {;ds18b20.c: 131: scratch[i] = read_byte();
   1029  000594  502F               	movf	readTemp_Single@i^0,w,c
@@ -1049,7 +1049,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1035  0005A2  2A2F               	incf	readTemp_Single@i^0,f,c
   1036  0005A4  0E01               	movlw	1
   1037  0005A6  642F               	cpfsgt	readTemp_Single@i^0,c
-  1038  0005A8  D7F5               	goto	l1664
+  1038  0005A8  D7F5               	goto	l1686
   1039                           
   1040                           ;ds18b20.c: 132: };ds18b20.c: 134: temp = (((uint16_t) scratch[1]) << 8) | ((uint16_t) s
       +                          cratch[0]);
@@ -1061,7 +1061,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1046                           
   1047                           ;ds18b20.c: 137: if (temp & 0x8000) {
   1048  0005B6  AE31               	btfss	(readTemp_Single@temp+1)^0,7,c
-  1049  0005B8  D009               	goto	l1678
+  1049  0005B8  D009               	goto	l1700
   1050                           
   1051                           ;ds18b20.c: 138: temp = -temp;
   1052  0005BA  6C30               	negf	readTemp_Single@temp^0,c
@@ -1075,7 +1075,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1060  0005C6  6ADA               	clrf	fsr2h,c
   1061  0005C8  0E2D               	movlw	45
   1062  0005CA  6EDF               	movwf	indf2,c
-  1063  0005CC                     l1678:
+  1063  0005CC                     l1700:
   1064                           
   1065                           ;ds18b20.c: 140: };ds18b20.c: 142: tmp = temp & 0x0f;
   1066  0005CC  5030               	movf	readTemp_Single@temp^0,w,c
@@ -1136,7 +1136,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1121                           
   1122                           ;ds18b20.c: 153: break;
   1123  000622  0C00               	retlw	0
-  1124  000624                     l1696:
+  1124  000624                     l1718:
   1125  000624  502A               	movf	readTemp_Single@time_flag^0,w,c
   1126  000626  6ED9               	movwf	fsr2l,c
   1127  000628  6ADA               	clrf	fsr2h,c
@@ -1148,9 +1148,9 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1133                           ; Name         Instructions Cycles
   1134                           ; simple_byte           10     6 (average)
   1135                           ;	Chosen strategy is simple_byte
-  1136  00062C  E094               	bz	l1640
+  1136  00062C  E094               	bz	l1662
   1137  00062E  0A01               	xorlw	1	; case 1
-  1138  000630  E0A8               	bz	l1652
+  1138  000630  E0A8               	bz	l1674
   1139  000632  0A03               	xorlw	3	; case 2
   1140  000634  0012               	return	
   1141  000636                     __end_of_readTemp_Single:
@@ -1200,12 +1200,12 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1185                           
   1186                           ;onewire.c: 55: for(i=0;i<8;i++)
   1187  000868  6A25               	clrf	read_byte@i^0,c
-  1188  00086A                     l1102:
+  1188  00086A                     l1124:
   1189                           
   1190                           ;onewire.c: 56: {;onewire.c: 57: if(read_bit()) val |= (0x01 << i);
   1191  00086A  ECFD  F004         	call	_read_bit	;wreg free
   1192  00086E  0900               	iorlw	0
-  1193  000870  E00C               	bz	l1106
+  1193  000870  E00C               	bz	l1128
   1194  000872  C025  F022         	movff	read_byte@i,??_read_byte
   1195  000876  0E01               	movlw	1
   1196  000878  6E23               	movwf	(??_read_byte+1)^0,c
@@ -1219,7 +1219,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1204  000884  D7FC               	goto	u175
   1205  000886  5023               	movf	(??_read_byte+1)^0,w,c
   1206  000888  1224               	iorwf	read_byte@val^0,f,c
-  1207  00088A                     l1106:
+  1207  00088A                     l1128:
   1208                           
   1209                           ;onewire.c: 58: _delay((unsigned long)((120)*(8000000/4000000.0)));
   1210  00088A  0E50               	movlw	80
@@ -1229,7 +1229,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1214  000890  2A25               	incf	read_byte@i^0,f,c
   1215  000892  0E07               	movlw	7
   1216  000894  6425               	cpfsgt	read_byte@i^0,c
-  1217  000896  D7E9               	goto	l1102
+  1217  000896  D7E9               	goto	l1124
   1218                           
   1219                           ;onewire.c: 59: };onewire.c: 61: return val;
   1220  000898  5024               	movf	read_byte@val^0,w,c
@@ -1344,8 +1344,8 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1329                           ;hd44780.c: 97: while(*t != '\0'){
   1330                           
   1331                           ;incstack = 0
-  1332  000636  D033               	goto	l1628
-  1333  000638                     l1612:
+  1332  000636  D033               	goto	l1650
+  1333  000638                     l1634:
   1334                           
   1335                           ;hd44780.c: 100: lcdWrite(1, COMMAND);
   1336  000638  D849               	call	PL24	;call to abstracted procedure
@@ -1363,16 +1363,16 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1348  00064C  D000               	nop2	
   1349                           
   1350                           ;hd44780.c: 102: break;
-  1351  00064E  D025               	goto	l1626
-  1352  000650                     l1616:
+  1351  00064E  D025               	goto	l1648
+  1352  000650                     l1638:
   1353                           
   1354                           ;hd44780.c: 105: lcd_gotoxy(1, 2);
   1355  000650  EC1D  F002         	call	PL16	;call to abstracted procedure
   1356  000654  ECE2  F004         	call	_lcd_gotoxy
   1357                           
   1358                           ;hd44780.c: 106: break;
-  1359  000658  D020               	goto	l1626
-  1360  00065A                     l1618:
+  1359  000658  D020               	goto	l1648
+  1360  00065A                     l1640:
   1361                           
   1362                           ;hd44780.c: 109: lcdWrite(0x10, COMMAND);
   1363  00065A  0E00               	movlw	0
@@ -1381,8 +1381,8 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1366  000660  ECAF  F004         	call	_lcdWrite
   1367                           
   1368                           ;hd44780.c: 110: break;
-  1369  000664  D01A               	goto	l1626
-  1370  000666                     l1620:
+  1369  000664  D01A               	goto	l1648
+  1370  000666                     l1642:
   1371                           
   1372                           ;hd44780.c: 113: lcdWrite(*t, DATA);
   1373  000666  0E01               	movlw	1
@@ -1399,8 +1399,8 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1384  000678  ECAF  F004         	call	_lcdWrite
   1385                           
   1386                           ;hd44780.c: 114: break;
-  1387  00067C  D00E               	goto	l1626
-  1388  00067E                     l1624:
+  1387  00067C  D00E               	goto	l1648
+  1388  00067E                     l1646:
   1389  00067E  D819               	call	PL4	;call to abstracted procedure
   1390  000680  64F7               	cpfsgt	tblptrh,c
   1391  000682  D003               	bra	u567
@@ -1418,18 +1418,18 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1403                           ; simple_byte           10     6 (average)
   1404                           ;	Chosen strategy is simple_byte
   1405  00068C  0A08               	xorlw	8	; case 8
-  1406  00068E  E0E5               	bz	l1618
+  1406  00068E  E0E5               	bz	l1640
   1407  000690  0A02               	xorlw	2	; case 10
-  1408  000692  E0DE               	bz	l1616
+  1408  000692  E0DE               	bz	l1638
   1409  000694  0A06               	xorlw	6	; case 12
-  1410  000696  E0D0               	bz	l1612
-  1411  000698  D7E6               	goto	l1620
-  1412  00069A                     l1626:
+  1410  000696  E0D0               	bz	l1634
+  1411  000698  D7E6               	goto	l1642
+  1412  00069A                     l1648:
   1413                           
   1414                           ;hd44780.c: 116: *t++;
   1415  00069A  4A29               	infsnz	lcdPrint@t^0,f,c
   1416  00069C  2A2A               	incf	(lcdPrint@t+1)^0,f,c
-  1417  00069E                     l1628:
+  1417  00069E                     l1650:
   1418  00069E  D809               	call	PL4	;call to abstracted procedure
   1419  0006A0  64F7               	cpfsgt	tblptrh,c
   1420  0006A2  D003               	bra	u577
@@ -1440,7 +1440,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1425  0006AA  D80A               	call	PL6	;call to abstracted procedure
   1426  0006AC                     u570:
   1427  0006AC  0900               	iorlw	0
-  1428  0006AE  E1E7               	bnz	l1624
+  1428  0006AE  E1E7               	bnz	l1646
   1429  0006B0  0012               	return		;funcret
   1430  0006B2                     __end_of_lcdPrint:
   1431                           	callstack 0
@@ -1519,12 +1519,12 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1504                           ;hd44780.c: 80: address = 0x40;
   1505  0009CA  0E40               	movlw	64
   1506  0009CC  6E28               	movwf	lcd_gotoxy@address^0,c
-  1507  0009CE  D001               	goto	l1572
+  1507  0009CE  D001               	goto	l1594
   1508  0009D0                     l187:
   1509                           
   1510                           ;hd44780.c: 81: else;hd44780.c: 82: address = 0;
   1511  0009D0  6A28               	clrf	lcd_gotoxy@address^0,c
-  1512  0009D2                     l1572:
+  1512  0009D2                     l1594:
   1513                           
   1514                           ;hd44780.c: 84: address += x - 1;
   1515  0009D2  0427               	decf	lcd_gotoxy@x^0,w,c
@@ -1540,7 +1540,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1525                           
   1526 ;; *************** function _key_press *****************
   1527 ;; Defined at:
-  1528 ;;		line 5 in file "E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c"
+  1528 ;;		line 5 in file "key.c"
   1529 ;; Parameters:    Size  Location     Type
   1530 ;;		None
   1531 ;; Auto vars:     Size  Location     Type
@@ -1580,45 +1580,45 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1564                           ;incstack = 0
   1565  0007E8  A281               	btfss	129,1,c	;volatile
   1566  0007EA  B481               	btfsc	129,2,c	;volatile
-  1567  0007EC  D002               	goto	l252
+  1567  0007EC  D002               	goto	l274
   1568                           
   1569                           ;key.c: 10: key = 3;
   1570  0007EE  0E03               	movlw	3
   1571  0007F0  D007               	goto	L2
-  1572  0007F2                     l252:
+  1572  0007F2                     l274:
   1573                           
   1574                           ;key.c: 11: else if ((PORTB & (1 << 1)) == 0)
   1575  0007F2  B281               	btfsc	129,1,c	;volatile
-  1576  0007F4  D002               	goto	l254
+  1576  0007F4  D002               	goto	l276
   1577                           
   1578                           ;key.c: 12: key = 1;
   1579  0007F6  0E01               	movlw	1
   1580  0007F8  D003               	goto	L2
-  1581  0007FA                     l254:
+  1581  0007FA                     l276:
   1582                           
   1583                           ;key.c: 13: else if ((PORTB & (1 << 2)) == 0)
   1584  0007FA  B481               	btfsc	129,2,c	;volatile
-  1585  0007FC  D003               	goto	l256
+  1585  0007FC  D003               	goto	l278
   1586                           
   1587                           ;key.c: 14: key = 2;
   1588  0007FE  0E02               	movlw	2
   1589  000800                     L2:
   1590  000800  6E22               	movwf	key_press@key^0,c
-  1591  000802  D001               	goto	l1292
-  1592  000804                     l256:
+  1591  000802  D001               	goto	l1314
+  1592  000804                     l278:
   1593                           
   1594                           ;key.c: 15: else;key.c: 16: key = 0;
   1595  000804  6A22               	clrf	key_press@key^0,c
-  1596  000806                     l1292:
+  1596  000806                     l1314:
   1597                           
   1598                           ;key.c: 19: if (key) {
   1599  000806  5022               	movf	key_press@key^0,w,c
-  1600  000808  E00D               	bz	l258
+  1600  000808  E00D               	bz	l280
   1601                           
   1602                           ;key.c: 22: if (count == 20) {
   1603  00080A  0E14               	movlw	20
   1604  00080C  180A               	xorwf	key_press@count^0,w,c
-  1605  00080E  E105               	bnz	l1304
+  1605  00080E  E105               	bnz	l1326
   1606                           
   1607                           ;key.c: 23: count = 20 + 10;
   1608  000810  0E1E               	movlw	30
@@ -1627,7 +1627,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1611                           ;key.c: 24: key_pressed = key;
   1612  000814  C022  F00B         	movff	key_press@key,_key_pressed	;volatile
   1613  000818  0C1E               	retlw	30
-  1614  00081A                     l1304:
+  1614  00081A                     l1326:
   1615                           
   1616                           ;key.c: 28: if (count < (20 + 5))
   1617  00081A  0E19               	movlw	25
@@ -1637,7 +1637,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1621                           ;key.c: 29: count++;
   1622  000820  2A0A               	incf	key_press@count^0,f,c
   1623  000822  0C19               	retlw	25
-  1624  000824                     l258:
+  1624  000824                     l280:
   1625                           
   1626                           ;key.c: 32: else count = 0;
   1627  000824  6A0A               	clrf	key_press@count^0,c
@@ -1647,7 +1647,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   1631                           
   1632 ;; *************** function _key_GetKey *****************
   1633 ;; Defined at:
-  1634 ;;		line 37 in file "E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c"
+  1634 ;;		line 37 in file "key.c"
   1635 ;; Parameters:    Size  Location     Type
   1636 ;;		None
   1637 ;; Auto vars:     Size  Location     Type
@@ -2019,12 +2019,12 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2003                           
   2004                           ;hd44780.c: 52: PORTAbits.RA2 = 0;
   2005  000964  9480               	bcf	128,2,c	;volatile
-  2006  000966  D001               	goto	l1562
+  2006  000966  D001               	goto	l1584
   2007  000968                     l179:
   2008                           
   2009                           ;hd44780.c: 53: else;hd44780.c: 54: PORTAbits.RA2 = 1;
   2010  000968  8480               	bsf	128,2,c	;volatile
-  2011  00096A                     l1562:
+  2011  00096A                     l1584:
   2012                           
   2013                           ;hd44780.c: 56: _delay((unsigned long)((100)*(8000000/4000000.0)));
   2014  00096A  0E42               	movlw	66
@@ -2180,7 +2180,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2164                           
   2165 ;; *************** function ___lwmod *****************
   2166 ;; Defined at:
-  2167 ;;		line 7 in file "C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwmod.c"
+  2167 ;;		line 7 in file "C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c"
   2168 ;; Parameters:    Size  Location     Type
   2169 ;;  dividend        2    7[COMRAM] unsigned int 
   2170 ;;  divisor         2    9[COMRAM] unsigned int 
@@ -2218,35 +2218,35 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2202                           ;incstack = 0
   2203  000828  502B               	movf	___lwmod@divisor^0,w,c
   2204  00082A  102C               	iorwf	(___lwmod@divisor+1)^0,w,c
-  2205  00082C  E017               	bz	l758
+  2205  00082C  E017               	bz	l780
   2206  00082E  0E01               	movlw	1
   2207  000830  6E2D               	movwf	___lwmod@counter^0,c
-  2208  000832  D004               	goto	l1726
-  2209  000834                     l1724:
+  2208  000832  D004               	goto	l1748
+  2209  000834                     l1746:
   2210  000834  90D8               	bcf	status,0,c
   2211  000836  362B               	rlcf	___lwmod@divisor^0,f,c
   2212  000838  362C               	rlcf	(___lwmod@divisor+1)^0,f,c
   2213  00083A  2A2D               	incf	___lwmod@counter^0,f,c
-  2214  00083C                     l1726:
+  2214  00083C                     l1748:
   2215  00083C  AE2C               	btfss	(___lwmod@divisor+1)^0,7,c
-  2216  00083E  D7FA               	goto	l1724
+  2216  00083E  D7FA               	goto	l1746
   2217  000840                     u670:
   2218  000840  502B               	movf	___lwmod@divisor^0,w,c
   2219  000842  5C29               	subwf	___lwmod@dividend^0,w,c
   2220  000844  502C               	movf	(___lwmod@divisor+1)^0,w,c
   2221  000846  582A               	subwfb	(___lwmod@dividend+1)^0,w,c
-  2222  000848  E304               	bnc	l1732
+  2222  000848  E304               	bnc	l1754
   2223  00084A  502B               	movf	___lwmod@divisor^0,w,c
   2224  00084C  5E29               	subwf	___lwmod@dividend^0,f,c
   2225  00084E  502C               	movf	(___lwmod@divisor+1)^0,w,c
   2226  000850  5A2A               	subwfb	(___lwmod@dividend+1)^0,f,c
-  2227  000852                     l1732:
+  2227  000852                     l1754:
   2228  000852  90D8               	bcf	status,0,c
   2229  000854  322C               	rrcf	(___lwmod@divisor+1)^0,f,c
   2230  000856  322B               	rrcf	___lwmod@divisor^0,f,c
   2231  000858  2E2D               	decfsz	___lwmod@counter^0,f,c
   2232  00085A  D7F2               	goto	u670
-  2233  00085C                     l758:
+  2233  00085C                     l780:
   2234  00085C  C029  F029         	movff	___lwmod@dividend,?___lwmod
   2235  000860  C02A  F02A         	movff	___lwmod@dividend+1,?___lwmod+1
   2236  000864  0012               	return		;funcret
@@ -2255,7 +2255,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2239                           
   2240 ;; *************** function ___lwdiv *****************
   2241 ;; Defined at:
-  2242 ;;		line 7 in file "C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwdiv.c"
+  2242 ;;		line 7 in file "C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c"
   2243 ;; Parameters:    Size  Location     Type
   2244 ;;  dividend        2    0[COMRAM] unsigned int 
   2245 ;;  divisor         2    2[COMRAM] unsigned int 
@@ -2296,18 +2296,18 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2280  0007A0  6A27               	clrf	(___lwdiv@quotient+1)^0,c
   2281  0007A2  5024               	movf	___lwdiv@divisor^0,w,c
   2282  0007A4  1025               	iorwf	(___lwdiv@divisor+1)^0,w,c
-  2283  0007A6  E01B               	bz	l748
+  2283  0007A6  E01B               	bz	l770
   2284  0007A8  0E01               	movlw	1
   2285  0007AA  6E28               	movwf	___lwdiv@counter^0,c
-  2286  0007AC  D004               	goto	l1706
-  2287  0007AE                     l1704:
+  2286  0007AC  D004               	goto	l1728
+  2287  0007AE                     l1726:
   2288  0007AE  90D8               	bcf	status,0,c
   2289  0007B0  3624               	rlcf	___lwdiv@divisor^0,f,c
   2290  0007B2  3625               	rlcf	(___lwdiv@divisor+1)^0,f,c
   2291  0007B4  2A28               	incf	___lwdiv@counter^0,f,c
-  2292  0007B6                     l1706:
+  2292  0007B6                     l1728:
   2293  0007B6  AE25               	btfss	(___lwdiv@divisor+1)^0,7,c
-  2294  0007B8  D7FA               	goto	l1704
+  2294  0007B8  D7FA               	goto	l1726
   2295  0007BA                     u640:
   2296  0007BA  90D8               	bcf	status,0,c
   2297  0007BC  3626               	rlcf	___lwdiv@quotient^0,f,c
@@ -2316,19 +2316,19 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2300  0007C2  5C22               	subwf	___lwdiv@dividend^0,w,c
   2301  0007C4  5025               	movf	(___lwdiv@divisor+1)^0,w,c
   2302  0007C6  5823               	subwfb	(___lwdiv@dividend+1)^0,w,c
-  2303  0007C8  E305               	bnc	l1716
+  2303  0007C8  E305               	bnc	l1738
   2304  0007CA  5024               	movf	___lwdiv@divisor^0,w,c
   2305  0007CC  5E22               	subwf	___lwdiv@dividend^0,f,c
   2306  0007CE  5025               	movf	(___lwdiv@divisor+1)^0,w,c
   2307  0007D0  5A23               	subwfb	(___lwdiv@dividend+1)^0,f,c
   2308  0007D2  8026               	bsf	___lwdiv@quotient^0,0,c
-  2309  0007D4                     l1716:
+  2309  0007D4                     l1738:
   2310  0007D4  90D8               	bcf	status,0,c
   2311  0007D6  3225               	rrcf	(___lwdiv@divisor+1)^0,f,c
   2312  0007D8  3224               	rrcf	___lwdiv@divisor^0,f,c
   2313  0007DA  2E28               	decfsz	___lwdiv@counter^0,f,c
   2314  0007DC  D7EE               	goto	u640
-  2315  0007DE                     l748:
+  2315  0007DE                     l770:
   2316  0007DE  C026  F022         	movff	___lwdiv@quotient,?___lwdiv
   2317  0007E2  C027  F023         	movff	___lwdiv@quotient+1,?___lwdiv+1
   2318  0007E6  0012               	return		;funcret
@@ -2587,7 +2587,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2571                           
   2572                           ;onewire.c: 68: uint8_t i;;onewire.c: 69: uint8_t temp;;onewire.c: 71: for (i=0;i<8;i++)
   2573  00089E  6A27               	clrf	write_byte@i^0,c
-  2574  0008A0                     l1054:
+  2574  0008A0                     l1076:
   2575                           
   2576                           ;onewire.c: 72: {;onewire.c: 73: temp = val >> i;
   2577  0008A0  C027  F023         	movff	write_byte@i,??_write_byte
@@ -2613,7 +2613,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2597  0008C2  2A27               	incf	write_byte@i^0,f,c
   2598  0008C4  0E07               	movlw	7
   2599  0008C6  6427               	cpfsgt	write_byte@i^0,c
-  2600  0008C8  D7EB               	goto	l1054
+  2600  0008C8  D7EB               	goto	l1076
   2601                           
   2602                           ;onewire.c: 76: };onewire.c: 78: _delay((unsigned long)((105)*(8000000/4000000.0)));
   2603  0008CA  0E46               	movlw	70
@@ -2672,7 +2672,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2656                           
   2657                           ;onewire.c: 38: if(bitval == 1) {
   2658  0009AC  0422               	decf	write_bit@bitval^0,w,c
-  2659  0009AE  E104               	bnz	l1030
+  2659  0009AE  E104               	bnz	l1052
   2660                           
   2661                           ;onewire.c: 39: _delay((unsigned long)((2)*(8000000/4000000.0)));
   2662  0009B0  D000               	nop2		;2 cycle nop
@@ -2683,7 +2683,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2667                           
   2668                           ;onewire.c: 41: TRISAbits.TRISA6 = 1;
   2669  0009B6  8C92               	bsf	146,6,c	;volatile
-  2670  0009B8                     l1030:
+  2670  0009B8                     l1052:
   2671                           
   2672                           ;onewire.c: 42: };onewire.c: 43: _delay((unsigned long)((105)*(8000000/4000000.0)));
   2673  0009B8  0E46               	movlw	70
@@ -2828,7 +2828,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2812  000982  6A25               	clrf	Delay_ms@i^0,c
   2813  000984  6A26               	clrf	(Delay_ms@i+1)^0,c
   2814  000986  D009               	goto	l117
-  2815  000988                     l1632:
+  2815  000988                     l1654:
   2816                           
   2817                           ;main.c: 195: _delay((unsigned long)((1)*(8000000/4000.0)));
   2818  000988  0E03               	movlw	3
@@ -2846,7 +2846,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2830  00099C  5C22               	subwf	Delay_ms@delay^0,w,c
   2831  00099E  5026               	movf	(Delay_ms@i+1)^0,w,c
   2832  0009A0  5823               	subwfb	(Delay_ms@delay+1)^0,w,c
-  2833  0009A2  E2F2               	bc	l1632
+  2833  0009A2  E2F2               	bc	l1654
   2834  0009A4  0012               	return		;funcret
   2835  0009A6                     __end_of_Delay_ms:
   2836                           	callstack 0
@@ -2891,7 +2891,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2875                           
   2876                           ;main.c: 198: if (PIR1bits.TMR1IF == 1) {
   2877  00000A  A09E               	btfss	158,0,c	;volatile
-  2878  00000C  D00D               	goto	i2l1548
+  2878  00000C  D00D               	goto	i2l1570
   2879                           
   2880                           ;main.c: 199: PIR1bits.TMR1IF = 0;
   2881  00000E  909E               	bcf	158,0,c	;volatile
@@ -2908,7 +2908,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2892  000018  2A21               	incf	_timer_val^0,f,c
   2893  00001A  0E1D               	movlw	29
   2894  00001C  6421               	cpfsgt	_timer_val^0,c
-  2895  00001E  D004               	goto	i2l1548
+  2895  00001E  D004               	goto	i2l1570
   2896                           
   2897                           ;main.c: 203: {;main.c: 204: timer_val = 0;
   2898  000020  6A21               	clrf	_timer_val^0,c
@@ -2919,7 +2919,7 @@ Microchip MPLAB XC8 C Compiler v2.20 (Pro license) build 20200408173844 Og9s
   2903                           
   2904                           ;main.c: 206: T1CONbits.TMR1ON = 0;
   2905  000026  90CD               	bcf	205,0,c	;volatile
-  2906  000028                     i2l1548:
+  2906  000028                     i2l1570:
   2907                           
   2908                           ;main.c: 208: };main.c: 209: };main.c: 210: if (INTCONbits.T0IF == 1) {
   2909  000028  A4F2               	btfss	242,2,c	;volatile
@@ -3386,8 +3386,8 @@ DATA                 0      0      34       9        0.0%
 CODE                 0      0       0       0        0.0%
 
 
-Microchip Technology PIC18 Macro Assembler V2.20 build 20200408173844 
-Symbol Table                                                                                   Fri Nov 27 15:51:28 2020
+Microchip Technology PIC18 Macro Assembler V2.30 build 20200825195618 
+Symbol Table                                                                                   Sun Nov 29 13:49:22 2020
 
                       PL2 03EE                        PL4 06B2                        PL6 06C0  
                       PL8 0406                        u10 06DE                        u30 06F4  
@@ -3396,10 +3396,10 @@ Symbol Table                                                                    
             lcdWrite@byte 0025                       PL10 0412                       PL20 0742  
                      PL12 041E                       PL22 0448                       PL14 042E  
                      PL24 06CC                       PL16 043A                       PL18 0440  
-            lcdWrite@type 0024                       l117 099A                       l252 07F2  
-                     l254 07FA                       l256 0804                       l258 0824  
-                     l179 0968                       l187 09D0                       l748 07DE  
-                     l758 085C                       u104 08B0                       u105 08AC  
+            lcdWrite@type 0024                       l117 099A                       l280 0824  
+                     l274 07F2                       l179 0968                       l187 09D0  
+                     l276 07FA                       l278 0804                       l770 07DE  
+                     l780 085C                       u104 08B0                       u105 08AC  
                      u174 0882                       u175 087E                       u550 0678  
                      u640 07BA                       u560 068C                       u570 06AC  
                      u557 0676                       u670 0840                       u567 068A  
@@ -3411,19 +3411,19 @@ Symbol Table                                                                    
                      u797 088C                       u967 0730                       u887 04CA  
                      u977 073A                       u897 04DE                       u987 08CC  
                      u997 09BA                       wreg 000FE8           lcdNibble@nibble 0023  
-             lcd_gotoxy@x 0027               lcd_gotoxy@y 0026                      l1030 09B8  
-                    l1102 086A                      l1106 088A                      l1054 08A0  
-                    l1304 081A                      l1292 0806                      l1620 0666  
-                    l1612 0638                      l1632 0988                      l1704 07AE  
-                    l1624 067E                      l1616 0650                      l1640 0556  
-                    l1706 07B6                      l1562 096A                      l1618 065A  
-                    l1626 069A                      l1716 07D4                      l1732 0852  
-                    l1724 0834                      l1572 09D2                      l1628 069E  
-                    l1652 0582                      l1726 083C                      l1910 03D0  
-                    l1902 03C0                      l1664 0594                      l1850 036A  
-                    l1826 0350                      l1916 03DE                      l1678 05CC  
-                    l1766 02B4                      l1758 0296                      l1696 0624  
-                    l1768 02BC                      l1874 0386                      STR_1 0211  
+             lcd_gotoxy@x 0027               lcd_gotoxy@y 0026                      l1052 09B8  
+                    l1124 086A                      l1128 088A                      l1314 0806  
+                    l1076 08A0                      l1326 081A                      l1700 05CC  
+                    l1640 065A                      l1642 0666                      l1634 0638  
+                    l1650 069E                      l1654 0988                      l1726 07AE  
+                    l1646 067E                      l1638 0650                      l1662 0556  
+                    l1718 0624                      l1728 07B6                      l1584 096A  
+                    l1648 069A                      l1738 07D4                      l1754 0852  
+                    l1746 0834                      l1594 09D2                      l1674 0582  
+                    l1748 083C                      l1932 03D0                      l1924 03C0  
+                    l1780 0296                      l1686 0594                      l1790 02BC  
+                    l1872 036A                      l1848 0350                      l1938 03DE  
+                    l1788 02B4                      l1896 0386                      STR_1 0211  
                     STR_2 0232                      STR_3 0222          ow_reset@presence 0022  
                     u1007 090C                      u1017 0918                      u1027 0928  
                     u1037 098E                      _LATA 000F89                      _LATB 000F8A  
@@ -3444,7 +3444,7 @@ Symbol Table                                                                    
          write_bit@bitval 0022           __initialization 08D2              __end_of_main 03EE  
          _readTemp_Single 054A                    ??_main 0032             __activetblptr 000002  
            ?_init_ds18b20 0022                    ?_myInt 0022        __size_of_Main_init 0052  
-                  i2l1548 0028          __end_of_clearLCD 09FA          __end_of_lcdPrint 06B2  
+                  i2l1570 0028          __end_of_clearLCD 09FA          __end_of_lcdPrint 06B2  
         __end_of_lcdWrite 0982                    _TxtBuf 000D                 ??___lwdiv 0026  
                ??___lwmod 002D                    _dq_num 0032             Delay_ms@delay 0022  
         __end_of_read_bit 0A10                    clear_0 08F2                    _select 0033  

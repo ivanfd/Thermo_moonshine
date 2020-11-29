@@ -1,25 +1,26 @@
-Microchip MPLAB XC8 Compiler V2.20
+Microchip MPLAB XC8 Compiler V2.30
 
 Linker command line:
 
--W-3 --edf=C:\Program Files\Microchip\xc8\v2.20\pic\dat\en_msgs.txt -cn \
-  -h+dist/default/production\18f2320.production.sym \
+-W-3 --edf=C:\Program Files (x86)\Microchip\xc8\v2.30\pic\dat\en_msgs.txt \
+  -cn -h+dist/default/production\18f2320.production.sym \
   --cmf=dist/default/production\18f2320.production.cmf -z -Q18F2320 \
-  -oC:\Temp\s1n8.2 --defsym=__MPLAB_BUILD=1 \
+  -oC:\Temp\s6dox2 --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/18f2320.production.map -E1 -ver=XC8 Compiler \
   --acfsm=1493 -ASTACK=080h-01FFh -pstack=STACK -ACODE=00h-01FFFh \
   -ACONST=00h-01FFFh -ASMALLCONST=0200h-02FFhx30 -AMEDIUMCONST=0200h-01FFFh \
   -ACOMRAM=01h-07Fh -AABS1=00h-01FFh -ABIGRAM=01h-01FFh \
   -ARAM=080h-0FFh,0100h-01FFh -ABANK0=080h-0FFh -ABANK1=0100h-01FFh \
   -ASFR=0F80h-0FFFh -ACONFIG=0300000h-030000Dh -AIDLOC=0200000h-0200007h \
+  -AEEDATA=0F00000h-0F000FFh -peeprom_data=EEDATA \
   -preset_vec=00h,intcode=08h,intcodelo,powerup,init -pramtop=0200h \
   -psmallconst=SMALLCONST -pmediumconst=MEDIUMCONST -pconst=CONST \
-  -AFARRAM=00h-00h -AEEDATA=0F00000h-0F000FFh -peeprom_data=EEDATA \
+  -AFARRAM=00h-00h \
   -prdata=COMRAM,nvrram=COMRAM,nvbit=COMRAM,rbss=COMRAM,rbit=COMRAM \
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Temp\s1n8.o dist/default/production\18f2320.production.o 
+  C:\Temp\s6dox8.o dist/default/production\18f2320.production.o 
 
 Object code version is 3.11
 
@@ -28,7 +29,8 @@ Machine type is 18F2320
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Temp\s1n8.o  idloc                            200000   200000        8        0       5
+C:\Temp\s6dox8.o
+                idloc                            200000   200000        8        0       5
                 config                           300000   300000        E        0       4
                 init                                 3C       3C        4        4       0
                 reset_vec                             0        0        4        0       0
@@ -127,9 +129,9 @@ TOTAL           Name                               Link     Load   Length     Sp
         CLASS   IDLOC          
                 idloc                            200000   200000        8         5
 
-        CLASS   FARRAM         
-
         CLASS   EEDATA         
+
+        CLASS   FARRAM         
 
 
 
@@ -755,7 +757,7 @@ Total ram usage:        3 bytes
 
  *************** function _key_press *****************
  Defined at:
-		line 5 in file "E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c"
+		line 5 in file "key.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -785,7 +787,7 @@ Total ram usage:        1 bytes
 
  *************** function _key_GetKey *****************
  Defined at:
-		line 37 in file "E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c"
+		line 37 in file "key.c"
  Parameters:    Size  Location     Type
 		None
  Auto vars:     Size  Location     Type
@@ -943,7 +945,7 @@ Total ram usage:        2 bytes
 
  *************** function ___lwmod *****************
  Defined at:
-		line 7 in file "C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwmod.c"
+		line 7 in file "C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c"
  Parameters:    Size  Location     Type
   dividend        2    7[COMRAM] unsigned int 
   divisor         2    9[COMRAM] unsigned int 
@@ -974,7 +976,7 @@ Total ram usage:        5 bytes
 
  *************** function ___lwdiv *****************
  Defined at:
-		line 7 in file "C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwdiv.c"
+		line 7 in file "C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c"
  Parameters:    Size  Location     Type
   dividend        2    0[COMRAM] unsigned int 
   divisor         2    2[COMRAM] unsigned int 
@@ -1222,70 +1224,70 @@ Total ram usage:        0 bytes
 MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
-E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c
-		_key_GetKey    		CODE           	0A10	0000	11
-		_key_press     		CODE           	07E8	0000	65
+C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c
+		___lwdiv       		CODE           	079E	0000	74
 
-E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c estimated size: 76
+C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwdiv.c estimated size: 74
 
-C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwmod.c
-		___lwmod       		CODE           	0828	0000	63
+key.c
+		_key_GetKey    		CODE           	0A10	0000	10
+		_key_press     		CODE           	07E8	0000	64
 
-C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwmod.c estimated size: 63
+key.c estimated size: 74
 
 onewire.c
-		_ow_reset      		CODE           	0906	0000	49
-		_read_bit      		CODE           	09FA	0000	23
-		_read_byte     		CODE           	0866	0000	55
-		_write_bit     		CODE           	09A6	0000	31
-		_write_byte    		CODE           	089C	0000	55
+		_ow_reset      		CODE           	0906	0000	48
+		_read_bit      		CODE           	09FA	0000	22
+		_read_byte     		CODE           	0866	0000	54
+		_write_bit     		CODE           	09A6	0000	30
+		_write_byte    		CODE           	089C	0000	54
 
-onewire.c estimated size: 213
+onewire.c estimated size: 208
 
 shared
-		PL12           		CODE           	041E	0000	17
-		PL8            		CODE           	0406	0000	13
-		PL22           		CODE           	0448	0000	11
-		PL14           		CODE           	042E	0000	13
-		PL24           		CODE           	06CC	0000	7
-		PL16           		CODE           	043A	0000	7
-		_fract         		SMALLCONST     	0201	0000	17
-		PL18           		CODE           	0440	0000	9
-		__initialization		CODE           	08D2	0000	39
-		PL2            		CODE           	03EE	0000	25
-		PL10           		CODE           	0412	0000	13
-		PL4            		CODE           	06B2	0000	15
-		PL20           		CODE           	0742	0000	11
-		PL6            		CODE           	06C0	0000	13
+		PL12           		CODE           	041E	0000	16
+		PL8            		CODE           	0406	0000	12
+		PL22           		CODE           	0448	0000	10
+		PL14           		CODE           	042E	0000	12
+		PL24           		CODE           	06CC	0000	6
+		PL16           		CODE           	043A	0000	6
+		_fract         		SMALLCONST     	0201	0000	16
+		PL18           		CODE           	0440	0000	8
+		__initialization		CODE           	08D2	0000	38
+		PL2            		CODE           	03EE	0000	24
+		PL10           		CODE           	0412	0000	12
+		PL4            		CODE           	06B2	0000	14
+		PL20           		CODE           	0742	0000	10
+		PL6            		CODE           	06C0	0000	12
 
-shared estimated size: 210
+shared estimated size: 196
 
 ds18b20.c
-		_init_ds18b20  		CODE           	0936	0000	41
-		_readTemp_Single		CODE           	054A	0000	237
+		_init_ds18b20  		CODE           	0936	0000	40
+		_readTemp_Single		CODE           	054A	0000	236
 
-ds18b20.c estimated size: 278
-
-C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwdiv.c
-		___lwdiv       		CODE           	079E	0000	75
-
-C:\Program Files\Microchip\xc8\v2.20\pic\sources\c90\common\lwdiv.c estimated size: 75
+ds18b20.c estimated size: 276
 
 hd44780.c
-		_lcd_gotoxy    		CODE           	09C4	0000	29
-		_lcdNibble     		CODE           	06D2	0000	113
-		_lcdWrite      		CODE           	095E	0000	37
-		_lcdPrint      		CODE           	0636	0000	125
-		_initLCD       		CODE           	0452	0000	249
-		_clearLCD      		CODE           	09E0	0000	27
+		_lcd_gotoxy    		CODE           	09C4	0000	28
+		_lcdNibble     		CODE           	06D2	0000	112
+		_lcdWrite      		CODE           	095E	0000	36
+		_lcdPrint      		CODE           	0636	0000	124
+		_initLCD       		CODE           	0452	0000	248
+		_clearLCD      		CODE           	09E0	0000	26
 
-hd44780.c estimated size: 580
+hd44780.c estimated size: 574
 
 main.c
-		_Main_init     		CODE           	074C	0000	83
-		_main          		CODE           	0244	0000	427
-		_myInt         		CODE           	0008	0000	53
-		_Delay_ms      		CODE           	0982	0000	37
+		_Main_init     		CODE           	074C	0000	82
+		_main          		CODE           	0244	0000	426
+		_myInt         		CODE           	0008	0000	52
+		_Delay_ms      		CODE           	0982	0000	36
 
-main.c estimated size: 600
+main.c estimated size: 596
+
+C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c
+		___lwmod       		CODE           	0828	0000	62
+
+C:\Program Files (x86)\Microchip\xc8\v2.30\pic\sources\c90\common\lwmod.c estimated size: 62
 
