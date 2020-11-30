@@ -11,15 +11,13 @@
 
 
 uint8_t timer_val = 0, time_flag = 0;  // для конвертування температури
-uint16_t temperature;
-uint8_t minus;
+uint16_t temperature_1, temperature_2;
+uint8_t minus_1, minus_2;
 uint8_t TxtBuf[16];
 bit read_key = 0; // дозвіл на читання кнопок
 uint8_t pressed_key;
 uint8_t select = SEL_MAIN; //де в меню ми знаходимося
 uint8_t dq_num = 1;
-
-
 
 void main(void) {
     Main_init();
@@ -39,35 +37,60 @@ void main(void) {
     }
 
     while (1) {
-        readTemp_Single(1, &temperature, &minus, &time_flag, &timer_val);
+
 
         if (read_key) {
             key_press();
             read_key = 0;
         }
-        pressed_key = key_GetKey();// читаємо копку
+        pressed_key = key_GetKey(); // читаємо копку
 
         switch (select) {
             case SEL_MAIN:
+                if (ds18b20_readTemp(&time_flag, &timer_val)) {
+                    temperature_1 = ds18b20_get_temp(1, &minus_1);
+                    temperature_2 = ds18b20_get_temp(2, &minus_2);
+                }
                 lcd_gotoxy(1, 1);
                 //strcpy(TxtBuf, "Press:");
                 TxtBuf[0] = 'T';
                 TxtBuf[1] = 'e';
                 TxtBuf[2] = 'm';
                 TxtBuf[3] = 'p';
-                TxtBuf[4] = ':';
-                TxtBuf[5] = minus;
-                TxtBuf[6] = ((temperature / 100) % 10) + 48;
-                TxtBuf[7] = ((temperature / 10) % 10) + 48;
-                TxtBuf[8] = '.';
-                TxtBuf[9] = ((temperature % 10) + 48);
-                TxtBuf[10] = ' ';
-                TxtBuf[11] = ' ';
-                TxtBuf[12] = ' ';
+                TxtBuf[4] = '1';
+                TxtBuf[5] = ':';
+                TxtBuf[6] = minus_1;
+                TxtBuf[7] = ((temperature_1 / 100) % 10) + 48;
+                TxtBuf[8] = ((temperature_1 / 10) % 10) + 48;
+                TxtBuf[9] = '.';
+                TxtBuf[10] = ((temperature_1 % 10) + 48);
+                TxtBuf[11] = 0xEF;
+                TxtBuf[12] = 'C';
                 TxtBuf[13] = ' ';
                 TxtBuf[14] = ' ';
                 TxtBuf[15] = 0;
                 lcdPrint(TxtBuf);
+
+                lcd_gotoxy(1, 2);
+                //strcpy(TxtBuf, "Press:");
+                TxtBuf[0] = 'T';
+                TxtBuf[1] = 'e';
+                TxtBuf[2] = 'm';
+                TxtBuf[3] = 'p';
+                TxtBuf[4] = '2';
+                TxtBuf[5] = ':';
+                TxtBuf[6] = minus_2;
+                TxtBuf[7] = ((temperature_2 / 100) % 10) + 48;
+                TxtBuf[8] = ((temperature_2 / 10) % 10) + 48;
+                TxtBuf[9] = '.';
+                TxtBuf[10] = ((temperature_2 % 10) + 48);
+                TxtBuf[11] = 0xEF;
+                TxtBuf[12] = 'C';
+                TxtBuf[13] = ' ';
+                TxtBuf[14] = ' ';
+                TxtBuf[15] = 0;
+                lcdPrint(TxtBuf);
+                
                 if (pressed_key == KEY_OK_EVENT) {
                     lcd_gotoxy(1, 2);
                     //strcpy(TxtBuf, "Press:");
@@ -135,6 +158,7 @@ void main(void) {
                         dq_num = 2;
                 }
                 if (pressed_key == KEY_BOTH_EVENT) {
+                    ds18b20_readrom(dq_num);
                     select = SEL_READ_DQ;
                 }
                 break;
@@ -160,10 +184,20 @@ void Main_init(void) {
     PORTC = 0;
     LATC = 0;
     TRISC = 0;
+    OSCCONbits.SCS0 = 0;
+    OSCCONbits.SCS1 = 1;
+    OSCCONbits.IRCF = 0b111; // Внутрішній осцилятор 8MHz
     ADCON1bits.PCFG = 0b1111; // всі порти цифрові
-    
+
     DQ = 1;
+   
+//    asm("nop");
+//    asm("nop");
+//    asm("nop");
+    
+    //  di();
     init_ds18b20();
+ //   ei();
     T1CON = 0b10000000;
     //T1CONbits.TMR1ON = 0; // вимкнути таймер 1
     TMR1H = HIGH_BYTE(TMR1Val);
@@ -179,9 +213,7 @@ void Main_init(void) {
     INTCONbits.T0IE = 1; // переривання від таймера 0
     INTCON2bits.RBPU = 0; // підтягуючі резистори
     
-    OSCCONbits.SCS0 = 0;
-    OSCCONbits.SCS1 = 1;
-    OSCCONbits.IRCF = 0b111; // Внутрішній осцилятор 8MHz
+
     
     PIE1bits.TMR1IE = 1; // переивання від таймера 1
     INTCONbits.PEIE = 1; // включити глобальні переивання

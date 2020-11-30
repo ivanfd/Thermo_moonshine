@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff930000000a000000ad05000052030000</PLACEMENT>
+  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffff930000000a000000ad05000052030000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
@@ -32,31 +32,23 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="746" x="768" flags="0000802b" y="282" h="495" pid="1" iid="1">
+   <POPUP w="600" x="78" flags="0000002b" y="169" h="400" pid="1" iid="1">
     <PROPERTIES>
-     <ITEM name="Breakpoint 0">"",027C,0000,16F2,B602,-1
-</ITEM>
-     <ITEM name="Breakpoint 1">"",0280,0000,E452,B602,-1
-</ITEM>
-     <ITEM name="Breakpoint 2">"",07DE,0000,A710,83AC,-1
-</ITEM>
-     <ITEM name="Breakpoint 3">"",06F6,0000,67D5,83AC,1
-</ITEM>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
      <ITEM name="DISPLNUMS">No</ITEM>
      <ITEM name="DISPOPCODES">No</ITEM>
      <ITEM name="FIXUPBPTS">Yes</ITEM>
      <ITEM name="WordsOnly">No</ITEM>
-     <ITEM name="nBreakpoints">3</ITEM>
+     <ITEM name="nBreakpoints">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="315" x="32" flags="0000000b" y="120" h="635" pid="2" iid="1">
+   <POPUP w="300" x="98" flags="0000000b" y="189" h="300" pid="2" iid="1">
     <PROPERTIES>
      <ITEM name="Address Column Width">94</ITEM>
      <ITEM name="AutoResize">No</ITEM>
      <ITEM name="Gridlines">Yes</ITEM>
-     <ITEM name="Name Column Width">133</ITEM>
+     <ITEM name="Name Column Width">94</ITEM>
      <ITEM name="ShowAddresses">Yes</ITEM>
      <ITEM name="ShowGlobals">Yes</ITEM>
      <ITEM name="ShowPreviousValues">No</ITEM>
@@ -91,7 +83,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="8" x="178" flags="00000002" y="269" h="16" pid="12" iid="1">
+   <POPUP w="8" x="178" flags="80000002" y="269" h="16" pid="12" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
@@ -134,7 +126,7 @@
    <POPUP w="142" x="258" flags="00000008" y="349" h="391" pid="10" iid="1">
     <PROPERTIES/>
    </POPUP>
-   <POPUP w="8" x="278" flags="00000002" y="369" h="8" pid="13" iid="1">
+   <POPUP w="8" x="278" flags="80000002" y="369" h="8" pid="13" iid="1">
     <PROPERTIES>
      <ITEM name="DataType">2</ITEM>
      <ITEM name="DispChars">Yes</ITEM>
