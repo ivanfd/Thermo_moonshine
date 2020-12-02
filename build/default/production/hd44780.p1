@@ -32,14 +32,14 @@ Version 3.2 HI-TECH Software Intermediate Code
 "203 C:/Program Files (x86)/Microchip/MPLABX/v5.35/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\pic18.h
 [v __delay `JF1875 ~T0 @X0 0 e ]
 [p i __delay ]
-"33 hd44780.h
+"101 hd44780.h
 [v _lcdNibble `(v ~T0 @X0 0 ef1`uc ]
 "31 hd44780.c
 [c E2011 0 1 .. ]
 [n E2011 . COMMAND DATA  ]
-"35 hd44780.h
+"103 hd44780.h
 [v _lcdWrite `(v ~T0 @X0 0 ef2`uc`E2011 ]
-"36
+"104
 [v _clearLCD `(v ~T0 @X0 0 ef ]
 "449 C:/Program Files (x86)/Microchip/xc8/v2.31/pic/include/proc\pic18f2320.h
 [s S17 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -2411,8 +2411,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;key.h: 29: void key_press(void);
-[; ;key.h: 30: uint8_t key_GetKey(void);
+[; ;key.h: 30: void key_press(void);
+[; ;key.h: 31: uint8_t key_GetKey(void);
 [; ;onewire.h: 12: uint8_t ow_reset(void);
 [; ;onewire.h: 13: uint8_t read_bit(void);
 [; ;onewire.h: 14: void write_bit(uint8_t bitval);
@@ -2443,26 +2443,227 @@ Version 3.2 HI-TECH Software Intermediate Code
 ]
 [; ;ds18b20.h: 18: const char fract[] = {0,1,1,2,2,3,4,4,5,6,6,7,7,8,9,9};
 [; ;ds18b20.h: 24: uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val);
-[; ;ds18b20.h: 25: void ds18b20_readrom(uint8_t num_dq);
+[; ;ds18b20.h: 25: uint8_t ds18b20_readrom(uint8_t num_dq);
 [; ;ds18b20.h: 26: uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus);
 [; ;ds18b20.h: 28: void init_ds18b20(void);
 [; ;ds18b20.h: 29: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 94: void Main_init(void);
-[; ;main.h: 95: void Delay_ms(uint16_t delay);
+[; ;main.h: 108: void Main_init(void);
+[; ;main.h: 109: void Delay_ms(uint16_t delay);
 [; ;hd44780.h: 9: typedef enum{
 [; ;hd44780.h: 10: COMMAND,
 [; ;hd44780.h: 11: DATA,
 [; ;hd44780.h: 12: }LCD_REGISTER_TYPE;
-[; ;hd44780.h: 33: void lcdNibble(uint8_t nibble);
-[; ;hd44780.h: 34: void initLCD();
-[; ;hd44780.h: 35: void lcdWrite(uint8_t byte, LCD_REGISTER_TYPE type);
-[; ;hd44780.h: 36: void clearLCD();
-[; ;hd44780.h: 37: void lcd_gotoxy(uint8_t x, uint8_t y);
-[; ;hd44780.h: 38: void lcd_putc(char c);
-[; ;hd44780.h: 39: void lcdPrint(const unsigned char *t);
-[; ;hd44780.h: 40: void cgrom_char(uint8_t *symbol, uint8_t address);
+"32 hd44780.h
+[v _HD44780_CYR `Cuc ~T0 @X0 -> 0 `x e ]
+[i _HD44780_CYR
+:U ..
+"34
+-> -> 65 `i `uc
+"35
+-> -> 160 `i `uc
+"36
+-> -> 66 `i `uc
+"37
+-> -> 161 `i `uc
+"38
+-> -> 224 `i `uc
+"39
+-> -> 69 `i `uc
+"40
+-> -> 163 `i `uc
+"41
+-> -> 164 `i `uc
+"42
+-> -> 165 `i `uc
+"43
+-> -> 166 `i `uc
+"44
+-> -> 75 `i `uc
+"45
+-> -> 167 `i `uc
+"46
+-> -> 77 `i `uc
+"47
+-> -> 72 `i `uc
+"48
+-> -> 79 `i `uc
+"49
+-> -> 168 `i `uc
+"50
+-> -> 80 `i `uc
+"51
+-> -> 67 `i `uc
+"52
+-> -> 84 `i `uc
+"53
+-> -> 169 `i `uc
+"54
+-> -> 170 `i `uc
+"55
+-> -> 88 `i `uc
+"56
+-> -> 225 `i `uc
+"57
+-> -> 171 `i `uc
+"58
+-> -> 172 `i `uc
+"59
+-> -> 226 `i `uc
+"60
+-> -> 173 `i `uc
+"61
+-> -> 174 `i `uc
+"62
+-> -> 98 `i `uc
+"63
+-> -> 175 `i `uc
+"64
+-> -> 176 `i `uc
+"65
+-> -> 177 `i `uc
+"66
+-> -> 97 `i `uc
+"67
+-> -> 178 `i `uc
+"68
+-> -> 179 `i `uc
+"69
+-> -> 180 `i `uc
+"70
+-> -> 227 `i `uc
+"71
+-> -> 101 `i `uc
+"72
+-> -> 182 `i `uc
+"73
+-> -> 183 `i `uc
+"74
+-> -> 184 `i `uc
+"75
+-> -> 185 `i `uc
+"76
+-> -> 186 `i `uc
+"77
+-> -> 187 `i `uc
+"78
+-> -> 188 `i `uc
+"79
+-> -> 189 `i `uc
+"80
+-> -> 111 `i `uc
+"81
+-> -> 190 `i `uc
+"82
+-> -> 112 `i `uc
+"83
+-> -> 99 `i `uc
+"84
+-> -> 191 `i `uc
+"85
+-> -> 121 `i `uc
+"86
+-> -> 228 `i `uc
+"87
+-> -> 120 `i `uc
+"88
+-> -> 229 `i `uc
+"89
+-> -> 192 `i `uc
+"90
+-> -> 193 `i `uc
+"91
+-> -> 230 `i `uc
+"92
+-> -> 194 `i `uc
+"93
+-> -> 195 `i `uc
+"94
+-> -> 196 `i `uc
+"95
+-> -> 197 `i `uc
+"96
+-> -> 198 `i `uc
+"98
+-> -> 199 `i `uc
+..
+]
+[; ;hd44780.h: 32: const char HD44780_CYR[] =
+[; ;hd44780.h: 33: {
+[; ;hd44780.h: 34: 0x41,
+[; ;hd44780.h: 35: 0xA0,
+[; ;hd44780.h: 36: 0x42,
+[; ;hd44780.h: 37: 0xA1,
+[; ;hd44780.h: 38: 0xE0,
+[; ;hd44780.h: 39: 0x45,
+[; ;hd44780.h: 40: 0xA3,
+[; ;hd44780.h: 41: 0xA4,
+[; ;hd44780.h: 42: 0xA5,
+[; ;hd44780.h: 43: 0xA6,
+[; ;hd44780.h: 44: 0x4B,
+[; ;hd44780.h: 45: 0xA7,
+[; ;hd44780.h: 46: 0x4D,
+[; ;hd44780.h: 47: 0x48,
+[; ;hd44780.h: 48: 0x4F,
+[; ;hd44780.h: 49: 0xA8,
+[; ;hd44780.h: 50: 0x50,
+[; ;hd44780.h: 51: 0x43,
+[; ;hd44780.h: 52: 0x54,
+[; ;hd44780.h: 53: 0xA9,
+[; ;hd44780.h: 54: 0xAA,
+[; ;hd44780.h: 55: 0x58,
+[; ;hd44780.h: 56: 0xE1,
+[; ;hd44780.h: 57: 0xAB,
+[; ;hd44780.h: 58: 0xAC,
+[; ;hd44780.h: 59: 0xE2,
+[; ;hd44780.h: 60: 0xAD,
+[; ;hd44780.h: 61: 0xAE,
+[; ;hd44780.h: 62: 0x62,
+[; ;hd44780.h: 63: 0xAF,
+[; ;hd44780.h: 64: 0xB0,
+[; ;hd44780.h: 65: 0xB1,
+[; ;hd44780.h: 66: 0x61,
+[; ;hd44780.h: 67: 0xB2,
+[; ;hd44780.h: 68: 0xB3,
+[; ;hd44780.h: 69: 0xB4,
+[; ;hd44780.h: 70: 0xE3,
+[; ;hd44780.h: 71: 0x65,
+[; ;hd44780.h: 72: 0xB6,
+[; ;hd44780.h: 73: 0xB7,
+[; ;hd44780.h: 74: 0xB8,
+[; ;hd44780.h: 75: 0xB9,
+[; ;hd44780.h: 76: 0xBA,
+[; ;hd44780.h: 77: 0xBB,
+[; ;hd44780.h: 78: 0xBC,
+[; ;hd44780.h: 79: 0xBD,
+[; ;hd44780.h: 80: 0x6F,
+[; ;hd44780.h: 81: 0xBE,
+[; ;hd44780.h: 82: 0x70,
+[; ;hd44780.h: 83: 0x63,
+[; ;hd44780.h: 84: 0xBF,
+[; ;hd44780.h: 85: 0x79,
+[; ;hd44780.h: 86: 0xE4,
+[; ;hd44780.h: 87: 0x78,
+[; ;hd44780.h: 88: 0xE5,
+[; ;hd44780.h: 89: 0xC0,
+[; ;hd44780.h: 90: 0xC1,
+[; ;hd44780.h: 91: 0xE6,
+[; ;hd44780.h: 92: 0xC2,
+[; ;hd44780.h: 93: 0xC3,
+[; ;hd44780.h: 94: 0xC4,
+[; ;hd44780.h: 95: 0xC5,
+[; ;hd44780.h: 96: 0xC6,
+[; ;hd44780.h: 97: 0xC7
+[; ;hd44780.h: 98: };
+[; ;hd44780.h: 101: void lcdNibble(uint8_t nibble);
+[; ;hd44780.h: 102: void initLCD();
+[; ;hd44780.h: 103: void lcdWrite(uint8_t byte, LCD_REGISTER_TYPE type);
+[; ;hd44780.h: 104: void clearLCD();
+[; ;hd44780.h: 105: void lcd_gotoxy(uint8_t x, uint8_t y);
+[; ;hd44780.h: 106: void lcd_putc(char c);
+[; ;hd44780.h: 107: void lcdPrint(const unsigned char *t);
+[; ;hd44780.h: 108: void cgrom_char(uint8_t *symbol, uint8_t address);
 "10 hd44780.c
 [v _initLCD `(v ~T0 @X0 1 ef ]
 {
@@ -2729,15 +2930,32 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;hd44780.c: 112: default:
 "112
 [e :U 235 ]
-[; ;hd44780.c: 113: lcdWrite(*t, DATA);
+[; ;hd44780.c: 113: if (*t < 0xC0) {
 "113
-[e ( _lcdWrite (2 , *U _t . `E2011 1 ]
-[; ;hd44780.c: 114: break;
+[e $ ! < -> *U _t `i -> 192 `i 236  ]
+{
+[; ;hd44780.c: 114: lcdWrite(*t, DATA);
 "114
-[e $U 230  ]
+[e ( _lcdWrite (2 , *U _t . `E2011 1 ]
 "115
 }
-[; ;hd44780.c: 115: }
+[; ;hd44780.c: 115: } else {
+[e $U 237  ]
+[e :U 236 ]
+{
+[; ;hd44780.c: 116: lcdWrite(HD44780_CYR[(unsigned char) (*t) - 0xC0], DATA);
+"116
+[e ( _lcdWrite (2 , *U + &U _HD44780_CYR * -> -> - -> *U _t `i -> 192 `i `ui `ux -> -> # *U &U _HD44780_CYR `ui `ux . `E2011 1 ]
+"117
+}
+[e :U 237 ]
+[; ;hd44780.c: 117: }
+[; ;hd44780.c: 119: break;
+"119
+[e $U 230  ]
+"120
+}
+[; ;hd44780.c: 120: }
 [e $U 230  ]
 "98
 [e :U 231 ]
@@ -2745,53 +2963,53 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> -> 10 `ui `uc 233
  , $ -> -> 8 `ui `uc 234
  235 ]
-"115
+"120
 [e :U 230 ]
-[; ;hd44780.c: 116: *t++;
-"116
+[; ;hd44780.c: 121: *t++;
+"121
 [e *U ++ _t * -> -> 1 `i `x -> -> # *U _t `i `x ]
-"119
+"124
 }
 [e :U 227 ]
 "97
 [e $ != -> *U _t `ui -> 0 `ui 228  ]
 [e :U 229 ]
-[; ;hd44780.c: 119: }
-[; ;hd44780.c: 120: }
-"120
+[; ;hd44780.c: 124: }
+[; ;hd44780.c: 125: }
+"125
 [e :UE 226 ]
 }
-"122
+"127
 [v _cgrom_char `(v ~T0 @X0 1 ef2`*uc`uc ]
 {
-[; ;hd44780.c: 122: void cgrom_char(uint8_t *symbol, uint8_t address) {
+[; ;hd44780.c: 127: void cgrom_char(uint8_t *symbol, uint8_t address) {
 [e :U _cgrom_char ]
 [v _symbol `*uc ~T0 @X0 1 r1 ]
 [v _address `uc ~T0 @X0 1 r2 ]
 [f ]
-"123
+"128
 [v _i `uc ~T0 @X0 1 a ]
-[; ;hd44780.c: 123: uint8_t i;
-[; ;hd44780.c: 124: lcdWrite(0x40 | (address * 8), COMMAND);
-"124
+[; ;hd44780.c: 128: uint8_t i;
+[; ;hd44780.c: 129: lcdWrite(0x40 | (address * 8), COMMAND);
+"129
 [e ( _lcdWrite (2 , -> | -> 64 `i * -> _address `i -> 8 `i `uc . `E2011 0 ]
-[; ;hd44780.c: 125: for (i = 0; i < 8; i++)
-"125
+[; ;hd44780.c: 130: for (i = 0; i < 8; i++)
+"130
 {
 [e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 237  ]
-[e $U 238  ]
-"126
-[e :U 237 ]
-[; ;hd44780.c: 126: lcdWrite(*symbol++, DATA);
+[e $ < -> _i `i -> 8 `i 239  ]
+[e $U 240  ]
+"131
+[e :U 239 ]
+[; ;hd44780.c: 131: lcdWrite(*symbol++, DATA);
 [e ( _lcdWrite (2 , *U ++ _symbol * -> -> 1 `i `x -> -> # *U _symbol `i `x . `E2011 1 ]
-"125
+"130
 [e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 237  ]
-[e :U 238 ]
-"126
+[e $ < -> _i `i -> 8 `i 239  ]
+[e :U 240 ]
+"131
 }
-[; ;hd44780.c: 127: }
-"127
-[e :UE 236 ]
+[; ;hd44780.c: 132: }
+"132
+[e :UE 238 ]
 }

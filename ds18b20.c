@@ -140,13 +140,17 @@ uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val) {
                     write_byte(rom_dq[j][i]);
                 }
                 write_byte(0xBE); // Read scratch pad command
-                for (i = 0; i < 2; i++)//  читаємо два байти температури
+                for (i = 0; i < 9; i++)//  читаємо 9 байт температури
                 {
                     scratch[i] = read_byte();
                 }
 
-                temp = (((uint16_t) scratch[1]) << 8) | ((uint16_t) scratch[0]);
-                temp_ready[j] = temp;
+                if (!(ds18b20_crc8(scratch, 9))) { // перевіряємо контрольну суму
+                    temp = (((uint16_t) scratch[1]) << 8) | ((uint16_t) scratch[0]);
+                    temp_ready[j] = temp;
+                }else
+                    temp_ready[j] = 32767;
+
             }
             *time_flag = 0;
             return TRUE;
@@ -163,7 +167,7 @@ uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val) {
 //-----------------------------
 //
 //-----------------------------
-void ds18b20_readrom(uint8_t num_dq){
+uint8_t ds18b20_readrom(uint8_t num_dq){
     uint8_t i;
     uint8_t temp_rom[8];
     
@@ -179,8 +183,9 @@ void ds18b20_readrom(uint8_t num_dq){
             write_eep(((num_dq - 1)*8) + i, temp_rom[i]); // і пишемо код в еепром
         }
         Delay_ms(10);
+        return TRUE;
     }
-    return;
+    return FALSE;
 }
 
 //-------------------------------
@@ -192,7 +197,8 @@ uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
     uint16_t temp = temp_ready[num_dq-1];
     uint8_t tmp;
     *minus = '+';
-
+    if(temp == 32767)
+        return temp;
     if (temp & 0x8000) {
         temp = -temp; // якщо від`ємна 
         *minus = '-';

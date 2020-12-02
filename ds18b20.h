@@ -22,7 +22,7 @@ uint8_t readTemp_Single(uint16_t *buf, uint8_t *minus,  uint8_t *time_flag, uint
 #endif
 #ifdef DS18B20_MANY
 uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val);
-void ds18b20_readrom(uint8_t num_dq); // прочитати код датчика і записати в еепром
+uint8_t ds18b20_readrom(uint8_t num_dq); // прочитати код датчика і записати в еепром
 uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus);
 #endif
 void init_ds18b20(void);

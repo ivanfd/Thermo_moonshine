@@ -6,7 +6,8 @@
 #include "main.h"
 #include <stdint.h>
 
-#define DELAYKEY 20     // debounce
+#define DELAYKEY 15     // debounce
+#define DELAYKEY2 300
 
 #define KEY_PORT    PORTB
 //#define KEY_OK_TRIS TRISBbits.TRISB2

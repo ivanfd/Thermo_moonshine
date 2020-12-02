@@ -109,11 +109,16 @@ void lcdPrint(const unsigned char *t){
             lcdWrite(0x10, COMMAND);
             break;
 
-        default:
-            lcdWrite(*t, DATA);
-            break;
-    }
-       *t++; 
+            default:
+                if (*t < 0xC0) {
+                    lcdWrite(*t, DATA);
+                } else {
+                    lcdWrite(HD44780_CYR[(unsigned char) (*t) - 0xC0], DATA);
+                }
+                //lcdWrite(*t, DATA);
+                break;
+        }
+        *t++; 
         
         //lcdWrite(*t++, DATA);
     }

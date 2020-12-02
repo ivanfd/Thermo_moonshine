@@ -3799,7 +3799,7 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 29 "key.h"
+# 30 "key.h"
 void key_press(void);
 uint8_t key_GetKey(void);
 
@@ -3816,7 +3816,7 @@ const char fract[] = {0,1,1,2,2,3,4,4,5,6,6,7,7,8,9,9};
 
 # 24
 uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val);
-void ds18b20_readrom(uint8_t num_dq);
+uint8_t ds18b20_readrom(uint8_t num_dq);
 uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus);
 
 void init_ds18b20(void);
@@ -3826,7 +3826,7 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 94 "main.h"
+# 108 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 
@@ -3836,7 +3836,76 @@ COMMAND,
 DATA,
 }LCD_REGISTER_TYPE;
 
-# 33
+# 32
+const char HD44780_CYR[] =
+{
+0x41,
+0xA0,
+0x42,
+0xA1,
+0xE0,
+0x45,
+0xA3,
+0xA4,
+0xA5,
+0xA6,
+0x4B,
+0xA7,
+0x4D,
+0x48,
+0x4F,
+0xA8,
+0x50,
+0x43,
+0x54,
+0xA9,
+0xAA,
+0x58,
+0xE1,
+0xAB,
+0xAC,
+0xE2,
+0xAD,
+0xAE,
+0x62,
+0xAF,
+0xB0,
+0xB1,
+0x61,
+0xB2,
+0xB3,
+0xB4,
+0xE3,
+0x65,
+0xB6,
+0xB7,
+0xB8,
+0xB9,
+0xBA,
+0xBB,
+0xBC,
+0xBD,
+0x6F,
+0xBE,
+0x70,
+0x63,
+0xBF,
+0x79,
+0xE4,
+0x78,
+0xE5,
+0xC0,
+0xC1,
+0xE6,
+0xC2,
+0xC3,
+0xC4,
+0xC5,
+0xC6,
+0xC7
+};
+
+
 void lcdNibble(uint8_t nibble);
 void initLCD();
 void lcdWrite(uint8_t byte, LCD_REGISTER_TYPE type);
@@ -3950,7 +4019,12 @@ lcdWrite(0x10, COMMAND);
 break;
 
 default:
+if (*t < 0xC0) {
 lcdWrite(*t, DATA);
+} else {
+lcdWrite(HD44780_CYR[(unsigned char) (*t) - 0xC0], DATA);
+}
+
 break;
 }
 *t++;

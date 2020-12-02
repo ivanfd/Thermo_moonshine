@@ -10,9 +10,11 @@
             <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/hd44780.c</file>
             <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/hd44780.h</file>
             <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.h</file>
+            <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/eeprom.c</file>
             <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/onewire.c</file>
             <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.c</file>
             <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/ds18b20.h</file>
+            <file>file:/E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/eeprom.h</file>
         </group>
     </open-files>
 </project-private>

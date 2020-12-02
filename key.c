@@ -4,7 +4,7 @@ volatile uint8_t key_pressed;
 
 void key_press(void)
 {
-    static uint8_t count = 0;
+    static uint16_t count = 0;
     uint8_t key;
     if (((KEY_PORT & (1 << KEY_OK)) == 0) && ((KEY_PORT & (1 << KEY_UP)) == 0))
         key = KEY_BOTH_EVENT;
@@ -17,19 +17,30 @@ void key_press(void)
 
 
     if (key) {// якщо перемінна key не нульова
-
-        //якщо кнопка утримується довго
-        if (count == DELAYKEY) {
-            count = DELAYKEY + 10;
-            key_pressed = key;   //записуємо її номер в буфер 
-
+        if (count > DELAYKEY2) {
+            count = DELAYKEY2 - 10;
+            key_pressed = key;
             return;
-        } else
-            if (count < (DELAYKEY + 5))
-            count++;
+        } else count++;
 
-    }
-    else count = 0;
+        if (count == DELAYKEY) {
+            key_pressed = key;
+            return;
+        }
+    } else count = 0;
+        
+        //якщо кнопка утримується довго
+//        if (count == DELAYKEY) {
+//            count = DELAYKEY + 10;
+//            key_pressed = key;   //записуємо її номер в буфер 
+//
+//            return;
+//        } else
+//            if (count < (DELAYKEY + 5))
+//            count++;
+//
+//    }
+//    else count = 0;
 }
 
 //Отримати код кнопки
