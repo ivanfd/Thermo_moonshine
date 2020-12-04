@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' standalone='yes'?>
 <WORKSPACE>
  <FRAME activewindow="0">
-  <PLACEMENT>2c00000002000000030000000083ffff0083ffffffffffffffffffff930000000a000000ad05000052030000</PLACEMENT>
+  <PLACEMENT>2c0000000200000003000000ffffffffffffffffffffffffffffffff930000000a000000ad05000052030000</PLACEMENT>
   <WINDOW type="default" module="ISIS"/>
  </FRAME>
  <MODULE name="VSMDEBUG">
@@ -32,19 +32,21 @@
      <ITEM name="nItems">0</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="654" x="813" flags="0000802b" y="140" h="590" pid="1" iid="1">
+   <POPUP w="654" x="946" flags="0000802b" y="96" h="590" pid="1" iid="1">
     <PROPERTIES>
-     <ITEM name="Breakpoint 0">"",014E,0000,9E4C,B602,-1
+     <ITEM name="Breakpoint 0">"",0160,0000,1B8C,B602,1
 </ITEM>
-     <ITEM name="Breakpoint 1">"",0342,0000,5270,B602,-1
+     <ITEM name="Breakpoint 1">"",018A,0000,3C54,B602,1
 </ITEM>
-     <ITEM name="Breakpoint 2">"",002C,0000,1DCB,B602,-1
+     <ITEM name="Breakpoint 2">"",0342,0000,60D5,B602,-1
 </ITEM>
-     <ITEM name="Breakpoint 3">"",0044,0000,0705,B602,-1
+     <ITEM name="Breakpoint 3">"",002C,0000,1DCB,B602,-1
 </ITEM>
-     <ITEM name="Breakpoint 4">"",0048,0000,D604,B602,-1
+     <ITEM name="Breakpoint 4">"",0044,0000,0705,B602,-1
 </ITEM>
-     <ITEM name="Breakpoint 5">"",0C04,0000,A710,83AC,-1
+     <ITEM name="Breakpoint 5">"",0048,0000,D604,B602,-1
+</ITEM>
+     <ITEM name="Breakpoint 6">"",0C6A,0000,A710,83AC,-1
 </ITEM>
      <ITEM name="CaseSensitive">No</ITEM>
      <ITEM name="DISPADDRS">Yes</ITEM>
@@ -52,7 +54,7 @@
      <ITEM name="DISPOPCODES">No</ITEM>
      <ITEM name="FIXUPBPTS">Yes</ITEM>
      <ITEM name="WordsOnly">No</ITEM>
-     <ITEM name="nBreakpoints">6</ITEM>
+     <ITEM name="nBreakpoints">0</ITEM>
     </PROPERTIES>
    </POPUP>
    <POPUP w="443" x="6" flags="0000000b" y="103" h="718" pid="2" iid="1">
@@ -188,7 +190,7 @@
      <ITEM name="TopLineAddress">00000000</ITEM>
     </PROPERTIES>
    </POPUP>
-   <POPUP w="695" x="611" flags="00000001" y="691" h="453" pid="0" iid="12">
+   <POPUP w="695" x="0" flags="00000000" y="342" h="453" pid="0" iid="12">
     <PROPERTIES/>
    </POPUP>
   </PWI>

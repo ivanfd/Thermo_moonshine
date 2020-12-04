@@ -3903,7 +3903,7 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 108 "main.h"
+# 117 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 

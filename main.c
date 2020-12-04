@@ -16,9 +16,11 @@ uint8_t minus_1 = '+', minus_2 = '+';
 uint8_t TxtBuf[16];
 bit read_key = 0; // дозвіл на читання кнопок
 bit en_sound = 0; // дозвіл сигналу
+bit sound_yes = 0; // загальна заборона сигналу
 uint8_t pressed_key;
 uint8_t select = SEL_MAIN; //де в меню ми знаходимося
 uint8_t sub_sel;
+uint8_t sub_main = SUB_MAIN_1;
 uint8_t dq_num = 1;
 uint8_t set_t_dq1_up, set_t_dq1_dwn, set_t_dq2_up, set_t_dq2_dwn;
 uint16_t temp1_fix, temp2_fix;
@@ -42,13 +44,15 @@ void main(void) {
         lcdPrint("Датчик 1, або 2");
         lcd_gotoxy(1, 2);
         lcdPrint("Вибiр 18B20:");
-       // Delay_ms(2000);
+        // Delay_ms(2000);
     }
-    
+
     set_t_dq1_up = read_eep(EE_TMP1_UP); // читаємо з еепром пороги
     set_t_dq1_dwn = read_eep(EE_TMP1_DWN); // температур
     set_t_dq2_up = read_eep(EE_TMP2_UP);
     set_t_dq2_dwn = read_eep(EE_TMP2_DWN);
+    temp1_fix = read_eep(EE_TMP1_FIX);
+    temp2_fix = read_eep(EE_TMP2_FIX);
 
     while (1) {
 
@@ -66,101 +70,168 @@ void main(void) {
                     temperature_2 = ds18b20_get_temp(2, &minus_2);
                 }
 
-                if ((temperature_1 >= (temp1_fix + set_t_dq1_up)))
-                    en_sound = 1;
-                else
-                    en_sound = 0;
-                    
+                
                 // виводимо температуру
-                //_____________________
+                // з двох датчиків
                 //---------------------
-                lcd_gotoxy(1, 1);
-                lcdPrint("Колона:");
-                lcd_gotoxy(8, 1);
-                if (!(temperature_1 == 32767)) {
-                    if (((temperature_1 / 100) % 10) == 0) {
-                        lcd_putc(minus_1);
-                        //lcd_putc(((temperature_1 / 100) % 10) + 48);
-                        lcd_putc(((temperature_1 / 10) % 10) + 48);
+                switch (sub_main) { // вибираємо яку температуру показувати
+                    case SUB_MAIN_1: // температура з колони
+                        lcd_gotoxy(1, 1);
+                        lcdPrint("Колона:");
+                        lcd_gotoxy(8, 1);
+                        if (!(temperature_1 == 32767)) {
+                            if (((temperature_1 / 100) % 10) == 0) {
+                                lcd_putc(minus_1);
+                                //lcd_putc(((temperature_1 / 100) % 10) + 48);
+                                lcd_putc(((temperature_1 / 10) % 10) + 48);
+                                lcd_putc('.');
+                                lcd_putc(((temperature_1 % 10) + 48));
+                                lcd_putc(0x01);
+                                lcd_putc('C');
+                                lcd_putc(' ');
+                                lcd_putc(' ');
+                            } else {
+                                lcd_putc(minus_1);
+                                lcd_putc(((temperature_1 / 100) % 10) + 48);
+                                lcd_putc(((temperature_1 / 10) % 10) + 48);
+                                lcd_putc('.');
+                                lcd_putc(((temperature_1 % 10) + 48));
+                                lcd_putc(0x01);
+                                lcd_putc('C');
+                                lcd_putc(' ');
+                               // lcd_putc(' ');
+                            }
+                        } else {
+                            lcd_putc('-');
+                            lcd_putc('-');
+                            lcd_putc('-');
+                            lcd_putc(' ');
+                            lcd_putc(' ');
+                            lcd_putc(' ');
+                            lcd_putc(' ');
+                        }
+                        lcd_gotoxy(1, 2);
+                        lcd_putc(0xCE);
+                        lcd_putc(((temp1_fix / 100) % 10) + 48);
+                        lcd_putc(((temp1_fix / 10) % 10) + 48);
                         lcd_putc('.');
-                        lcd_putc(((temperature_1 % 10) + 48));
+                        lcd_putc(((temp1_fix % 10) + 48));
                         lcd_putc(0x01);
-                        lcd_putc('C');
                         lcd_putc(' ');
-                        lcd_putc(' ');
-                    } else {
-                        lcd_putc(minus_1);
-                        lcd_putc(((temperature_1 / 100) % 10) + 48);
-                        lcd_putc(((temperature_1 / 10) % 10) + 48);
+                        lcd_putc(0xD9);  
+                        lcd_putc(((set_t_dq1_up / 10) % 10) + 48);
                         lcd_putc('.');
-                        lcd_putc(((temperature_1 % 10) + 48));
-                        lcd_putc(0x01);
-                        lcd_putc('C');
+                        lcd_putc(((set_t_dq1_up % 10) + 48));                        
                         lcd_putc(' ');
-                        lcd_putc(' ');
-                    }
-                } else {
-                    lcd_putc('-');
-                    lcd_putc('-');
-                    lcd_putc('-');
-                    lcd_putc(' ');
-                    lcd_putc(' ');
-                    lcd_putc(' ');
-                    lcd_putc(' ');
-                }
+                        lcd_putc(0xDA);  
+                        lcd_putc(((set_t_dq1_dwn / 10) % 10) + 48);
+                        lcd_putc('.');
+                        lcd_putc(((set_t_dq1_dwn % 10) + 48)); 
 
-                lcd_gotoxy(1, 2);
-                lcdPrint("Голова:");
-                lcd_gotoxy(8, 2);
-                if (!(temperature_2 == 32767)) {
-                    if (((temperature_2 / 100) % 10) == 0) {
-                        lcd_putc(minus_2);
-                        //lcd_putc(((temperature_2 / 100) % 10) + 48);
-                        lcd_putc(((temperature_2 / 10) % 10) + 48);
+                        break;
+                    case SUB_MAIN_2:// температура з голови
+                        lcd_gotoxy(1, 1);
+                        lcdPrint("Голова:");
+                        lcd_gotoxy(8, 1);
+                        if (!(temperature_2 == 32767)) {
+                            if (((temperature_2 / 100) % 10) == 0) {
+                                lcd_putc(minus_2);
+                                //lcd_putc(((temperature_2 / 100) % 10) + 48);
+                                lcd_putc(((temperature_2 / 10) % 10) + 48);
+                                lcd_putc('.');
+                                lcd_putc(((temperature_2 % 10) + 48));
+                                lcd_putc(0x01);
+                                lcd_putc('C');
+                                lcd_putc(' ');
+                                lcd_putc(' ');
+                            } else {
+                                lcd_putc(minus_2);
+                                lcd_putc(((temperature_2 / 100) % 10) + 48);
+                                lcd_putc(((temperature_2 / 10) % 10) + 48);
+                                lcd_putc('.');
+                                lcd_putc(((temperature_2 % 10) + 48));
+                                lcd_putc(0x01);
+                                lcd_putc('C');
+                                lcd_putc(' ');
+                                //lcd_putc(' ');
+                            }
+                        } else {
+                            lcd_putc('-');
+                            lcd_putc('-');
+                            lcd_putc('-');
+                            lcd_putc(' ');
+                            lcd_putc(' ');
+                            lcd_putc(' ');
+                            lcd_putc(' ');
+                        }
+                        lcd_gotoxy(1, 2);
+                        lcd_putc(0xCE);
+                        lcd_putc(((temp2_fix / 100) % 10) + 48);
+                        lcd_putc(((temp2_fix / 10) % 10) + 48);
                         lcd_putc('.');
-                        lcd_putc(((temperature_2 % 10) + 48));
+                        lcd_putc(((temp2_fix % 10) + 48));
                         lcd_putc(0x01);
-                        lcd_putc('C');
                         lcd_putc(' ');
-                        lcd_putc(' ');
-                    } else {
-                        lcd_putc(minus_2);
-                        lcd_putc(((temperature_2 / 100) % 10) + 48);
-                        lcd_putc(((temperature_2 / 10) % 10) + 48);
+                        lcd_putc(0xD9);
+                        lcd_putc(((set_t_dq2_up / 10) % 10) + 48);
                         lcd_putc('.');
-                        lcd_putc(((temperature_2 % 10) + 48));
-                        lcd_putc(0x01);
-                        lcd_putc('C');
+                        lcd_putc(((set_t_dq2_up % 10) + 48));
                         lcd_putc(' ');
-                        lcd_putc(' ');
-                    }
-                }else{
-                    lcd_putc('-');
-                    lcd_putc('-');
-                    lcd_putc('-');
-                    lcd_putc(' ');
-                    lcd_putc(' ');
-                    lcd_putc(' ');
-                    lcd_putc(' ');
-                }
+                        lcd_putc(0xDA);
+                        lcd_putc(((set_t_dq2_dwn / 10) % 10) + 48);
+                        lcd_putc('.');
+                        lcd_putc(((set_t_dq2_dwn % 10) + 48));
+                        break;
+                }// end sub_main
+
+                if (sound_yes) { // якщо є дозвіл звуку
+                    lcd_gotoxy(16, 1);
+                    lcd_putc(0xED);
+                    if ((((temperature_1 >= (temp1_fix + set_t_dq1_up)) || 
+                            (temperature_1 <= (temp1_fix - set_t_dq1_dwn))) && 
+                                (!(temperature_1 == 32767))) || 
+                            (((temperature_2 >= (temp2_fix + set_t_dq2_up)) || 
+                            (temperature_2 <= (temp2_fix - set_t_dq2_dwn))) && 
+                                (!(temperature_2 == 32767))))
+                        en_sound = 1;
+                    else
+                        en_sound = 0;
+
+                } else {
+                    lcd_gotoxy(16, 1);
+                    lcd_putc(0xD5);
+                    SND = 0;
+                    en_sound = 0;
+                }                
+
+
                 if (pressed_key == KEY_OK_EVENT) { // натиснули кнопку ОК
                     clearLCD();
-                    select = SEL_SET_TEMP;
+                    select = SEL_DQ_SND;
                     lcd_gotoxy(1, 1);
-                    lcdPrint("  Гiстерезис  ");
+                    lcdPrint(" Порiг  Сигнал");
                     lcd_gotoxy(1, 2);
-                    lcdPrint("Кол(1)/Гол(2):");
-                }
-                if (pressed_key == KEY_UP_EVENT) {
+                    lcdPrint("  OK      UP");
 
                 }
+                
+                if (pressed_key == KEY_UP_EVENT) {
+                    if (sub_main == SUB_MAIN_1)
+                        sub_main = SUB_MAIN_2;
+                    else
+                        sub_main = SUB_MAIN_1;
+                }
+                
                 if (pressed_key == KEY_BOTH_EVENT) {
                     temp1_fix = temperature_1;
                     temp2_fix = temperature_2;
+                    write_eep(EE_TMP1_FIX, temp1_fix);
+                    write_eep(EE_TMP2_FIX, temp2_fix);
                 }
 
                 break;
-            case SEL_SET_DQ:
+                //===========================================
+            case SEL_SET_DQ:// налаштування приєднання датчиків
 
                 lcd_gotoxy(14, 2);
                 lcd_putc(dq_num + 48);
@@ -180,10 +251,25 @@ void main(void) {
                         lcdPrint(" Код прочитано ");
                     }
 
-                    select = SEL_READ_DQ;
+                    select = SEL_STOP;
                 }
                 break;
-            case SEL_READ_DQ:
+            case SEL_STOP:
+                break;
+            case SEL_DQ_SND:
+                if (pressed_key == KEY_OK_EVENT) { // натиснули кнопку ОК
+                    clearLCD();
+                    select = SEL_SET_TEMP;
+                    lcd_gotoxy(1, 1);
+                    lcdPrint("  Гiстерезис  ");
+                    lcd_gotoxy(1, 2);
+                    lcdPrint("Кол(1)/Гол(2):");
+                }
+
+                if (pressed_key == KEY_UP_EVENT) {
+                    sound_yes = !(sound_yes);
+                    select = SEL_MAIN;
+                }
                 break;
             case SEL_SET_TEMP:// вибір налаштування порогів
                 lcd_gotoxy(16, 2);
@@ -406,8 +492,9 @@ void interrupt myInt(void) {
                 SND = 0; // вимкнути вивід звуку(активний бузер!)
             if(snd_delay > SND_PAUSE)
                 snd_delay = 0;
-
-        }
+        }else
+            SND = 0;
+        
     }
     return;
 }
