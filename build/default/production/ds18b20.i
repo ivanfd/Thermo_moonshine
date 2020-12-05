@@ -3892,7 +3892,7 @@ void cgrom_char(uint8_t *symbol, uint8_t address);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 108 "main.h"
+# 117 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 

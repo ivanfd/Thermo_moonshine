@@ -3911,7 +3911,7 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 108 "main.h"
+# 117 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 
@@ -3922,9 +3922,11 @@ uint8_t minus_1 = '+', minus_2 = '+';
 uint8_t TxtBuf[16];
 bit read_key = 0;
 bit en_sound = 0;
+bit sound_yes = 0;
 uint8_t pressed_key;
 uint8_t select = 1;
 uint8_t sub_sel;
+uint8_t sub_main = 1;
 uint8_t dq_num = 1;
 uint8_t set_t_dq1_up, set_t_dq1_dwn, set_t_dq2_up, set_t_dq2_dwn;
 uint16_t temp1_fix, temp2_fix;
@@ -3955,6 +3957,8 @@ set_t_dq1_up = read_eep(16);
 set_t_dq1_dwn = read_eep(17);
 set_t_dq2_up = read_eep(18);
 set_t_dq2_dwn = read_eep(19);
+temp1_fix = read_eep(20);
+temp2_fix = read_eep(21);
 
 while (1) {
 
@@ -3972,14 +3976,9 @@ temperature_1 = ds18b20_get_temp(1, &minus_1);
 temperature_2 = ds18b20_get_temp(2, &minus_2);
 }
 
-if ((temperature_1 >= (temp1_fix + set_t_dq1_up)))
-en_sound = 1;
-else
-en_sound = 0;
-
-
-
-
+# 77
+switch (sub_main) {
+case 1:
 lcd_gotoxy(1, 1);
 lcdPrint("Колона:");
 lcd_gotoxy(8, 1);
@@ -4003,7 +4002,7 @@ lcd_putc(((temperature_1 % 10) + 48));
 lcd_putc(0x01);
 lcd_putc('C');
 lcd_putc(' ');
-lcd_putc(' ');
+
 }
 } else {
 lcd_putc('-');
@@ -4014,10 +4013,29 @@ lcd_putc(' ');
 lcd_putc(' ');
 lcd_putc(' ');
 }
-
 lcd_gotoxy(1, 2);
+lcd_putc(0xCE);
+lcd_putc(((temp1_fix / 100) % 10) + 48);
+lcd_putc(((temp1_fix / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((temp1_fix % 10) + 48));
+lcd_putc(0x01);
+lcd_putc(' ');
+lcd_putc(0xD9);
+lcd_putc(((set_t_dq1_up / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((set_t_dq1_up % 10) + 48));
+lcd_putc(' ');
+lcd_putc(0xDA);
+lcd_putc(((set_t_dq1_dwn / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((set_t_dq1_dwn % 10) + 48));
+
+break;
+case 2:
+lcd_gotoxy(1, 1);
 lcdPrint("Голова:");
-lcd_gotoxy(8, 2);
+lcd_gotoxy(8, 1);
 if (!(temperature_2 == 32767)) {
 if (((temperature_2 / 100) % 10) == 0) {
 lcd_putc(minus_2);
@@ -4038,34 +4056,85 @@ lcd_putc(((temperature_2 % 10) + 48));
 lcd_putc(0x01);
 lcd_putc('C');
 lcd_putc(' ');
-lcd_putc(' ');
-}
-}else{
-lcd_putc('-');
-lcd_putc('-');
-lcd_putc('-');
-lcd_putc(' ');
-lcd_putc(' ');
-lcd_putc(' ');
-lcd_putc(' ');
-}
-if (pressed_key == 1) {
-clearLCD();
-select = 4;
-lcd_gotoxy(1, 1);
-lcdPrint("  Гiстерезис  ");
-lcd_gotoxy(1, 2);
-lcdPrint("Кол(1)/Гол(2):");
-}
-if (pressed_key == 2) {
 
 }
+} else {
+lcd_putc('-');
+lcd_putc('-');
+lcd_putc('-');
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+}
+lcd_gotoxy(1, 2);
+lcd_putc(0xCE);
+lcd_putc(((temp2_fix / 100) % 10) + 48);
+lcd_putc(((temp2_fix / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((temp2_fix % 10) + 48));
+lcd_putc(0x01);
+lcd_putc(' ');
+lcd_putc(0xD9);
+lcd_putc(((set_t_dq2_up / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((set_t_dq2_up % 10) + 48));
+lcd_putc(' ');
+lcd_putc(0xDA);
+lcd_putc(((set_t_dq2_dwn / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((set_t_dq2_dwn % 10) + 48));
+break;
+}
+
+if (sound_yes) {
+lcd_gotoxy(16, 1);
+lcd_putc(0xED);
+if ((((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
+(temperature_1 <= (temp1_fix - set_t_dq1_dwn))) &&
+(!(temperature_1 == 32767))) ||
+(((temperature_2 >= (temp2_fix + set_t_dq2_up)) ||
+(temperature_2 <= (temp2_fix - set_t_dq2_dwn))) &&
+(!(temperature_2 == 32767))))
+en_sound = 1;
+else
+en_sound = 0;
+
+# 205
+} else {
+lcd_gotoxy(16, 1);
+lcd_putc(0xD5);
+LATCbits.LATC4 = 0;
+en_sound = 0;
+}
+
+
+if (pressed_key == 1) {
+clearLCD();
+select = 7;
+lcd_gotoxy(1, 1);
+lcdPrint(" Порiг  Сигнал");
+lcd_gotoxy(1, 2);
+lcdPrint("  OK      UP");
+
+}
+
+if (pressed_key == 2) {
+if (sub_main == 1)
+sub_main = 2;
+else
+sub_main = 1;
+}
+
 if (pressed_key == 3) {
 temp1_fix = temperature_1;
 temp2_fix = temperature_2;
+write_eep(20, temp1_fix);
+write_eep(21, temp2_fix);
 }
 
 break;
+
 case 2:
 
 lcd_gotoxy(14, 2);
@@ -4090,6 +4159,21 @@ select = 3;
 }
 break;
 case 3:
+break;
+case 7:
+if (pressed_key == 1) {
+clearLCD();
+select = 4;
+lcd_gotoxy(1, 1);
+lcdPrint("  Гiстерезис  ");
+lcd_gotoxy(1, 2);
+lcdPrint("Кол(1)/Гол(2):");
+}
+
+if (pressed_key == 2) {
+sound_yes = !(sound_yes);
+select = 1;
+}
 break;
 case 4:
 lcd_gotoxy(16, 2);
@@ -4312,8 +4396,9 @@ LATCbits.LATC4 = 1;
 LATCbits.LATC4 = 0;
 if(snd_delay > 70)
 snd_delay = 0;
+}else
+LATCbits.LATC4 = 0;
 
-}
 }
 return;
 }

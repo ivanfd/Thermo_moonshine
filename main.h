@@ -87,18 +87,27 @@
 
 #define SEL_MAIN 1 // основне меню
 #define SEL_SET_DQ 2 // налаштування датчиків
-#define SEL_READ_DQ 3 // прочитати код датчика
+#define SEL_STOP 3 // прочитати код датчика
 #define SEL_SET_TEMP 4 //налаштування гістерезису температури
 #define SEL_SET_TEMP_DQ1 5 //налаштування гістерезису температури
 #define SEL_SET_TEMP_DQ2 6 //налаштування гістерезису температури
+#define SEL_DQ_SND 7 //вибір - звук, чи читання датчиків
 
 #define SUB_SEL_UP 1
 #define SUB_SEL_DWN 2
+
+#define SUB_MAIN_1 1
+#define SUB_MAIN_2 2
+
+
 
 #define EE_TMP1_UP 16  // адреси еепром
 #define EE_TMP1_DWN 17 // температури  
 #define EE_TMP2_UP 18  // аварії
 #define EE_TMP2_DWN 19
+#define EE_TMP1_FIX 20 //зафіксована температура датчика 1
+#define EE_TMP2_FIX 21 // зафіксована температура датчика 2
+
 
 #define SND LATCbits.LATC4 //порт динаміка
 #define SND_TIME 20 // Довжина звуку

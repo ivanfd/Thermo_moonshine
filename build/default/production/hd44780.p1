@@ -2449,8 +2449,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 29: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 108: void Main_init(void);
-[; ;main.h: 109: void Delay_ms(uint16_t delay);
+[; ;main.h: 117: void Main_init(void);
+[; ;main.h: 118: void Delay_ms(uint16_t delay);
 [; ;hd44780.h: 9: typedef enum{
 [; ;hd44780.h: 10: COMMAND,
 [; ;hd44780.h: 11: DATA,
