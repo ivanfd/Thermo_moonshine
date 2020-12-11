@@ -3911,25 +3911,28 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 117 "main.h"
+# 121 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 
 # 13 "main.c"
 uint8_t timer_val = 0, time_flag = 0;
-uint16_t temperature_1, temperature_2;
+uint16_t temperature_1 = 32767, temperature_2 = 32767;
 uint8_t minus_1 = '+', minus_2 = '+';
 uint8_t TxtBuf[16];
 bit read_key = 0;
 bit en_sound = 0;
 bit sound_yes = 0;
+bit snd_k, snd_b, snd_all, snd_k_b, snd_b_b;
 uint8_t pressed_key;
 uint8_t select = 1;
 uint8_t sub_sel;
 uint8_t sub_main = 1;
 uint8_t dq_num = 1;
-uint8_t set_t_dq1_up, set_t_dq1_dwn, set_t_dq2_up, set_t_dq2_dwn;
-uint16_t temp1_fix, temp2_fix;
+uint8_t set_t_dq1_up, set_t_dq1_dwn;
+uint8_t set_t_dq2_100, set_t_dq2_10;
+uint16_t set_t_dq2;
+uint16_t temp1_fix;
 
 const uint8_t symbol_3[8] = {0x00, 0x04, 0x06, 0x07, 0x06, 0x04, 0x00, 0x00};
 const uint8_t symbol_4[8] = {0x06, 0x09, 0x09, 0x06, 0x00, 0x00, 0x00, 0x00};
@@ -3955,10 +3958,12 @@ lcdPrint("Вибiр 18B20:");
 
 set_t_dq1_up = read_eep(16);
 set_t_dq1_dwn = read_eep(17);
-set_t_dq2_up = read_eep(18);
-set_t_dq2_dwn = read_eep(19);
-temp1_fix = read_eep(20);
-temp2_fix = read_eep(21);
+set_t_dq2 = (uint16_t) read_eep(18) << 8 | read_eep(19);
+
+
+temp1_fix = (uint16_t) read_eep(20) << 8 | read_eep(20 + 1);
+
+
 
 while (1) {
 
@@ -3976,13 +3981,14 @@ temperature_1 = ds18b20_get_temp(1, &minus_1);
 temperature_2 = ds18b20_get_temp(2, &minus_2);
 }
 
-# 77
+# 82
 switch (sub_main) {
 case 1:
 lcd_gotoxy(1, 1);
 lcdPrint("Колона:");
-lcd_gotoxy(8, 1);
+
 if (!(temperature_1 == 32767)) {
+if (((temperature_1 / 1000) % 10) == 0) {
 if (((temperature_1 / 100) % 10) == 0) {
 lcd_putc(minus_1);
 
@@ -3990,7 +3996,8 @@ lcd_putc(((temperature_1 / 10) % 10) + 48);
 lcd_putc('.');
 lcd_putc(((temperature_1 % 10) + 48));
 lcd_putc(0x01);
-lcd_putc('C');
+
+lcd_putc(' ');
 lcd_putc(' ');
 lcd_putc(' ');
 } else {
@@ -4000,7 +4007,20 @@ lcd_putc(((temperature_1 / 10) % 10) + 48);
 lcd_putc('.');
 lcd_putc(((temperature_1 % 10) + 48));
 lcd_putc(0x01);
-lcd_putc('C');
+
+lcd_putc(' ');
+lcd_putc(' ');
+
+}
+} else {
+lcd_putc(minus_1);
+lcd_putc(((temperature_1 / 1000) % 10) + 48);
+lcd_putc(((temperature_1 / 100) % 10) + 48);
+lcd_putc(((temperature_1 / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((temperature_1 % 10) + 48));
+lcd_putc(0x01);
+
 lcd_putc(' ');
 
 }
@@ -4034,9 +4054,10 @@ lcd_putc(((set_t_dq1_dwn % 10) + 48));
 break;
 case 2:
 lcd_gotoxy(1, 1);
-lcdPrint("Голова:");
-lcd_gotoxy(8, 1);
+lcdPrint("Кубова:");
+
 if (!(temperature_2 == 32767)) {
+if (((temperature_2 / 1000) % 10) == 0) {
 if (((temperature_2 / 100) % 10) == 0) {
 lcd_putc(minus_2);
 
@@ -4044,7 +4065,8 @@ lcd_putc(((temperature_2 / 10) % 10) + 48);
 lcd_putc('.');
 lcd_putc(((temperature_2 % 10) + 48));
 lcd_putc(0x01);
-lcd_putc('C');
+
+lcd_putc(' ');
 lcd_putc(' ');
 lcd_putc(' ');
 } else {
@@ -4054,7 +4076,20 @@ lcd_putc(((temperature_2 / 10) % 10) + 48);
 lcd_putc('.');
 lcd_putc(((temperature_2 % 10) + 48));
 lcd_putc(0x01);
-lcd_putc('C');
+
+lcd_putc(' ');
+lcd_putc(' ');
+
+}
+} else {
+lcd_putc(minus_2);
+lcd_putc(((temperature_2 / 1000) % 10) + 48);
+lcd_putc(((temperature_2 / 100) % 10) + 48);
+lcd_putc(((temperature_2 / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((temperature_2 % 10) + 48));
+lcd_putc(0x01);
+
 lcd_putc(' ');
 
 }
@@ -4068,41 +4103,86 @@ lcd_putc(' ');
 lcd_putc(' ');
 }
 lcd_gotoxy(1, 2);
-lcd_putc(0xCE);
-lcd_putc(((temp2_fix / 100) % 10) + 48);
-lcd_putc(((temp2_fix / 10) % 10) + 48);
+lcdPrint("Порiг:");
+lcd_putc('+');
+if (!(((set_t_dq2 / 1000) % 10) == 0)) {
+lcd_putc(((set_t_dq2 / 1000) % 10) + 48);
+lcd_putc(((set_t_dq2 / 100) % 10) + 48);
+lcd_putc(((set_t_dq2 / 10) % 10) + 48);
 lcd_putc('.');
-lcd_putc(((temp2_fix % 10) + 48));
+lcd_putc(((set_t_dq2 % 10) + 48));
 lcd_putc(0x01);
 lcd_putc(' ');
-lcd_putc(0xD9);
-lcd_putc(((set_t_dq2_up / 10) % 10) + 48);
-lcd_putc('.');
-lcd_putc(((set_t_dq2_up % 10) + 48));
 lcd_putc(' ');
-lcd_putc(0xDA);
-lcd_putc(((set_t_dq2_dwn / 10) % 10) + 48);
+lcd_putc(' ');
+} else if (!(((set_t_dq2 / 100) % 10) == 0)) {
+lcd_putc(((set_t_dq2 / 100) % 10) + 48);
+lcd_putc(((set_t_dq2 / 10) % 10) + 48);
 lcd_putc('.');
-lcd_putc(((set_t_dq2_dwn % 10) + 48));
+lcd_putc(((set_t_dq2 % 10) + 48));
+lcd_putc(0x01);
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+} else {
+lcd_putc(((set_t_dq2 / 10) % 10) + 48);
+lcd_putc('.');
+lcd_putc(((set_t_dq2 % 10) + 48));
+lcd_putc(0x01);
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+lcd_putc(' ');
+}
+
+
 break;
 }
 
+
+
+
 if (sound_yes) {
-lcd_gotoxy(16, 1);
+lcd_gotoxy(15, 1);
+lcd_putc(' ');
 lcd_putc(0xED);
-if ((((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
+if (((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
 (temperature_1 <= (temp1_fix - set_t_dq1_dwn))) &&
-(!(temperature_1 == 32767))) ||
-(((temperature_2 >= (temp2_fix + set_t_dq2_up)) ||
-(temperature_2 <= (temp2_fix - set_t_dq2_dwn))) &&
-(!(temperature_2 == 32767))))
-en_sound = 1;
+!(temperature_1 == 32767))
+
+snd_k_b = 1;
 else
+snd_k_b = 0;
+
+if ((temperature_2 >= set_t_dq2) && !(temperature_2 == 32767))
+snd_b_b = 1;
+else
+snd_b_b = 0;
+
+if (snd_k_b && snd_b_b) {
+en_sound = 1;
+snd_k = 0;
+snd_b = 0;
+snd_all = 1;
+}else if(snd_b_b){
+en_sound = 1;
+snd_k = 0;
+snd_all = 0;
+snd_b = 1;
+}else if(snd_k_b){
+en_sound = 1;
+snd_k = 1;
+snd_all = 0;
+snd_b = 0;
+}else
 en_sound = 0;
 
-# 205
 } else {
-lcd_gotoxy(16, 1);
+lcd_gotoxy(15, 1);
+lcd_putc(' ');
 lcd_putc(0xD5);
 LATCbits.LATC4 = 0;
 en_sound = 0;
@@ -4113,9 +4193,9 @@ if (pressed_key == 1) {
 clearLCD();
 select = 7;
 lcd_gotoxy(1, 1);
-lcdPrint(" Порiг  Сигнал");
+lcdPrint("Порiг Сигн. Led");
 lcd_gotoxy(1, 2);
-lcdPrint("  OK      UP");
+lcdPrint("  1     2   1-2");
 
 }
 
@@ -4127,10 +4207,20 @@ sub_main = 1;
 }
 
 if (pressed_key == 3) {
+
+switch (sub_main) {
+case 1:
 temp1_fix = temperature_1;
-temp2_fix = temperature_2;
-write_eep(20, temp1_fix);
-write_eep(21, temp2_fix);
+write_eep(20, (temp1_fix >> 8));
+write_eep(20 + 1, (uint8_t) temp1_fix);
+break;
+case 2:
+
+
+
+break;
+}
+Delay_ms(10);
 }
 
 break;
@@ -4165,13 +4255,17 @@ if (pressed_key == 1) {
 clearLCD();
 select = 4;
 lcd_gotoxy(1, 1);
-lcdPrint("  Гiстерезис  ");
+lcdPrint("   Границi   ");
 lcd_gotoxy(1, 2);
-lcdPrint("Кол(1)/Гол(2):");
+lcdPrint("Кол(1)/Куб(2):");
 }
 
 if (pressed_key == 2) {
 sound_yes = !(sound_yes);
+select = 1;
+}
+if (pressed_key == 3) {
+LATCbits.LATC5 = !(LATCbits.LATC5);
 select = 1;
 }
 break;
@@ -4202,9 +4296,11 @@ select = 6;
 sub_sel = 1;
 clearLCD();
 lcd_gotoxy(1, 1);
-lcdPrint("    Голова  ");
+lcdPrint("    Кубова  ");
 lcd_gotoxy(1, 2);
-lcdPrint("Темп Верх:");
+lcdPrint("Темп цiлi:");
+set_t_dq2_100 = set_t_dq2 / 10;
+set_t_dq2_10 = set_t_dq2 % 10;
 }
 }
 
@@ -4265,50 +4361,61 @@ switch (sub_sel) {
 case 1:
 lcd_gotoxy(11, 2);
 lcd_putc('+');
-lcd_putc(((set_t_dq2_up / 10) % 10) + 48);
+lcd_putc(((set_t_dq2_100 / 100) % 10) + 48);
+lcd_putc(((set_t_dq2_100 / 10) % 10) + 48);
+lcd_putc(((set_t_dq2_100 % 10) + 48));
 lcd_putc('.');
-lcd_putc(((set_t_dq2_up % 10) + 48));
+lcd_putc((set_t_dq2_10 % 10) + 48);
+
 
 if (pressed_key == 1) {
-set_t_dq2_up++;
-if (set_t_dq2_up == 11)
-set_t_dq2_up = 0;
+set_t_dq2_100++;
+if (set_t_dq2_100 >= 105)
+set_t_dq2_100 = 0;
 }
 if (pressed_key == 2) {
-set_t_dq2_up--;
-if (set_t_dq2_up == 255)
-set_t_dq2_up = 10;
+set_t_dq2_100--;
+if (set_t_dq2_100 == 255)
+set_t_dq2_100 = 105;
 }
 if (pressed_key == 3) {
 sub_sel = 2;
 lcd_gotoxy(1, 2);
-lcdPrint("Темп Низ:     ");
+lcdPrint("Темп дрб:      ");
 }
 break;
 case 2:
 lcd_gotoxy(10, 2);
-lcd_putc('-');
-lcd_putc(((set_t_dq2_dwn / 10) % 10) + 48);
+lcd_putc('+');
+lcd_putc(((set_t_dq2_100 / 100) % 10) + 48);
+lcd_putc(((set_t_dq2_100 / 10) % 10) + 48);
+lcd_putc(((set_t_dq2_100 % 10) + 48));
 lcd_putc('.');
-lcd_putc(((set_t_dq2_dwn % 10) + 48));
+lcd_putc((set_t_dq2_10 % 10) + 48);
+lcd_putc(' ');
 
 if (pressed_key == 1) {
-set_t_dq2_dwn++;
-if (set_t_dq2_dwn == 11)
-set_t_dq2_dwn = 0;
+set_t_dq2_10++;
+if (set_t_dq2_10 == 10)
+set_t_dq2_10 = 0;
 }
 if (pressed_key == 2) {
-set_t_dq2_dwn--;
-if (set_t_dq2_dwn == 255)
-set_t_dq2_dwn = 10;
+set_t_dq2_10--;
+if (set_t_dq2_10 == 255)
+set_t_dq2_10 = 9;
 }
 if (pressed_key == 3) {
 select = 1;
-write_eep(18, set_t_dq2_up);
-write_eep(19, set_t_dq2_dwn);
+set_t_dq2 = (set_t_dq2_100 * 10) + set_t_dq2_10;
+write_eep(18, ((unsigned char)(((set_t_dq2)>>8)&0xFF)));
+write_eep(19, ((unsigned char)((set_t_dq2)&0xFF)));
+Delay_ms(10);
 }
 break;
 }
+
+
+
 break;
 }
 
@@ -4360,8 +4467,11 @@ PIE1bits.TMR1IE = 1;
 INTCONbits.PEIE = 1;
 INTCONbits.GIE = 1;
 initLCD();
-cgrom_char(&symbol_4, 1);
+cgrom_char(symbol_4, 1);
 LATCbits.LATC4 = 0;
+snd_k = 0;
+snd_b = 0;
+snd_all = 0;
 
 }
 
@@ -4390,12 +4500,30 @@ TMR0L = ((unsigned char)((45536)&0xFF));
 read_key = 1;
 if (en_sound) {
 snd_delay++;
-if (snd_delay <= 20) {
+if (snd_k) {
+if (snd_delay <= 8) {
 LATCbits.LATC4 = 1;
 } else
 LATCbits.LATC4 = 0;
-if(snd_delay > 70)
+if (snd_delay > 90)
 snd_delay = 0;
+}
+if (snd_b) {
+if (snd_delay <= 15) {
+LATCbits.LATC4 = 1;
+} else
+LATCbits.LATC4 = 0;
+if (snd_delay > 50)
+snd_delay = 0;
+}
+if (snd_all) {
+if (snd_delay <= 10) {
+LATCbits.LATC4 = 1;
+} else
+LATCbits.LATC4 = 0;
+if (snd_delay > 25)
+snd_delay = 0;
+}
 }else
 LATCbits.LATC4 = 0;
 

@@ -103,16 +103,20 @@
 
 #define EE_TMP1_UP 16  // адреси еепром
 #define EE_TMP1_DWN 17 // температури  
-#define EE_TMP2_UP 18  // аварії
-#define EE_TMP2_DWN 19
+#define EE_TMP2_HI 18  // аварії
+#define EE_TMP2_LO 19
 #define EE_TMP1_FIX 20 //зафіксована температура датчика 1
-#define EE_TMP2_FIX 21 // зафіксована температура датчика 2
+#define EE_TMP2_FIX 22 // зафіксована температура датчика 2
 
 
 #define SND LATCbits.LATC4 //порт динаміка
-#define SND_TIME 20 // Довжина звуку
-#define SND_PAUSE 70 // пауза між виводом звуку
-
+#define LED_ON LATCbits.LATC5 // підсвітка
+#define SND_TIME_K 8 // Довжина звуку
+#define SND_PAUSE_K 90 // пауза між виводом звуку
+#define SND_TIME_B 15 // Довжина звуку
+#define SND_PAUSE_B 50 // пауза між виводом звуку
+#define SND_TIME_ALL 10 // Довжина звуку
+#define SND_PAUSE_ALL 25 // пауза між виводом звуку
 
 void Main_init(void);
 void Delay_ms(uint16_t delay);

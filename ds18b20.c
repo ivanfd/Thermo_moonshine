@@ -160,7 +160,7 @@ uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val) {
            break;
     
     }
-  //  return 1;
+    return FALSE;
 }
 
 

@@ -28,7 +28,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ds18b20_crc8 `(uc ~T0 @X0 0 ef2`*uc`uc ]
 "7 eeprom.h
 [v _write_eep `(v ~T0 @X0 0 ef2`uc`uc ]
-"118 main.h
+"122 main.h
 [v _Delay_ms `(v ~T0 @X0 0 ef1`ui ]
 [; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
@@ -2597,8 +2597,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;hd44780.h: 108: void cgrom_char(uint8_t *symbol, uint8_t address);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 117: void Main_init(void);
-[; ;main.h: 118: void Delay_ms(uint16_t delay);
+[; ;main.h: 121: void Main_init(void);
+[; ;main.h: 122: void Delay_ms(uint16_t delay);
 [; ;onewire.h: 12: uint8_t ow_reset(void);
 [; ;onewire.h: 13: uint8_t read_bit(void);
 [; ;onewire.h: 14: void write_bit(uint8_t bitval);
@@ -2894,6 +2894,10 @@ Version 3.2 HI-TECH Software Intermediate Code
  225 ]
 "162
 [e :U 225 ]
+[; ;ds18b20.c: 163: return 0;
+"163
+[e ) -> -> 0 `i `uc ]
+[e $UE 224  ]
 [; ;ds18b20.c: 164: }
 "164
 [e :UE 224 ]
