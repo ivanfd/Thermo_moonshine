@@ -1,5 +1,5 @@
 
-# 1 "hd44780.c"
+# 1 "key.c"
 
 # 18 "C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\xc.h"
 extern const char __xc8_OPTIM_SPEED;
@@ -3799,37 +3799,6 @@ extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupport
 extern int sprintf(char *, const char *, ...);
 extern int printf(const char *, ...);
 
-# 30 "key.h"
-void key_press(void);
-uint8_t key_GetKey(void);
-
-# 12 "onewire.h"
-uint8_t ow_reset(void);
-uint8_t read_bit(void);
-void write_bit(uint8_t bitval);
-uint8_t read_byte(void);
-void write_byte(uint8_t val);
-void Waiting_WR (void);
-
-# 18 "ds18b20.h"
-const char fract[] = {0,1,1,2,2,3,4,4,5,6,6,7,7,8,9,9};
-
-# 24
-uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val);
-uint8_t ds18b20_readrom(uint8_t num_dq);
-uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus);
-
-void init_ds18b20(void);
-uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
-
-# 7 "eeprom.h"
-void write_eep( unsigned char address, unsigned char data );
-unsigned char read_eep( unsigned short address );
-
-# 122 "main.h"
-void Main_init(void);
-void Delay_ms(uint16_t delay);
-
 # 9 "hd44780.h"
 typedef enum{
 COMMAND,
@@ -3915,128 +3884,77 @@ void lcd_putc(char c);
 void lcdPrint(const unsigned char *t);
 void cgrom_char(uint8_t *symbol, uint8_t address);
 
-# 10 "hd44780.c"
-void initLCD() {
-LATAbits.LATA2 = 0;
-LATAbits.LATA1 = 0;
+# 12 "onewire.h"
+uint8_t ow_reset(void);
+uint8_t read_bit(void);
+void write_bit(uint8_t bitval);
+uint8_t read_byte(void);
+void write_byte(uint8_t val);
+void Waiting_WR (void);
 
-_delay((unsigned long)((10)*(8000000/4000.0)));
-_delay((unsigned long)((10)*(8000000/4000.0)));
-_delay((unsigned long)((10)*(8000000/4000.0)));
-_delay((unsigned long)((10)*(8000000/4000.0)));
+# 18 "ds18b20.h"
+const char fract[] = {0,1,1,2,2,3,4,4,5,6,6,7,7,8,9,9};
+
+# 24
+uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val);
+uint8_t ds18b20_readrom(uint8_t num_dq);
+uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus);
+
+void init_ds18b20(void);
+uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
+
+# 7 "eeprom.h"
+void write_eep( unsigned char address, unsigned char data );
+unsigned char read_eep( unsigned short address );
+
+# 122 "main.h"
+void Main_init(void);
+void Delay_ms(uint16_t delay);
+
+# 30 "key.h"
+void key_press(void);
+uint8_t key_GetKey(void);
+
+# 2 "key.c"
+volatile uint8_t key_pressed;
 
 
-
-lcdNibble(0b0011);
-_delay((unsigned long)((5)*(8000000/4000.0)));
-lcdNibble(0b0011);
-_delay((unsigned long)((5)*(8000000/4000.0)));
-lcdNibble(0b0011);
-_delay((unsigned long)((5)*(8000000/4000.0)));
-lcdNibble(0b0010);
-_delay((unsigned long)((5)*(8000000/4000.0)));
-
-
-lcdWrite(((0b0010 << 4) | (1 << 3)), COMMAND);
-_delay((unsigned long)((5)*(8000000/4000.0)));
-lcdWrite(((0b1100) | (0 << 1) | (0 << 0)), COMMAND);
-_delay((unsigned long)((8)*(8000000/4000.0)));
-clearLCD();
-_delay((unsigned long)((5)*(8000000/4000.0)));
-lcdWrite(0x06, COMMAND);
-_delay((unsigned long)((5)*(8000000/4000.0)));
-clearLCD();
-
-LATAbits.LATA2 = 1;
-
-}
-
-void clearLCD() {
-lcdWrite(0x01, COMMAND);
-_delay((unsigned long)((2)*(8000000/4000.0)));
-}
-
-void lcdWrite(uint8_t byte, LCD_REGISTER_TYPE type) {
-if (type == COMMAND)
-LATAbits.LATA2 = 0;
+void key_press(void)
+{
+static uint16_t count = 0;
+uint8_t key;
+if (((PORTB & (1 << 1)) == 0) && ((PORTB & (1 << 2)) == 0))
+key = 3;
+else if ((PORTB & (1 << 1)) == 0)
+key = 1;
+else if ((PORTB & (1 << 2)) == 0)
+key = 2;
 else
-LATAbits.LATA2 = 1;
+key = 0;
 
-_delay((unsigned long)((100)*(8000000/4000000.0)));
 
-lcdNibble(byte >> 4);
-lcdNibble(byte & 0x0F);
+if (key) {
+if (count > 300) {
+count = 300 - 10;
+key_pressed = key;
+return;
+} else count++;
 
+if (count == 15) {
+key_pressed = key;
+return;
 }
+} else count = 0;
 
-void lcdNibble(uint8_t nibble) {
-LATCbits.LATC0 = (nibble & 0x01) ? 1 : 0;
-LATCbits.LATC1 = (nibble & 0x02) ? 1 : 0;
-LATCbits.LATC2 = (nibble & 0x04) ? 1 : 0;
-LATCbits.LATC3 = (nibble & 0x08) ? 1 : 0;
-
-
-LATAbits.LATA1 = 1;
-_delay((unsigned long)((100)*(8000000/4000000.0)));
-LATAbits.LATA1 = 0;
-_delay((unsigned long)((100)*(8000000/4000000.0)));
-}
-
-void lcd_gotoxy(uint8_t x, uint8_t y) {
-uint8_t address;
-
-if (y != 1)
-address = 0x40;
-else
-address = 0;
-
-address += x - 1;
-lcdWrite(0x80 | address, COMMAND);
+# 44
 }
 
 
 
-void lcd_putc(char c) {
+uint8_t key_GetKey(void)
+{
+uint8_t key = key_pressed;
 
-lcdWrite(c, DATA);
+key_pressed = 0;
+return key;
 }
-
-
-void lcdPrint(const unsigned char *t){
-while(*t != '\0'){
-switch (*t) {
-case '\f':
-lcdWrite(1, COMMAND);
-_delay((unsigned long)((2)*(8000000/4000.0)));
-break;
-
-case '\n':
-lcd_gotoxy(1, 2);
-break;
-
-case '\b':
-lcdWrite(0x10, COMMAND);
-break;
-
-default:
-if (*t < 0xC0) {
-lcdWrite(*t, DATA);
-} else {
-lcdWrite(HD44780_CYR[(unsigned char) (*t) - 0xC0], DATA);
-}
-
-break;
-}
-*t++;
-
-
-}
-}
-
-void cgrom_char(uint8_t *symbol, uint8_t address) {
-uint8_t i;
-lcdWrite(0x40 | (address * 8), COMMAND);
-for (i = 0; i < 8; i++)
-lcdWrite(*symbol++, DATA);
-}
-

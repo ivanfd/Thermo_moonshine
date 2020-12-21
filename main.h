@@ -92,6 +92,7 @@
 #define SEL_SET_TEMP_DQ1 5 //налаштування гістерезису температури
 #define SEL_SET_TEMP_DQ2 6 //налаштування гістерезису температури
 #define SEL_DQ_SND 7 //вибір - звук, чи читання датчиків
+#define SEL_EN_SND 8 //вибір - звук, звук для конкретного датчика
 
 #define SUB_SEL_UP 1
 #define SUB_SEL_DWN 2
@@ -111,8 +112,8 @@
 
 #define SND LATCbits.LATC4 //порт динаміка
 #define LED_ON LATCbits.LATC5 // підсвітка
-#define SND_TIME_K 8 // Довжина звуку
-#define SND_PAUSE_K 90 // пауза між виводом звуку
+#define SND_TIME_K 10 // Довжина звуку
+#define SND_PAUSE_K 80 // пауза між виводом звуку
 #define SND_TIME_B 15 // Довжина звуку
 #define SND_PAUSE_B 50 // пауза між виводом звуку
 #define SND_TIME_ALL 10 // Довжина звуку

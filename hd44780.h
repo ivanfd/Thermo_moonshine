@@ -22,12 +22,12 @@ typedef enum{
 #define BLINK _OFF // Valid option are ON or OFF
 #define NUMLINES _TWO_LINES // Valid options are ONE_LINE or TWO_LINES
 
-#define RS PORTAbits.RA2
-#define EN PORTAbits.RA1
-#define D4 PORTCbits.RC0
-#define D5 PORTCbits.RC1
-#define D6 PORTCbits.RC2
-#define D7 PORTCbits.RC3
+#define RS LATAbits.LATA2
+#define EN LATAbits.LATA1
+#define D4 LATCbits.LATC0
+#define D5 LATCbits.LATC1
+#define D6 LATCbits.LATC2
+#define D7 LATCbits.LATC3
 
 const char HD44780_CYR[] =
 {

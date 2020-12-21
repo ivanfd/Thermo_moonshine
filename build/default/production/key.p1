@@ -1,49 +1,6 @@
 Version 3.2 HI-TECH Software Intermediate Code
-"12 onewire.h
-[v _ow_reset `(uc ~T0 @X0 0 ef ]
-"16
-[v _write_byte `(v ~T0 @X0 0 ef1`uc ]
-"8 eeprom.h
-[v _read_eep `(uc ~T0 @X0 0 ef1`us ]
-"4120 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f2320.h
-[s S173 :2 `uc 1 :1 `uc 1 ]
-[n S173 . . NOT_T1SYNC ]
-"4124
-[s S174 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S174 . TMR1ON TMR1CS nT1SYNC T1OSCEN T1CKPS T1RUN RD16 ]
-"4133
-[s S175 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S175 . . T1SYNC . T1CKPS0 T1CKPS1 ]
-"4140
-[s S176 :3 `uc 1 :1 `uc 1 :3 `uc 1 :1 `uc 1 ]
-[n S176 . . SOSCEN . T1RD16 ]
-"4119
-[u S172 `S173 1 `S174 1 `S175 1 `S176 1 ]
-[n S172 . . . . . ]
-"4147
-[v _T1CONbits `VS172 ~T0 @X0 0 e@4045 ]
-"5079
-[s S208 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S208 . RBIF INT0IF TMR0IF RBIE INT0IE TMR0IE PEIE_GIEL GIE_GIEH ]
-"5089
-[s S209 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S209 . . INT0F T0IF . INT0E T0IE PEIE GIE ]
-"5099
-[s S210 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S210 . . INTF . INTE . GIEL GIEH ]
-"5078
-[u S207 `S208 1 `S209 1 `S210 1 ]
-[n S207 . . . . ]
-"5109
-[v _INTCONbits `VS207 ~T0 @X0 0 e@4082 ]
-"15 onewire.h
-[v _read_byte `(uc ~T0 @X0 0 ef ]
-"29 ds18b20.h
-[v _ds18b20_crc8 `(uc ~T0 @X0 0 ef2`*uc`uc ]
-"7 eeprom.h
-[v _write_eep `(v ~T0 @X0 0 ef2`uc`uc ]
-"123 main.h
-[v _Delay_ms `(v ~T0 @X0 0 ef1`ui ]
+"262 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f2320.h
+[v _PORTB `Vuc ~T0 @X0 0 e@3969 ]
 [; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
 [; ;xc8debug.h: 14: extern void __builtin_software_breakpoint(void);
@@ -2274,34 +2231,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;xc8\pic\include\pic18.h: 203: extern __nonreentrant void _delay(unsigned long);
 [; ;xc8\pic\include\pic18.h: 205: extern __nonreentrant void _delaywdt(unsigned long);
 [; ;xc8\pic\include\pic18.h: 207: extern __nonreentrant void _delay3(unsigned char);
-[; ;stdint.h: 13: typedef signed char int8_t;
-[; ;stdint.h: 20: typedef signed int int16_t;
-[; ;stdint.h: 28: typedef __int24 int24_t;
-[; ;stdint.h: 36: typedef signed long int int32_t;
-[; ;stdint.h: 52: typedef unsigned char uint8_t;
-[; ;stdint.h: 58: typedef unsigned int uint16_t;
-[; ;stdint.h: 65: typedef __uint24 uint24_t;
-[; ;stdint.h: 72: typedef unsigned long int uint32_t;
-[; ;stdint.h: 88: typedef signed char int_least8_t;
-[; ;stdint.h: 96: typedef signed int int_least16_t;
-[; ;stdint.h: 109: typedef __int24 int_least24_t;
-[; ;stdint.h: 118: typedef signed long int int_least32_t;
-[; ;stdint.h: 136: typedef unsigned char uint_least8_t;
-[; ;stdint.h: 143: typedef unsigned int uint_least16_t;
-[; ;stdint.h: 154: typedef __uint24 uint_least24_t;
-[; ;stdint.h: 162: typedef unsigned long int uint_least32_t;
-[; ;stdint.h: 181: typedef signed char int_fast8_t;
-[; ;stdint.h: 188: typedef signed int int_fast16_t;
-[; ;stdint.h: 200: typedef __int24 int_fast24_t;
-[; ;stdint.h: 208: typedef signed long int int_fast32_t;
-[; ;stdint.h: 224: typedef unsigned char uint_fast8_t;
-[; ;stdint.h: 230: typedef unsigned int uint_fast16_t;
-[; ;stdint.h: 240: typedef __uint24 uint_fast24_t;
-[; ;stdint.h: 247: typedef unsigned long int uint_fast32_t;
-[; ;stdint.h: 268: typedef int32_t intmax_t;
-[; ;stdint.h: 282: typedef uint32_t uintmax_t;
-[; ;stdint.h: 289: typedef int16_t intptr_t;
-[; ;stdint.h: 294: typedef uint16_t uintptr_t;
 "15 main.h
 [p x OSC=INTIO2 ]
 "16
@@ -2364,6 +2293,34 @@ Version 3.2 HI-TECH Software Intermediate Code
 [p x EBTR3=OFF ]
 "65
 [p x EBTRB=OFF ]
+[; ;stdint.h: 13: typedef signed char int8_t;
+[; ;stdint.h: 20: typedef signed int int16_t;
+[; ;stdint.h: 28: typedef __int24 int24_t;
+[; ;stdint.h: 36: typedef signed long int int32_t;
+[; ;stdint.h: 52: typedef unsigned char uint8_t;
+[; ;stdint.h: 58: typedef unsigned int uint16_t;
+[; ;stdint.h: 65: typedef __uint24 uint24_t;
+[; ;stdint.h: 72: typedef unsigned long int uint32_t;
+[; ;stdint.h: 88: typedef signed char int_least8_t;
+[; ;stdint.h: 96: typedef signed int int_least16_t;
+[; ;stdint.h: 109: typedef __int24 int_least24_t;
+[; ;stdint.h: 118: typedef signed long int int_least32_t;
+[; ;stdint.h: 136: typedef unsigned char uint_least8_t;
+[; ;stdint.h: 143: typedef unsigned int uint_least16_t;
+[; ;stdint.h: 154: typedef __uint24 uint_least24_t;
+[; ;stdint.h: 162: typedef unsigned long int uint_least32_t;
+[; ;stdint.h: 181: typedef signed char int_fast8_t;
+[; ;stdint.h: 188: typedef signed int int_fast16_t;
+[; ;stdint.h: 200: typedef __int24 int_fast24_t;
+[; ;stdint.h: 208: typedef signed long int int_fast32_t;
+[; ;stdint.h: 224: typedef unsigned char uint_fast8_t;
+[; ;stdint.h: 230: typedef unsigned int uint_fast16_t;
+[; ;stdint.h: 240: typedef __uint24 uint_fast24_t;
+[; ;stdint.h: 247: typedef unsigned long int uint_fast32_t;
+[; ;stdint.h: 268: typedef int32_t intmax_t;
+[; ;stdint.h: 282: typedef uint32_t uintmax_t;
+[; ;stdint.h: 289: typedef int16_t intptr_t;
+[; ;stdint.h: 294: typedef uint16_t uintptr_t;
 [; ;xc8\pic\include\__size_t.h: 4: typedef unsigned size_t;
 [; ;stdarg.h: 7: typedef void * va_list[1];
 [; ;stdarg.h: 10: extern void * __va_start(void);
@@ -2394,8 +2351,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;stdio.h: 190: extern int vsscanf(const char *, const char *, va_list) __attribute__((unsupported("vsscanf() is not supported by this compiler")));
 [; ;stdio.h: 194: extern int sprintf(char *, const char *, ...);
 [; ;stdio.h: 195: extern int printf(const char *, ...);
-[; ;key.h: 30: void key_press(void);
-[; ;key.h: 31: uint8_t key_GetKey(void);
 [; ;hd44780.h: 9: typedef enum{
 [; ;hd44780.h: 10: COMMAND,
 [; ;hd44780.h: 11: DATA,
@@ -2609,10 +2564,6 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;hd44780.h: 106: void lcd_putc(char c);
 [; ;hd44780.h: 107: void lcdPrint(const unsigned char *t);
 [; ;hd44780.h: 108: void cgrom_char(uint8_t *symbol, uint8_t address);
-[; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
-[; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 122: void Main_init(void);
-[; ;main.h: 123: void Delay_ms(uint16_t delay);
 [; ;onewire.h: 12: uint8_t ow_reset(void);
 [; ;onewire.h: 13: uint8_t read_bit(void);
 [; ;onewire.h: 14: void write_bit(uint8_t bitval);
@@ -2647,530 +2598,133 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 26: uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus);
 [; ;ds18b20.h: 28: void init_ds18b20(void);
 [; ;ds18b20.h: 29: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
-"4 ds18b20.c
-[v _scratch `uc ~T0 @X0 -> 9 `i e ]
-[; ;ds18b20.c: 4: uint8_t scratch[9];
-[v F2035 `uc ~T0 @X0 -> 8 `i t ]
-"7
-[v _rom_dq `F2035 ~T0 @X0 -> 2 `i e ]
-[; ;ds18b20.c: 7: uint8_t rom_dq[2][8];
-"8
-[v _temp_ready `ui ~T0 @X0 -> 2 `i e ]
-[; ;ds18b20.c: 8: uint16_t temp_ready[2];
-"18
-[v _init_ds18b20 `(v ~T0 @X0 1 ef ]
+[; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
+[; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
+[; ;main.h: 122: void Main_init(void);
+[; ;main.h: 123: void Delay_ms(uint16_t delay);
+[; ;key.h: 30: void key_press(void);
+[; ;key.h: 31: uint8_t key_GetKey(void);
+"2 key.c
+[v _key_pressed `Vuc ~T0 @X0 1 e ]
+[; ;key.c: 2: volatile uint8_t key_pressed;
+"5
+[v _key_press `(v ~T0 @X0 1 ef ]
+"6
 {
-[; ;ds18b20.c: 18: void init_ds18b20(void) {
-[e :U _init_ds18b20 ]
+[; ;key.c: 5: void key_press(void)
+[; ;key.c: 6: {
+[e :U _key_press ]
 [f ]
-[; ;ds18b20.c: 20: if (!ow_reset())
-"20
-[e $ ! ! != -> ( _ow_reset ..  `i -> -> -> 0 `i `uc `i 217  ]
-[; ;ds18b20.c: 21: {
-"21
-{
-[; ;ds18b20.c: 23: write_byte(0xCC);
-"23
-[e ( _write_byte (1 -> -> 204 `i `uc ]
-[; ;ds18b20.c: 24: write_byte(0x4E);
-"24
-[e ( _write_byte (1 -> -> 78 `i `uc ]
-[; ;ds18b20.c: 25: write_byte(0x00);
-"25
-[e ( _write_byte (1 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 26: write_byte(0x00);
-"26
-[e ( _write_byte (1 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 27: write_byte(0x7F);
-"27
-[e ( _write_byte (1 -> -> 127 `i `uc ]
-"28
-}
+"7
+[v F2035 `ui ~T0 @X0 1 s count ]
+[i F2035
+-> -> 0 `i `ui
+]
+"8
+[v _key `uc ~T0 @X0 1 a ]
+[; ;key.c: 7: static uint16_t count = 0;
+[; ;key.c: 8: uint8_t key;
+[; ;key.c: 9: if (((PORTB & (1 << 1)) == 0) && ((PORTB & (1 << 2)) == 0))
+"9
+[e $ ! && == & -> _PORTB `i << -> 1 `i -> 1 `i -> 0 `i == & -> _PORTB `i << -> 1 `i -> 2 `i -> 0 `i 217  ]
+[; ;key.c: 10: key = 3;
+"10
+[e = _key -> -> 3 `i `uc ]
+[e $U 218  ]
+"11
 [e :U 217 ]
-[; ;ds18b20.c: 28: }
-[; ;ds18b20.c: 30: for (uint8_t q = 0; q < 2; q++) {
-"30
-{
-[v _q `uc ~T0 @X0 1 a ]
-[e = _q -> -> 0 `i `uc ]
-[e $ < -> _q `i -> 2 `i 218  ]
-[e $U 219  ]
-[e :U 218 ]
-{
-[; ;ds18b20.c: 31: for (uint8_t i = 0; i < 8; i++) {
-"31
-{
-[v _i `uc ~T0 @X0 1 a ]
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 221  ]
-[e $U 222  ]
-[e :U 221 ]
-{
-[; ;ds18b20.c: 32: rom_dq[q][i] = read_eep((q*8) + i);
-"32
-[e = *U + &U *U + &U _rom_dq * -> _q `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux * -> _i `ux -> -> # *U &U *U + &U _rom_dq * -> _q `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux `ui `ux ( _read_eep (1 -> + * -> _q `i -> 8 `i -> _i `i `us ]
-"33
-}
-"31
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 221  ]
-[e :U 222 ]
-"33
-}
-"34
-}
-"30
-[e ++ _q -> -> 1 `i `uc ]
-[e $ < -> _q `i -> 2 `i 218  ]
+[; ;key.c: 11: else if ((PORTB & (1 << 1)) == 0)
+[e $ ! == & -> _PORTB `i << -> 1 `i -> 1 `i -> 0 `i 219  ]
+[; ;key.c: 12: key = 1;
+"12
+[e = _key -> -> 1 `i `uc ]
+[e $U 220  ]
+"13
 [e :U 219 ]
-"34
+[; ;key.c: 13: else if ((PORTB & (1 << 2)) == 0)
+[e $ ! == & -> _PORTB `i << -> 1 `i -> 2 `i -> 0 `i 221  ]
+[; ;key.c: 14: key = 2;
+"14
+[e = _key -> -> 2 `i `uc ]
+[e $U 222  ]
+"15
+[e :U 221 ]
+[; ;key.c: 15: else
+[; ;key.c: 16: key = 0;
+"16
+[e = _key -> -> 0 `i `uc ]
+[e :U 222 ]
+[e :U 220 ]
+[e :U 218 ]
+[; ;key.c: 19: if (key) {
+"19
+[e $ ! != -> _key `i -> -> -> 0 `i `uc `i 223  ]
+{
+[; ;key.c: 20: if (count > 300) {
+"20
+[e $ ! > F2035 -> -> 300 `i `ui 224  ]
+{
+[; ;key.c: 21: count = 300 - 10;
+"21
+[e = F2035 -> - -> 300 `i -> 10 `i `ui ]
+[; ;key.c: 22: key_pressed = key;
+"22
+[e = _key_pressed _key ]
+[; ;key.c: 23: return;
+"23
+[e $UE 216  ]
+"24
 }
-[; ;ds18b20.c: 33: }
-[; ;ds18b20.c: 34: }
-[; ;ds18b20.c: 36: }
-"36
+[; ;key.c: 24: } else count++;
+[e $U 225  ]
+[e :U 224 ]
+[e ++ F2035 -> -> 1 `i `ui ]
+[e :U 225 ]
+[; ;key.c: 26: if (count == 15) {
+"26
+[e $ ! == F2035 -> -> 15 `i `ui 226  ]
+{
+[; ;key.c: 27: key_pressed = key;
+"27
+[e = _key_pressed _key ]
+[; ;key.c: 28: return;
+"28
+[e $UE 216  ]
+"29
+}
+[e :U 226 ]
+"30
+}
+[; ;key.c: 29: }
+[; ;key.c: 30: } else count = 0;
+[e $U 227  ]
+[e :U 223 ]
+[e = F2035 -> -> 0 `i `ui ]
+[e :U 227 ]
+[; ;key.c: 44: }
+"44
 [e :UE 216 ]
 }
-"117
-[v _ds18b20_readTemp `(uc ~T0 @X0 1 ef2`*uc`*uc ]
+"48
+[v _key_GetKey `(uc ~T0 @X0 1 ef ]
+"49
 {
-[; ;ds18b20.c: 117: uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val) {
-[e :U _ds18b20_readTemp ]
-[v _time_flag `*uc ~T0 @X0 1 r1 ]
-[v _timer_val `*uc ~T0 @X0 1 r2 ]
+[; ;key.c: 48: uint8_t key_GetKey(void)
+[; ;key.c: 49: {
+[e :U _key_GetKey ]
 [f ]
-"119
-[v _temp `ui ~T0 @X0 1 a ]
-[; ;ds18b20.c: 119: uint16_t temp = 0;
-[e = _temp -> -> 0 `i `ui ]
-"120
-[v _i `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 120: uint8_t i;
-[; ;ds18b20.c: 122: switch (*time_flag) {
-"122
-[e $U 226  ]
-{
-[; ;ds18b20.c: 123: case 0:
-"123
-[e :U 227 ]
-[; ;ds18b20.c: 124: if (!ow_reset())
-"124
-[e $ ! ! != -> ( _ow_reset ..  `i -> -> -> 0 `i `uc `i 228  ]
-[; ;ds18b20.c: 125: {
-"125
-{
-[; ;ds18b20.c: 126: write_byte(0xCC);
-"126
-[e ( _write_byte (1 -> -> 204 `i `uc ]
-[; ;ds18b20.c: 127: write_byte(0x44);
-"127
-[e ( _write_byte (1 -> -> 68 `i `uc ]
-[; ;ds18b20.c: 128: *timer_val = 0;
-"128
-[e = *U _timer_val -> -> 0 `i `uc ]
-[; ;ds18b20.c: 129: *time_flag = 2;
-"129
-[e = *U _time_flag -> -> 2 `i `uc ]
-[; ;ds18b20.c: 130: T1CONbits.TMR1ON = 1;
-"130
-[e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
-[; ;ds18b20.c: 132: return 0;
-"132
-[e ) -> -> 0 `i `uc ]
-[e $UE 224  ]
-"133
-}
-[e :U 228 ]
-[; ;ds18b20.c: 133: }
-[; ;ds18b20.c: 134: break;
-"134
-[e $U 225  ]
-[; ;ds18b20.c: 135: case 1:
-"135
-[e :U 229 ]
-[; ;ds18b20.c: 136: for (uint8_t j = 0; j < 2; j++) {
-"136
-{
-[v _j `uc ~T0 @X0 1 a ]
-[e = _j -> -> 0 `i `uc ]
-[e $ < -> _j `i -> 2 `i 230  ]
-[e $U 231  ]
-[e :U 230 ]
-{
-[; ;ds18b20.c: 137: ow_reset();
-"137
-[e ( _ow_reset ..  ]
-[; ;ds18b20.c: 138: write_byte(0x55);
-"138
-[e ( _write_byte (1 -> -> 85 `i `uc ]
-[; ;ds18b20.c: 139: for (i = 0; i < 8; i++) {
-"139
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 233  ]
-[e $U 234  ]
-[e :U 233 ]
-{
-[; ;ds18b20.c: 140: write_byte(rom_dq[j][i]);
-"140
-[e ( _write_byte (1 *U + &U *U + &U _rom_dq * -> _j `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux * -> _i `ux -> -> # *U &U *U + &U _rom_dq * -> _j `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux `ui `ux ]
-"141
-}
-"139
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 233  ]
-[e :U 234 ]
-"141
-}
-[; ;ds18b20.c: 141: }
-[; ;ds18b20.c: 142: write_byte(0xBE);
-"142
-[e ( _write_byte (1 -> -> 190 `i `uc ]
-[; ;ds18b20.c: 143: (INTCONbits.GIE = 0);
-"143
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 144: for (i = 0; i < 9; i++)
-"144
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 9 `i 236  ]
-[e $U 237  ]
-"145
-[e :U 236 ]
-[; ;ds18b20.c: 145: {
-{
-[; ;ds18b20.c: 146: scratch[i] = read_byte();
-"146
-[e = *U + &U _scratch * -> _i `ux -> -> # *U &U _scratch `ui `ux ( _read_byte ..  ]
-"147
-}
-"144
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 9 `i 236  ]
-[e :U 237 ]
-"147
-}
-[; ;ds18b20.c: 147: }
-[; ;ds18b20.c: 149: if (!(ds18b20_crc8(scratch, 9))) {
-"149
-[e $ ! ! != -> ( _ds18b20_crc8 (2 , &U _scratch -> -> 9 `i `uc `i -> -> -> 0 `i `uc `i 239  ]
-{
-[; ;ds18b20.c: 150: temp = (((uint16_t) scratch[1]) << 8) | ((uint16_t) scratch[0]);
-"150
-[e = _temp | << -> *U + &U _scratch * -> -> -> 1 `i `ui `ux -> -> # *U &U _scratch `ui `ux `ui -> 8 `i -> *U + &U _scratch * -> -> -> 0 `i `ui `ux -> -> # *U &U _scratch `ui `ux `ui ]
-[; ;ds18b20.c: 151: temp_ready[j] = temp;
-"151
-[e = *U + &U _temp_ready * -> _j `ux -> -> # *U &U _temp_ready `ui `ux _temp ]
-"152
-}
-[; ;ds18b20.c: 152: }else
-[e $U 240  ]
-[e :U 239 ]
-[; ;ds18b20.c: 153: temp_ready[j] = 32767;
-"153
-[e = *U + &U _temp_ready * -> _j `ux -> -> # *U &U _temp_ready `ui `ux -> -> 32767 `i `ui ]
-[e :U 240 ]
-[; ;ds18b20.c: 154: (INTCONbits.GIE = 1);
-"154
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
-"155
-}
-"136
-[e ++ _j -> -> 1 `i `uc ]
-[e $ < -> _j `i -> 2 `i 230  ]
-[e :U 231 ]
-"155
-}
-[; ;ds18b20.c: 155: }
-[; ;ds18b20.c: 156: *time_flag = 0;
-"156
-[e = *U _time_flag -> -> 0 `i `uc ]
-[; ;ds18b20.c: 157: return 1;
-"157
-[e ) -> -> 1 `i `uc ]
-[e $UE 224  ]
-[; ;ds18b20.c: 158: break;
-"158
-[e $U 225  ]
-[; ;ds18b20.c: 159: case 2:
-"159
-[e :U 241 ]
-[; ;ds18b20.c: 160: return 0;
-"160
-[e ) -> -> 0 `i `uc ]
-[e $UE 224  ]
-[; ;ds18b20.c: 161: break;
-"161
-[e $U 225  ]
-"163
-}
-[; ;ds18b20.c: 163: }
-[e $U 225  ]
-"122
-[e :U 226 ]
-[e [\ *U _time_flag , $ -> -> 0 `i `uc 227
- , $ -> -> 1 `i `uc 229
- , $ -> -> 2 `i `uc 241
- 225 ]
-"163
-[e :U 225 ]
-[; ;ds18b20.c: 164: return 0;
-"164
-[e ) -> -> 0 `i `uc ]
-[e $UE 224  ]
-[; ;ds18b20.c: 165: }
-"165
-[e :UE 224 ]
-}
-"171
-[v _ds18b20_readrom `(uc ~T0 @X0 1 ef1`uc ]
-{
-[; ;ds18b20.c: 171: uint8_t ds18b20_readrom(uint8_t num_dq){
-[e :U _ds18b20_readrom ]
-[v _num_dq `uc ~T0 @X0 1 r1 ]
-[f ]
-"172
-[v _i `uc ~T0 @X0 1 a ]
-"173
-[v _temp_rom `uc ~T0 @X0 -> 8 `i a ]
-[; ;ds18b20.c: 172: uint8_t i;
-[; ;ds18b20.c: 173: uint8_t temp_rom[8];
-[; ;ds18b20.c: 175: if (!ow_reset())
-"175
-[e $ ! ! != -> ( _ow_reset ..  `i -> -> -> 0 `i `uc `i 243  ]
-[; ;ds18b20.c: 176: {
-"176
-{
-[; ;ds18b20.c: 177: write_byte(0x33);
-"177
-[e ( _write_byte (1 -> -> 51 `i `uc ]
-[; ;ds18b20.c: 178: for (i = 0; i < 8; i++) {
-"178
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 244  ]
-[e $U 245  ]
-[e :U 244 ]
-{
-[; ;ds18b20.c: 179: temp_rom[i] = read_byte();
-"179
-[e = *U + &U _temp_rom * -> _i `ux -> -> # *U &U _temp_rom `ui `ux ( _read_byte ..  ]
-"180
-}
-"178
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 244  ]
-[e :U 245 ]
-"180
-}
-"181
-}
-[e :U 243 ]
-[; ;ds18b20.c: 180: }
-[; ;ds18b20.c: 181: }
-[; ;ds18b20.c: 182: if (!(ds18b20_crc8(temp_rom, 8))) {
-"182
-[e $ ! ! != -> ( _ds18b20_crc8 (2 , &U _temp_rom -> -> 8 `i `uc `i -> -> -> 0 `i `uc `i 247  ]
-{
-[; ;ds18b20.c: 183: for (i = 0; i < 8; i++) {
-"183
-{
-[e = _i -> -> 0 `i `uc ]
-[e $ < -> _i `i -> 8 `i 248  ]
-[e $U 249  ]
-[e :U 248 ]
-{
-[; ;ds18b20.c: 184: write_eep(((num_dq - 1)*8) + i, temp_rom[i]);
-"184
-[e ( _write_eep (2 , -> + * - -> _num_dq `i -> 1 `i -> 8 `i -> _i `i `uc *U + &U _temp_rom * -> _i `ux -> -> # *U &U _temp_rom `ui `ux ]
-"185
-}
-"183
-[e ++ _i -> -> 1 `i `uc ]
-[e $ < -> _i `i -> 8 `i 248  ]
-[e :U 249 ]
-"185
-}
-[; ;ds18b20.c: 185: }
-[; ;ds18b20.c: 186: Delay_ms(10);
-"186
-[e ( _Delay_ms (1 -> -> 10 `i `ui ]
-[; ;ds18b20.c: 187: return 1;
-"187
-[e ) -> -> 1 `i `uc ]
-[e $UE 242  ]
-"188
-}
-[e :U 247 ]
-[; ;ds18b20.c: 188: }
-[; ;ds18b20.c: 189: return 0;
-"189
-[e ) -> -> 0 `i `uc ]
-[e $UE 242  ]
-[; ;ds18b20.c: 190: }
-"190
-[e :UE 242 ]
-}
-"197
-[v _ds18b20_get_temp `(ui ~T0 @X0 1 ef2`uc`*uc ]
-{
-[; ;ds18b20.c: 197: uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
-[e :U _ds18b20_get_temp ]
-[v _num_dq `uc ~T0 @X0 1 r1 ]
-[v _minus `*uc ~T0 @X0 1 r2 ]
-[f ]
-"198
-[v _temp `ui ~T0 @X0 1 a ]
-[; ;ds18b20.c: 198: uint16_t temp = temp_ready[num_dq-1];
-[e = _temp *U + &U _temp_ready * -> -> - -> _num_dq `i -> 1 `i `ui `ux -> -> # *U &U _temp_ready `ui `ux ]
-"199
-[v _tmp `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 199: uint8_t tmp;
-[; ;ds18b20.c: 200: *minus = '+';
-"200
-[e = *U _minus -> -> 43 `ui `uc ]
-[; ;ds18b20.c: 201: if(temp == 32767)
-"201
-[e $ ! == _temp -> -> 32767 `i `ui 252  ]
-[; ;ds18b20.c: 202: return temp;
-"202
-[e ) _temp ]
-[e $UE 251  ]
-[e :U 252 ]
-[; ;ds18b20.c: 203: if (temp & 0x8000) {
-"203
-[e $ ! != & _temp -> 32768 `ui -> -> 0 `i `ui 253  ]
-{
-[; ;ds18b20.c: 204: temp = -temp;
-"204
-[e = _temp -U _temp ]
-[; ;ds18b20.c: 205: *minus = '-';
-"205
-[e = *U _minus -> -> 45 `ui `uc ]
-"206
-}
-[e :U 253 ]
-[; ;ds18b20.c: 206: }
-[; ;ds18b20.c: 208: tmp = temp & 0x0f;
-"208
-[e = _tmp -> & _temp -> -> 15 `i `ui `uc ]
-[; ;ds18b20.c: 209: tmp = fract[tmp];
-"209
-[e = _tmp *U + &U _fract * -> _tmp `ux -> -> # *U &U _fract `ui `ux ]
-[; ;ds18b20.c: 210: temp = temp >> 4;
-"210
-[e = _temp >> _temp -> 4 `i ]
-[; ;ds18b20.c: 211: temp = (temp & 0x00ff) * 10;
-"211
-[e = _temp * & _temp -> -> 255 `i `ui -> -> 10 `i `ui ]
-[; ;ds18b20.c: 212: temp = temp + tmp;
-"212
-[e = _temp + _temp -> _tmp `ui ]
-[; ;ds18b20.c: 214: return temp;
-"214
-[e ) _temp ]
-[e $UE 251  ]
-[; ;ds18b20.c: 216: }
-"216
-[e :UE 251 ]
-}
-"220
-[v _ds18b20_crc8 `(uc ~T0 @X0 1 ef2`*uc`uc ]
-{
-[; ;ds18b20.c: 220: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes) {
-[e :U _ds18b20_crc8 ]
-[v _data_in `*uc ~T0 @X0 1 r1 ]
-[v _num_bytes `uc ~T0 @X0 1 r2 ]
-[f ]
-"221
-[v _crc `uc ~T0 @X0 1 a ]
-"222
-[v _loop_count `uc ~T0 @X0 1 a ]
-"223
-[v _bit_counter `uc ~T0 @X0 1 a ]
-"224
-[v _data `uc ~T0 @X0 1 a ]
-"225
-[v _feedback_bit `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 221: uint8_t crc;
-[; ;ds18b20.c: 222: uint8_t loop_count;
-[; ;ds18b20.c: 223: uint8_t bit_counter;
-[; ;ds18b20.c: 224: uint8_t data;
-[; ;ds18b20.c: 225: uint8_t feedback_bit;
-[; ;ds18b20.c: 227: crc = 0x00;
-"227
-[e = _crc -> -> 0 `i `uc ]
-[; ;ds18b20.c: 229: for (loop_count = 0; loop_count != num_bytes; loop_count++) {
-"229
-{
-[e = _loop_count -> -> 0 `i `uc ]
-[e $U 258  ]
-[e :U 255 ]
-{
-[; ;ds18b20.c: 230: data = data_in[loop_count];
-"230
-[e = _data *U + _data_in * -> _loop_count `ux -> -> # *U _data_in `ui `ux ]
-[; ;ds18b20.c: 232: bit_counter = 8;
-"232
-[e = _bit_counter -> -> 8 `i `uc ]
-[; ;ds18b20.c: 233: do {
-"233
-[e :U 261 ]
-{
-[; ;ds18b20.c: 234: feedback_bit = (crc ^ data) & 0x01;
-"234
-[e = _feedback_bit -> & ^ -> _crc `i -> _data `i -> 1 `i `uc ]
-[; ;ds18b20.c: 236: if (feedback_bit == 0x01) {
-"236
-[e $ ! == -> _feedback_bit `i -> 1 `i 262  ]
-{
-[; ;ds18b20.c: 237: crc = crc ^ 0x18;
-"237
-[e = _crc -> ^ -> _crc `i -> 24 `i `uc ]
-"238
-}
-[e :U 262 ]
-[; ;ds18b20.c: 238: }
-[; ;ds18b20.c: 239: crc = (crc >> 1) & 0x7F;
-"239
-[e = _crc -> & >> -> _crc `i -> 1 `i -> 127 `i `uc ]
-[; ;ds18b20.c: 240: if (feedback_bit == 0x01) {
-"240
-[e $ ! == -> _feedback_bit `i -> 1 `i 263  ]
-{
-[; ;ds18b20.c: 241: crc = crc | 0x80;
-"241
-[e = _crc -> | -> _crc `i -> 128 `i `uc ]
-"242
-}
-[e :U 263 ]
-[; ;ds18b20.c: 242: }
-[; ;ds18b20.c: 244: data = data >> 1;
-"244
-[e = _data -> >> -> _data `i -> 1 `i `uc ]
-[; ;ds18b20.c: 245: bit_counter--;
-"245
-[e -- _bit_counter -> -> 1 `i `uc ]
-"247
-}
-[; ;ds18b20.c: 247: } while (bit_counter > 0);
-[e $ > -> _bit_counter `i -> 0 `i 261  ]
-[e :U 260 ]
-"248
-}
-"229
-[e ++ _loop_count -> -> 1 `i `uc ]
-[e :U 258 ]
-[e $ != -> _loop_count `i -> _num_bytes `i 255  ]
-[e :U 256 ]
-"248
-}
-[; ;ds18b20.c: 248: }
-[; ;ds18b20.c: 250: return crc;
-"250
-[e ) _crc ]
-[e $UE 254  ]
-[; ;ds18b20.c: 251: }
-"251
-[e :UE 254 ]
+"50
+[v _key `uc ~T0 @X0 1 a ]
+[; ;key.c: 50: uint8_t key = key_pressed;
+[e = _key _key_pressed ]
+[; ;key.c: 52: key_pressed = 0;
+"52
+[e = _key_pressed -> -> 0 `i `uc ]
+[; ;key.c: 53: return key;
+"53
+[e ) _key ]
+[e $UE 228  ]
+[; ;key.c: 54: }
+"54
+[e :UE 228 ]
 }

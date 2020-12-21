@@ -10,7 +10,7 @@
 #include "main.h"
 
 
-uint8_t timer_val = 0, time_flag = 0;  // для конвертування температури
+uint8_t timer_val = 0, time_flag = 0; // для конвертування температури
 uint16_t temperature_1 = 32767, temperature_2 = 32767;
 uint8_t minus_1 = '+', minus_2 = '+';
 uint8_t TxtBuf[16];
@@ -18,6 +18,7 @@ bit read_key = 0; // дозвіл на читання кнопок
 bit en_sound = 0; // дозвіл сигналу
 bit sound_yes = 0; // загальна заборона сигналу
 bit snd_k, snd_b, snd_all, snd_k_b, snd_b_b;
+bit en_snd_k = 0, en_snd_b = 0;
 uint8_t pressed_key;
 uint8_t select = SEL_MAIN; //де в меню ми знаходимося
 uint8_t sub_sel;
@@ -52,10 +53,8 @@ void main(void) {
 
     set_t_dq1_up = read_eep(EE_TMP1_UP); // читаємо з еепром пороги
     set_t_dq1_dwn = read_eep(EE_TMP1_DWN); // температур
-    set_t_dq2 = (uint16_t) read_eep(EE_TMP2_HI) << 8 | read_eep(EE_TMP2_LO);    
-//    set_t_dq2_dwn = read_eep(EE_TMP2_DWN);
-    //checksum = (uint16_t) (checksum_hi << 8) | checksum_lo;
-    temp1_fix = (uint16_t) read_eep(EE_TMP1_FIX) << 8 | read_eep(EE_TMP1_FIX + 1);    
+    set_t_dq2 = (uint16_t) read_eep(EE_TMP2_HI) << 8 | read_eep(EE_TMP2_LO);
+    temp1_fix = (uint16_t) read_eep(EE_TMP1_FIX) << 8 | read_eep(EE_TMP1_FIX + 1);
     //temp2_fix = (uint16_t) read_eep(EE_TMP2_FIX) << 8 | read_eep(EE_TMP2_FIX + 1);
     //temp2_fix = read_eep(EE_TMP2_FIX);
 
@@ -75,7 +74,7 @@ void main(void) {
                     temperature_2 = ds18b20_get_temp(2, &minus_2);
                 }
 
-                
+
                 // виводимо температуру
                 // з двох датчиків
                 //---------------------
@@ -93,7 +92,7 @@ void main(void) {
                                     lcd_putc('.');
                                     lcd_putc(((temperature_1 % 10) + 48));
                                     lcd_putc(0x01);
-//                                    lcd_putc('C');
+                                    //                                    lcd_putc('C');
                                     lcd_putc(' ');
                                     lcd_putc(' ');
                                     lcd_putc(' ');
@@ -104,7 +103,7 @@ void main(void) {
                                     lcd_putc('.');
                                     lcd_putc(((temperature_1 % 10) + 48));
                                     lcd_putc(0x01);
-//                                    lcd_putc('C');
+                                    //                                    lcd_putc('C');
                                     lcd_putc(' ');
                                     lcd_putc(' ');
                                     // lcd_putc(' ');
@@ -117,9 +116,9 @@ void main(void) {
                                 lcd_putc('.');
                                 lcd_putc(((temperature_1 % 10) + 48));
                                 lcd_putc(0x01);
-//                                lcd_putc('C');
+                                //                                lcd_putc('C');
                                 lcd_putc(' ');
-                               // lcd_putc(' ');
+                                // lcd_putc(' ');
                             }
                         } else {
                             lcd_putc('-');
@@ -130,6 +129,9 @@ void main(void) {
                             lcd_putc(' ');
                             lcd_putc(' ');
                         }
+                        lcd_gotoxy(16, 1);
+                        (en_snd_k) ?  lcd_putc(0xED): lcd_putc(0xD5);
+                      
                         lcd_gotoxy(1, 2);
                         lcd_putc(0xCE);
                         lcd_putc(((temp1_fix / 100) % 10) + 48);
@@ -138,15 +140,15 @@ void main(void) {
                         lcd_putc(((temp1_fix % 10) + 48));
                         lcd_putc(0x01);
                         lcd_putc(' ');
-                        lcd_putc(0xD9);  
+                        lcd_putc(0xD9);
                         lcd_putc(((set_t_dq1_up / 10) % 10) + 48);
                         lcd_putc('.');
-                        lcd_putc(((set_t_dq1_up % 10) + 48));                        
+                        lcd_putc(((set_t_dq1_up % 10) + 48));
                         lcd_putc(' ');
-                        lcd_putc(0xDA);  
+                        lcd_putc(0xDA);
                         lcd_putc(((set_t_dq1_dwn / 10) % 10) + 48);
                         lcd_putc('.');
-                        lcd_putc(((set_t_dq1_dwn % 10) + 48)); 
+                        lcd_putc(((set_t_dq1_dwn % 10) + 48));
 
                         break;
                     case SUB_MAIN_2:// температура з голови
@@ -162,7 +164,7 @@ void main(void) {
                                     lcd_putc('.');
                                     lcd_putc(((temperature_2 % 10) + 48));
                                     lcd_putc(0x01);
-//                                    lcd_putc('C');
+                                    //                                    lcd_putc('C');
                                     lcd_putc(' ');
                                     lcd_putc(' ');
                                     lcd_putc(' ');
@@ -199,6 +201,8 @@ void main(void) {
                             lcd_putc(' ');
                             lcd_putc(' ');
                         }
+                        lcd_gotoxy(16, 1);
+                        (en_snd_b) ? lcd_putc(0xED) : lcd_putc(0xD5);
                         lcd_gotoxy(1, 2);
                         lcdPrint("Порiг:");
                         lcd_putc('+');
@@ -238,25 +242,31 @@ void main(void) {
 
                         break;
                 }// end sub_main
-                
+
                 //+++++++++++++++++++++++
                 // обробіток виводу звуку
                 //+++++++++++++++++++++++
                 if (sound_yes) { // якщо є дозвіл звуку
-                    lcd_gotoxy(15, 1);
-                    lcd_putc(' ');
-                    lcd_putc(0xED); // виводимо значок - дзвінок
-                    if (((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
-                            (temperature_1 <= (temp1_fix - set_t_dq1_dwn))) &&
+                    //                    lcd_gotoxy(15, 1);
+                    //                    lcd_putc(' ');
+                    //                    lcd_putc(0xED); // виводимо значок - дзвінок
+                    if (en_snd_k) { //якщо звук для колони дозволений
+                        if (((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
+                                (temperature_1 <= (temp1_fix - set_t_dq1_dwn))) &&
                                 !(temperature_1 == 32767))
-                        //                        en_sound = 1;
-                        snd_k_b = 1; // звук для колони
-                    else
+                            //                        en_sound = 1;
+                            snd_k_b = 1; // звук для колони
+                        else
+                            snd_k_b = 0;
+                    } else
                         snd_k_b = 0;
-                    
-                    if ((temperature_2 >= set_t_dq2) && !(temperature_2 == 32767))
-                        snd_b_b = 1;
-                    else
+
+                    if (en_snd_b) {
+                        if ((temperature_2 >= set_t_dq2) && !(temperature_2 == 32767))
+                            snd_b_b = 1;
+                        else
+                            snd_b_b = 0;
+                    } else
                         snd_b_b = 0;
 
                     if (snd_k_b && snd_b_b) {
@@ -264,23 +274,23 @@ void main(void) {
                         snd_k = 0;
                         snd_b = 0;
                         snd_all = 1;
-                    }else if(snd_b_b){
+                    } else if (snd_b_b) {
                         en_sound = 1;
                         snd_k = 0;
                         snd_all = 0;
                         snd_b = 1;
-                    }else if(snd_k_b){
+                    } else if (snd_k_b) {
                         en_sound = 1;
                         snd_k = 1;
                         snd_all = 0;
-                        snd_b = 0;                        
-                    }else
+                        snd_b = 0;
+                    } else
                         en_sound = 0;
 
                 } else {
-                    lcd_gotoxy(15, 1);
-                    lcd_putc(' ');
-                    lcd_putc(0xD5);
+                    //                    lcd_gotoxy(15, 1);
+                    //                    lcd_putc(' ');
+                    //                    lcd_putc(0xD5);
                     SND = 0;
                     en_sound = 0;
                 }
@@ -312,9 +322,9 @@ void main(void) {
                             write_eep(EE_TMP1_FIX + 1, (uint8_t) temp1_fix);
                             break;
                         case SUB_MAIN_2:
-   //                         temp2_fix = temperature_2;
-   //                         write_eep(EE_TMP2_FIX, (temp2_fix >> 8));
-   //                         write_eep(EE_TMP2_FIX + 1, (uint8_t) temp2_fix);
+                            //                         temp2_fix = temperature_2;
+                            //                         write_eep(EE_TMP2_FIX, (temp2_fix >> 8));
+                            //                         write_eep(EE_TMP2_FIX + 1, (uint8_t) temp2_fix);
                             break;
                     }
                     Delay_ms(10);
@@ -358,11 +368,37 @@ void main(void) {
                 }
 
                 if (pressed_key == KEY_UP_EVENT) {
-                    sound_yes = !(sound_yes);
-                    select = SEL_MAIN;
+                    //                    sound_yes = !(sound_yes);
+                    //                    select = SEL_MAIN;
+                    clearLCD();
+                    select = SEL_EN_SND;
+                    lcd_gotoxy(1, 1);
+                    lcdPrint(" Колона    Куб");
                 }
                 if (pressed_key == KEY_BOTH_EVENT) {
                     LED_ON = !(LED_ON);
+                    select = SEL_MAIN;
+                }
+                break;
+            case SEL_EN_SND:// налаштуємо чи виводити звук для кожного датчика
+                lcd_gotoxy(4, 2);
+                (en_snd_k) ? lcd_putc(0xED) : lcd_putc(0xD5);
+                lcd_gotoxy(13, 2);
+                (en_snd_b) ? lcd_putc(0xED) : lcd_putc(0xD5);
+
+                if (pressed_key == KEY_OK_EVENT) { // натиснули кнопку ОК
+                    en_snd_k = !(en_snd_k);
+                }
+
+                if (pressed_key == KEY_UP_EVENT) {
+                    en_snd_b = !(en_snd_b);
+                }
+                if (pressed_key == KEY_BOTH_EVENT) {
+                    if (!(en_snd_k) && !(en_snd_b)) {
+                        sound_yes = 0;
+                    } else
+                        sound_yes = 1;
+                    //                 sound_yes = !(sound_yes);
                     select = SEL_MAIN;
                 }
                 break;
@@ -463,7 +499,7 @@ void main(void) {
                         lcd_putc(((set_t_dq2_100 % 10) + 48));
                         lcd_putc('.');
                         lcd_putc((set_t_dq2_10 % 10) + 48);
-//                        lcd_putc(0x01);
+                        //                        lcd_putc(0x01);
 
                         if (pressed_key == KEY_OK_EVENT) {
                             set_t_dq2_100++;
@@ -490,7 +526,7 @@ void main(void) {
                         lcd_putc('.');
                         lcd_putc((set_t_dq2_10 % 10) + 48);
                         lcd_putc(' ');
-                        
+
                         if (pressed_key == KEY_OK_EVENT) {
                             set_t_dq2_10++;
                             if (set_t_dq2_10 == 10)
@@ -523,8 +559,8 @@ void main(void) {
 }
 
 void Main_init(void) {
-    
-    
+
+
     PORTA = 0;
     LATA = 0;
     TRISA = 0;
@@ -547,7 +583,8 @@ void Main_init(void) {
     //T1CONbits.TMR1ON = 0; // вимкнути таймер 1
     TMR1H = HIGH_BYTE(TMR1Val);
     TMR1L = LOW_BYTE(TMR1Val);
-    
+    IPR1bits.TMR1IP = 1; // високий пріоритет для таймера 1
+
     T0CONbits.T0PS = 0b000; //таймер 0 дільник 1:1
     T0CONbits.PSA = 1;
     T0CONbits.T08BIT = 0; //16 біт таймер 0
@@ -556,11 +593,13 @@ void Main_init(void) {
     TMR0H = HIGH_BYTE(TMR0Val);
     TMR0L = LOW_BYTE(TMR0Val);
     INTCONbits.T0IE = 1; // переривання від таймера 0
+    INTCON2bits.T0IP = 0; // низький пріоритет для таймера 0
     INTCON2bits.RBPU = 0; // підтягуючі резистори
-    
 
-    
+
+
     PIE1bits.TMR1IE = 1; // переивання від таймера 1
+    RCONbits.IPEN = 1; //пріоритетне перериванн¤ вмк.
     INTCONbits.PEIE = 1; // включити глобальні переивання
     INTCONbits.GIE = 1; // включити переферійні переривання
     initLCD();
@@ -576,8 +615,9 @@ void Delay_ms(uint16_t delay) {
     for (uint16_t i = 0; i <= delay; i++)
         __delay_ms(1);
 }
-void interrupt myInt(void) {
-    static uint8_t snd_delay;
+
+void high_priority interrupt myIntH(void) {
+
     if (PIR1bits.TMR1IF == 1) {
         PIR1bits.TMR1IF = 0; // скинути признак переривання від таймера 1
         TMR1H = HIGH_BYTE(TMR1Val);
@@ -590,6 +630,14 @@ void interrupt myInt(void) {
 
         }
     }
+
+    return;
+}
+
+
+void low_priority interrupt myIntL(void){
+        static uint8_t snd_delay;
+        
     if (INTCONbits.T0IF == 1) {//відбулося переривання від таймера 0
         INTCONbits.T0IF = 0;
         TMR0H = HIGH_BYTE(TMR0Val);
@@ -612,7 +660,7 @@ void interrupt myInt(void) {
                     SND = 0; // вимкнути вивід звуку(активний бузер!)
                 if (snd_delay > SND_PAUSE_B)
                     snd_delay = 0;
-            }        
+            }
             if (snd_all) {
                 if (snd_delay <= SND_TIME_ALL) {
                     SND = 1; // включити вивід звуку(активний бузер!)
@@ -620,10 +668,10 @@ void interrupt myInt(void) {
                     SND = 0; // вимкнути вивід звуку(активний бузер!)
                 if (snd_delay > SND_PAUSE_ALL)
                     snd_delay = 0;
-            }            
-        }else
+            }
+        } else
             SND = 0;
-        
+
     }
-    return;
+return;    
 }
