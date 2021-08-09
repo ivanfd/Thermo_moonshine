@@ -12,6 +12,8 @@
 
 uint8_t timer_val = 0, time_flag = 0; // для конвертування температури
 uint16_t temperature_1 = 32767, temperature_2 = 32767;
+uint16_t temperature_1_old = 32767, temperature_2_old = 32767;
+bit en_send_usart = 0;
 uint8_t minus_1 = '+', minus_2 = '+';
 uint8_t TxtBuf[16];
 bit read_key = 0; // дозвіл на читання кнопок
@@ -40,7 +42,7 @@ void main(void) {
     lcd_gotoxy(1, 1);
     lcdPrint("---ТЕРМОМЕТР---");
     lcd_gotoxy(1, 2);
-    lcdPrint("(c)Ivan_fd v1.3");
+    lcdPrint("(c)Ivan_fd v1.4");
     Delay_ms(2000);
     clearLCD();
     if ((KEY_PORT & (1 << KEY_OK)) == 0) {
@@ -63,7 +65,7 @@ void main(void) {
     while (1) {
 
 
-        if (read_key) {
+        if (read_key) { // опитування кнопок
             key_press();
             read_key = 0;
         }
@@ -72,12 +74,16 @@ void main(void) {
         switch (select) {
             case SEL_MAIN:
                 if (ds18b20_readTemp(&time_flag, &timer_val)) { // читаємо температуру
+                    temperature_1_old = temperature_1;
+                    temperature_2_old = temperature_2;
                     temperature_1 = ds18b20_get_temp(1, &minus_1);
                     temperature_2 = ds18b20_get_temp(2, &minus_2);
+                    if((temperature_1 != temperature_1_old) || (temperature_2 != temperature_2_old))
+                        en_send_usart = 1; // дозволимо переслати температуру ао усарт
                 }
 #ifdef DEBUG_OUT  // будемо пересилати температури в порт
-                if (tik_time_b >= 200) {
-                    tik_time_b = 0;
+                if (en_send_usart) {
+                    en_send_usart = 0;
                     if (temperature_1 != 32767) {
                         EUSART_Write_Str("tk:");
                         EUSART_Write(((temperature_1 / 1000) % 10) + 48); // передаємо першу цифру

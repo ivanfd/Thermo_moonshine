@@ -3929,6 +3929,8 @@ void Delay_ms(uint16_t delay);
 # 13 "main.c"
 uint8_t timer_val = 0, time_flag = 0;
 uint16_t temperature_1 = 32767, temperature_2 = 32767;
+uint16_t temperature_1_old = 32767, temperature_2_old = 32767;
+bit en_send_usart = 0;
 uint8_t minus_1 = '+', minus_2 = '+';
 uint8_t TxtBuf[16];
 bit read_key = 0;
@@ -3957,7 +3959,7 @@ Main_init();
 lcd_gotoxy(1, 1);
 lcdPrint("---реплнлерп---");
 lcd_gotoxy(1, 2);
-lcdPrint("(c)Ivan_fd v1.3");
+lcdPrint("(c)Ivan_fd v1.4");
 Delay_ms(2000);
 clearLCD();
 if ((PORTB & (1 << 1)) == 0) {
@@ -3989,12 +3991,16 @@ pressed_key = key_GetKey();
 switch (select) {
 case 1:
 if (ds18b20_readTemp(&time_flag, &timer_val)) {
+temperature_1_old = temperature_1;
+temperature_2_old = temperature_2;
 temperature_1 = ds18b20_get_temp(1, &minus_1);
 temperature_2 = ds18b20_get_temp(2, &minus_2);
+if((temperature_1 != temperature_1_old) || (temperature_2 != temperature_2_old))
+en_send_usart = 1;
 }
 
-if (tik_time_b >= 200) {
-tik_time_b = 0;
+if (en_send_usart) {
+en_send_usart = 0;
 if (temperature_1 != 32767) {
 EUSART_Write_Str("tk:");
 EUSART_Write(((temperature_1 / 1000) % 10) + 48);
