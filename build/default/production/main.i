@@ -3911,7 +3911,18 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 122 "main.h"
+# 17 "eusart.h"
+extern volatile uint8_t eusartRxCount;
+
+void init_uart(void);
+void putch(char data);
+
+uint8_t EUSART_Read(void);
+void EUSART_Write(uint8_t txData);
+void reinit_rx();
+void EUSART_Write_Str(const unsigned char *t);
+
+# 125 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 
@@ -3925,6 +3936,7 @@ bit en_sound = 0;
 bit sound_yes = 0;
 bit snd_k, snd_b, snd_all, snd_k_b, snd_b_b;
 bit en_snd_k = 0, en_snd_b = 0;
+uint8_t tik_time = 0, tik_time_b = 0;
 uint8_t pressed_key;
 uint8_t select = 1;
 uint8_t sub_sel;
@@ -3935,6 +3947,7 @@ uint8_t set_t_dq2_100, set_t_dq2_10;
 uint16_t set_t_dq2;
 uint16_t temp1_fix;
 
+
 const uint8_t symbol_3[8] = {0x00, 0x04, 0x06, 0x07, 0x06, 0x04, 0x00, 0x00};
 const uint8_t symbol_4[8] = {0x06, 0x09, 0x09, 0x06, 0x00, 0x00, 0x00, 0x00};
 
@@ -3944,7 +3957,7 @@ Main_init();
 lcd_gotoxy(1, 1);
 lcdPrint("---реплнлерп---");
 lcd_gotoxy(1, 2);
-lcdPrint("(c)Ivan_fd v1.0");
+lcdPrint("(c)Ivan_fd v1.3");
 Delay_ms(2000);
 clearLCD();
 if ((PORTB & (1 << 1)) == 0) {
@@ -3980,7 +3993,36 @@ temperature_1 = ds18b20_get_temp(1, &minus_1);
 temperature_2 = ds18b20_get_temp(2, &minus_2);
 }
 
-# 81
+if (tik_time_b >= 200) {
+tik_time_b = 0;
+if (temperature_1 != 32767) {
+EUSART_Write_Str("tk:");
+EUSART_Write(((temperature_1 / 1000) % 10) + 48);
+EUSART_Write(((temperature_1 / 100) % 10) + 48);
+EUSART_Write(((temperature_1 / 10) % 10) + 48);
+EUSART_Write((temperature_1 % 10) + 48);
+
+} else {
+EUSART_Write_Str("tk:");
+EUSART_Write_Str("0000");
+}
+if (temperature_2 != 32767) {
+EUSART_Write_Str("tb:");
+EUSART_Write(((temperature_2 / 1000) % 10) + 48);
+EUSART_Write(((temperature_2 / 100) % 10) + 48);
+EUSART_Write(((temperature_2 / 10) % 10) + 48);
+EUSART_Write((temperature_2 % 10) + 48);
+EUSART_Write_Str("\r\n");
+} else {
+EUSART_Write_Str("tb:");
+EUSART_Write_Str("0000\r\n");
+
+}
+}
+
+
+
+
 switch (sub_main) {
 case 1:
 lcd_gotoxy(1, 1);
@@ -4156,10 +4198,10 @@ if (sound_yes) {
 if (en_snd_k) {
 if (((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
 (temperature_1 <= (temp1_fix - set_t_dq1_dwn))) &&
-!(temperature_1 == 32767))
+!(temperature_1 == 32767)) {
 
 snd_k_b = 1;
-else
+} else
 snd_k_b = 0;
 } else
 snd_k_b = 0;
@@ -4177,16 +4219,46 @@ en_sound = 1;
 snd_k = 0;
 snd_b = 0;
 snd_all = 1;
+if (tik_time >= 100) {
+tik_time = 0;
+EUSART_Write('A');
+EUSART_Write('l');
+EUSART_Write('r');
+EUSART_Write('_');
+EUSART_Write('A');
+EUSART_Write('\r');
+EUSART_Write('\n');
+}
 } else if (snd_b_b) {
 en_sound = 1;
 snd_k = 0;
 snd_all = 0;
 snd_b = 1;
+if (tik_time >= 100) {
+tik_time = 0;
+EUSART_Write('A');
+EUSART_Write('l');
+EUSART_Write('r');
+EUSART_Write('_');
+EUSART_Write('B');
+EUSART_Write('\r');
+EUSART_Write('\n');
+}
 } else if (snd_k_b) {
 en_sound = 1;
 snd_k = 1;
 snd_all = 0;
 snd_b = 0;
+if (tik_time >= 100) {
+tik_time = 0;
+EUSART_Write('A');
+EUSART_Write('l');
+EUSART_Write('r');
+EUSART_Write('_');
+EUSART_Write('K');
+EUSART_Write('\r');
+EUSART_Write('\n');
+}
 } else
 en_sound = 0;
 
@@ -4506,6 +4578,7 @@ RCONbits.IPEN = 1;
 INTCONbits.PEIE = 1;
 INTCONbits.GIE = 1;
 initLCD();
+init_uart();
 cgrom_char(symbol_4, 1);
 LATCbits.LATC4 = 0;
 snd_k = 0;
@@ -4546,6 +4619,8 @@ INTCONbits.T0IF = 0;
 TMR0H = ((unsigned char)(((45536)>>8)&0xFF));
 TMR0L = ((unsigned char)((45536)&0xFF));
 read_key = 1;
+tik_time++;
+tik_time_b++;
 if (en_sound) {
 snd_delay++;
 if (snd_k) {

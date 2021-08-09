@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c ds18b20.c hd44780.c onewire.c eeprom.c key.c
+SOURCEFILES_QUOTED_IF_SPACED=main.c ds18b20.c hd44780.c onewire.c eeprom.c key.c eusart.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.p1 ${OBJECTDIR}/ds18b20.p1 ${OBJECTDIR}/hd44780.p1 ${OBJECTDIR}/onewire.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/key.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.p1.d ${OBJECTDIR}/ds18b20.p1.d ${OBJECTDIR}/hd44780.p1.d ${OBJECTDIR}/onewire.p1.d ${OBJECTDIR}/eeprom.p1.d ${OBJECTDIR}/key.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.p1 ${OBJECTDIR}/ds18b20.p1 ${OBJECTDIR}/hd44780.p1 ${OBJECTDIR}/onewire.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/key.p1 ${OBJECTDIR}/eusart.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.p1.d ${OBJECTDIR}/ds18b20.p1.d ${OBJECTDIR}/hd44780.p1.d ${OBJECTDIR}/onewire.p1.d ${OBJECTDIR}/eeprom.p1.d ${OBJECTDIR}/key.p1.d ${OBJECTDIR}/eusart.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.p1 ${OBJECTDIR}/ds18b20.p1 ${OBJECTDIR}/hd44780.p1 ${OBJECTDIR}/onewire.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/key.p1
+OBJECTFILES=${OBJECTDIR}/main.p1 ${OBJECTDIR}/ds18b20.p1 ${OBJECTDIR}/hd44780.p1 ${OBJECTDIR}/onewire.p1 ${OBJECTDIR}/eeprom.p1 ${OBJECTDIR}/key.p1 ${OBJECTDIR}/eusart.p1
 
 # Source Files
-SOURCEFILES=main.c ds18b20.c hd44780.c onewire.c eeprom.c key.c
+SOURCEFILES=main.c ds18b20.c hd44780.c onewire.c eeprom.c key.c eusart.c
 
 
 
@@ -142,6 +142,14 @@ ${OBJECTDIR}/key.p1: key.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/key.d ${OBJECTDIR}/key.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/key.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/eusart.p1: eusart.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/eusart.p1.d 
+	@${RM} ${OBJECTDIR}/eusart.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c  -D__DEBUG=1   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -Os -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"C:/Program Files (x86)/Microchip/xc8/v2.31/pic/include/proc" -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c90 -gcoff -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/eusart.p1 eusart.c 
+	@-${MV} ${OBJECTDIR}/eusart.d ${OBJECTDIR}/eusart.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/eusart.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} "${OBJECTDIR}" 
@@ -190,6 +198,14 @@ ${OBJECTDIR}/key.p1: key.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -Os -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"C:/Program Files (x86)/Microchip/xc8/v2.31/pic/include/proc" -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c90 -gcoff -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/key.p1 key.c 
 	@-${MV} ${OBJECTDIR}/key.d ${OBJECTDIR}/key.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/key.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/eusart.p1: eusart.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/eusart.p1.d 
+	@${RM} ${OBJECTDIR}/eusart.p1 
+	${MP_CC} $(MP_EXTRA_CC_PRE) -mcpu=$(MP_PROCESSOR_OPTION) -c   -mdfp="${DFP_DIR}/xc8"  -fno-short-double -fno-short-float -memi=wordwrite -Os -fasmfile -maddrqual=ignore -xassembler-with-cpp -I"C:/Program Files (x86)/Microchip/xc8/v2.31/pic/include/proc" -mwarn=-3 -Wa,-a -DXPRJ_default=$(CND_CONF)  -msummary=-psect,-class,+mem,-hex,-file  -ginhx032 -Wl,--data-init -mno-keep-startup -mno-download -mdefault-config-bits $(COMPARISON_BUILD)  -std=c90 -gcoff -mstack=compiled:auto:auto:auto     -o ${OBJECTDIR}/eusart.p1 eusart.c 
+	@-${MV} ${OBJECTDIR}/eusart.d ${OBJECTDIR}/eusart.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/eusart.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

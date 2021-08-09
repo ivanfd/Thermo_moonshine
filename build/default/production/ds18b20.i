@@ -3892,7 +3892,18 @@ void cgrom_char(uint8_t *symbol, uint8_t address);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 122 "main.h"
+# 17 "eusart.h"
+extern volatile uint8_t eusartRxCount;
+
+void init_uart(void);
+void putch(char data);
+
+uint8_t EUSART_Read(void);
+void EUSART_Write(uint8_t txData);
+void reinit_rx();
+void EUSART_Write_Str(const unsigned char *t);
+
+# 125 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 
@@ -3964,13 +3975,14 @@ return 0;
 break;
 case 1:
 for (uint8_t j = 0; j < 2; j++) {
+(INTCONbits.GIE = 0);
 ow_reset();
 write_byte(0x55);
 for (i = 0; i < 8; i++) {
 write_byte(rom_dq[j][i]);
 }
 write_byte(0xBE);
-(INTCONbits.GIE = 0);
+
 for (i = 0; i < 9; i++)
 {
 scratch[i] = read_byte();
@@ -3994,7 +4006,7 @@ break;
 return 0;
 }
 
-# 171
+# 172
 uint8_t ds18b20_readrom(uint8_t num_dq){
 uint8_t i;
 uint8_t temp_rom[8];
@@ -4016,7 +4028,7 @@ return 1;
 return 0;
 }
 
-# 197
+# 198
 uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
 uint16_t temp = temp_ready[num_dq-1];
 uint8_t tmp;

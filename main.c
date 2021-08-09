@@ -19,7 +19,8 @@ bit en_sound = 0; // дозвіл сигналу
 bit sound_yes = 0; // загальна заборона сигналу
 bit snd_k, snd_b, snd_all, snd_k_b, snd_b_b;
 bit en_snd_k = 0, en_snd_b = 0;
-uint8_t pressed_key;
+uint8_t tik_time = 0, tik_time_b = 0; // лічильник часу для виводу по уарт
+uint8_t pressed_key;    // сюди отримуємо натиснуту кнопку
 uint8_t select = SEL_MAIN; //де в меню ми знаходимося
 uint8_t sub_sel;
 uint8_t sub_main = SUB_MAIN_1;
@@ -29,6 +30,7 @@ uint8_t set_t_dq2_100, set_t_dq2_10;
 uint16_t set_t_dq2;
 uint16_t temp1_fix; //, temp2_fix;
 
+// власні символи в LCD
 const uint8_t symbol_3[8] = {0x00, 0x04, 0x06, 0x07, 0x06, 0x04, 0x00, 0x00};
 const uint8_t symbol_4[8] = {0x06, 0x09, 0x09, 0x06, 0x00, 0x00, 0x00, 0x00};
 
@@ -38,7 +40,7 @@ void main(void) {
     lcd_gotoxy(1, 1);
     lcdPrint("---ТЕРМОМЕТР---");
     lcd_gotoxy(1, 2);
-    lcdPrint("(c)Ivan_fd v1.0");
+    lcdPrint("(c)Ivan_fd v1.3");
     Delay_ms(2000);
     clearLCD();
     if ((KEY_PORT & (1 << KEY_OK)) == 0) {
@@ -73,8 +75,34 @@ void main(void) {
                     temperature_1 = ds18b20_get_temp(1, &minus_1);
                     temperature_2 = ds18b20_get_temp(2, &minus_2);
                 }
+#ifdef DEBUG_OUT  // будемо пересилати температури в порт
+                if (tik_time_b >= 200) {
+                    tik_time_b = 0;
+                    if (temperature_1 != 32767) {
+                        EUSART_Write_Str("tk:");
+                        EUSART_Write(((temperature_1 / 1000) % 10) + 48); // передаємо першу цифру
+                        EUSART_Write(((temperature_1 / 100) % 10) + 48); // передаємо другу цифру
+                        EUSART_Write(((temperature_1 / 10) % 10) + 48); //......
+                        EUSART_Write((temperature_1 % 10) + 48);
+                        //                    EUSART_Write_Str(" °C\r\n");
+                    } else {
+                        EUSART_Write_Str("tk:");
+                        EUSART_Write_Str("0000");
+                    }
+                    if (temperature_2 != 32767) {
+                        EUSART_Write_Str("tb:");
+                        EUSART_Write(((temperature_2 / 1000) % 10) + 48); //......
+                        EUSART_Write(((temperature_2 / 100) % 10) + 48); // передаємо першу цифру
+                        EUSART_Write(((temperature_2 / 10) % 10) + 48); //......
+                        EUSART_Write((temperature_2 % 10) + 48);
+                        EUSART_Write_Str("\r\n");
+                    } else {
+                        EUSART_Write_Str("tb:");
+                        EUSART_Write_Str("0000\r\n");
 
-
+                    }
+                }
+#endif
                 // виводимо температуру
                 // з двох датчиків
                 //---------------------
@@ -131,7 +159,7 @@ void main(void) {
                         }
                         lcd_gotoxy(16, 1);
                         (en_snd_k) ?  lcd_putc(0xED): lcd_putc(0xD5);
-                      
+                        
                         lcd_gotoxy(1, 2);
                         lcd_putc(0xCE);
                         lcd_putc(((temp1_fix / 100) % 10) + 48);
@@ -151,7 +179,7 @@ void main(void) {
                         lcd_putc(((set_t_dq1_dwn % 10) + 48));
 
                         break;
-                    case SUB_MAIN_2:// температура з голови
+                    case SUB_MAIN_2:// температура з кубу
                         lcd_gotoxy(1, 1);
                         lcdPrint("Кубова:");
                         //lcd_gotoxy(8, 1);
@@ -253,10 +281,10 @@ void main(void) {
                     if (en_snd_k) { //якщо звук для колони дозволений
                         if (((temperature_1 >= (temp1_fix + set_t_dq1_up)) ||
                                 (temperature_1 <= (temp1_fix - set_t_dq1_dwn))) &&
-                                !(temperature_1 == 32767))
-                            //                        en_sound = 1;
+                                !(temperature_1 == 32767)) {
+
                             snd_k_b = 1; // звук для колони
-                        else
+                        } else
                             snd_k_b = 0;
                     } else
                         snd_k_b = 0;
@@ -274,16 +302,46 @@ void main(void) {
                         snd_k = 0;
                         snd_b = 0;
                         snd_all = 1;
+                        if (tik_time >= 100) {
+                            tik_time = 0;
+                            EUSART_Write('A');
+                            EUSART_Write('l');
+                            EUSART_Write('r');
+                            EUSART_Write('_');
+                            EUSART_Write('A');
+                            EUSART_Write('\r');
+                            EUSART_Write('\n');
+                        }
                     } else if (snd_b_b) {
                         en_sound = 1;
                         snd_k = 0;
                         snd_all = 0;
                         snd_b = 1;
+                        if (tik_time >= 100) {
+                            tik_time = 0;
+                            EUSART_Write('A');
+                            EUSART_Write('l');
+                            EUSART_Write('r');
+                            EUSART_Write('_');
+                            EUSART_Write('B');
+                            EUSART_Write('\r');
+                            EUSART_Write('\n');
+                        }                        
                     } else if (snd_k_b) {
                         en_sound = 1;
                         snd_k = 1;
                         snd_all = 0;
                         snd_b = 0;
+                        if (tik_time >= 100) {
+                            tik_time = 0;
+                            EUSART_Write('A');
+                            EUSART_Write('l');
+                            EUSART_Write('r');
+                            EUSART_Write('_');
+                            EUSART_Write('K');
+                            EUSART_Write('\r');
+                            EUSART_Write('\n');
+                        }
                     } else
                         en_sound = 0;
 
@@ -603,6 +661,7 @@ void Main_init(void) {
     INTCONbits.PEIE = 1; // включити глобальні переивання
     INTCONbits.GIE = 1; // включити переферійні переривання
     initLCD();
+    init_uart();
     cgrom_char(symbol_4, 1);
     SND = 0;
     snd_k = 0;
@@ -643,6 +702,8 @@ void low_priority interrupt myIntL(void){
         TMR0H = HIGH_BYTE(TMR0Val);
         TMR0L = LOW_BYTE(TMR0Val);
         read_key = 1; // дозвіл на читання кнопок
+        tik_time++;
+        tik_time_b++;
         if (en_sound) {
             snd_delay++;
             if (snd_k) {

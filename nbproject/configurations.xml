@@ -10,6 +10,7 @@
       <itemPath>onewire.h</itemPath>
       <itemPath>E:/Ivan/XC8/TEMPERATURE_SAMOGON/18f2320/key.h</itemPath>
       <itemPath>eeprom.h</itemPath>
+      <itemPath>eusart.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -24,6 +25,7 @@
       <itemPath>onewire.c</itemPath>
       <itemPath>eeprom.c</itemPath>
       <itemPath>key.c</itemPath>
+      <itemPath>eusart.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

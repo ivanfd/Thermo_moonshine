@@ -12,6 +12,7 @@ key.h  \
 hd44780.h  \
 C:/Program\ Files\ (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8/pic/include/pic18_chip_select.h  \
 eeprom.h  \
+eusart.h  \
 C:/Program\ Files\ (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8/pic/include/xc.h  \
 C:/Program\ Files\ (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8/pic/include/htc.h  \
 ds18b20.h  \

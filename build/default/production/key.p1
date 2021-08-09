@@ -2600,8 +2600,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 29: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 122: void Main_init(void);
-[; ;main.h: 123: void Delay_ms(uint16_t delay);
+[; ;eusart.h: 17: extern volatile uint8_t eusartRxCount;
+[; ;eusart.h: 19: void init_uart(void);
+[; ;eusart.h: 20: void putch(char data);
+[; ;eusart.h: 22: uint8_t EUSART_Read(void);
+[; ;eusart.h: 23: void EUSART_Write(uint8_t txData);
+[; ;eusart.h: 24: void reinit_rx();
+[; ;eusart.h: 25: void EUSART_Write_Str(const unsigned char *t);
+[; ;main.h: 125: void Main_init(void);
+[; ;main.h: 126: void Delay_ms(uint16_t delay);
 [; ;key.h: 30: void key_press(void);
 [; ;key.h: 31: uint8_t key_GetKey(void);
 "2 key.c
@@ -2616,8 +2623,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _key_press ]
 [f ]
 "7
-[v F2035 `ui ~T0 @X0 1 s count ]
-[i F2035
+[v F2045 `ui ~T0 @X0 1 s count ]
+[i F2045
 -> -> 0 `i `ui
 ]
 "8
@@ -2662,11 +2669,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;key.c: 20: if (count > 300) {
 "20
-[e $ ! > F2035 -> -> 300 `i `ui 224  ]
+[e $ ! > F2045 -> -> 300 `i `ui 224  ]
 {
 [; ;key.c: 21: count = 300 - 10;
 "21
-[e = F2035 -> - -> 300 `i -> 10 `i `ui ]
+[e = F2045 -> - -> 300 `i -> 10 `i `ui ]
 [; ;key.c: 22: key_pressed = key;
 "22
 [e = _key_pressed _key ]
@@ -2678,11 +2685,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;key.c: 24: } else count++;
 [e $U 225  ]
 [e :U 224 ]
-[e ++ F2035 -> -> 1 `i `ui ]
+[e ++ F2045 -> -> 1 `i `ui ]
 [e :U 225 ]
 [; ;key.c: 26: if (count == 15) {
 "26
-[e $ ! == F2035 -> -> 15 `i `ui 226  ]
+[e $ ! == F2045 -> -> 15 `i `ui 226  ]
 {
 [; ;key.c: 27: key_pressed = key;
 "27
@@ -2699,7 +2706,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;key.c: 30: } else count = 0;
 [e $U 227  ]
 [e :U 223 ]
-[e = F2035 -> -> 0 `i `ui ]
+[e = F2045 -> -> 0 `i `ui ]
 [e :U 227 ]
 [; ;key.c: 44: }
 "44

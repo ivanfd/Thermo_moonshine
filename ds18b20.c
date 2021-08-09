@@ -134,13 +134,14 @@ uint8_t ds18b20_readTemp(uint8_t *time_flag, uint8_t *timer_val) {
             break;
         case 1:
             for (uint8_t j = 0; j < COUNT_DQ; j++) {
+                di();
                 ow_reset();
                 write_byte(0x55); //  команда відповідність ROM
                 for (i = 0; i < 8; i++) { // пишемо код датчика, з нульового по COUNT_DQ
                           write_byte(rom_dq[j][i]);
                 }
                 write_byte(0xBE); // Read scratch pad command
-                di();
+
                 for (i = 0; i < 9; i++)//  читаємо 9 байт температури
                 {
                     scratch[i] = read_byte();

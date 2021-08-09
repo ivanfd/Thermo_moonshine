@@ -17,10 +17,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 "101 hd44780.h
 [v _lcdNibble `(v ~T0 @X0 0 ef1`uc ]
 "31 hd44780.c
-[c E2011 0 1 .. ]
-[n E2011 . COMMAND DATA  ]
+[c E2021 0 1 .. ]
+[n E2021 . COMMAND DATA  ]
 "103 hd44780.h
-[v _lcdWrite `(v ~T0 @X0 0 ef2`uc`E2011 ]
+[v _lcdWrite `(v ~T0 @X0 0 ef2`uc`E2021 ]
 "104
 [v _clearLCD `(v ~T0 @X0 0 ef ]
 "852 C:/Program Files (x86)/Microchip/MPLABX/v5.40/packs/Microchip/PIC18Fxxxx_DFP/1.2.26/xc8\pic\include\proc\pic18f2320.h
@@ -2422,8 +2422,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 29: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 122: void Main_init(void);
-[; ;main.h: 123: void Delay_ms(uint16_t delay);
+[; ;eusart.h: 17: extern volatile uint8_t eusartRxCount;
+[; ;eusart.h: 19: void init_uart(void);
+[; ;eusart.h: 20: void putch(char data);
+[; ;eusart.h: 22: uint8_t EUSART_Read(void);
+[; ;eusart.h: 23: void EUSART_Write(uint8_t txData);
+[; ;eusart.h: 24: void reinit_rx();
+[; ;eusart.h: 25: void EUSART_Write_Str(const unsigned char *t);
+[; ;main.h: 125: void Main_init(void);
+[; ;main.h: 126: void Delay_ms(uint16_t delay);
 [; ;hd44780.h: 9: typedef enum{
 [; ;hd44780.h: 10: COMMAND,
 [; ;hd44780.h: 11: DATA,
@@ -2687,13 +2694,13 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 [; ;hd44780.c: 31: lcdWrite(((0b0010 << 4) | (1 << 3)), COMMAND);
 "31
-[e ( _lcdWrite (2 , -> | << -> 2 `i -> 4 `i << -> 1 `i -> 3 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> | << -> 2 `i -> 4 `i << -> 1 `i -> 3 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 32: _delay((unsigned long)((5)*(8000000/4000.0)));
 "32
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 [; ;hd44780.c: 33: lcdWrite(((0b1100) | (0 << 1) | (0 << 0)), COMMAND);
 "33
-[e ( _lcdWrite (2 , -> | | -> 12 `i << -> 0 `i -> 1 `i << -> 0 `i -> 0 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> | | -> 12 `i << -> 0 `i -> 1 `i << -> 0 `i -> 0 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 34: _delay((unsigned long)((8)*(8000000/4000.0)));
 "34
 [e ( __delay (1 -> * -> -> 8 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
@@ -2705,7 +2712,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
 [; ;hd44780.c: 37: lcdWrite(0x06, COMMAND);
 "37
-[e ( _lcdWrite (2 , -> -> 6 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> -> 6 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 38: _delay((unsigned long)((5)*(8000000/4000.0)));
 "38
 [e ( __delay (1 -> * -> -> 5 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
@@ -2727,7 +2734,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;hd44780.c: 46: lcdWrite(0x01, COMMAND);
 "46
-[e ( _lcdWrite (2 , -> -> 1 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> -> 1 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 47: _delay((unsigned long)((2)*(8000000/4000.0)));
 "47
 [e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
@@ -2736,16 +2743,16 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :UE 217 ]
 }
 "50
-[v _lcdWrite `(v ~T0 @X0 1 ef2`uc`E2011 ]
+[v _lcdWrite `(v ~T0 @X0 1 ef2`uc`E2021 ]
 {
 [; ;hd44780.c: 50: void lcdWrite(uint8_t byte, LCD_REGISTER_TYPE type) {
 [e :U _lcdWrite ]
 [v _byte `uc ~T0 @X0 1 r1 ]
-[v _type `E2011 ~T0 @X0 1 r2 ]
+[v _type `E2021 ~T0 @X0 1 r2 ]
 [f ]
 [; ;hd44780.c: 51: if (type == COMMAND)
 "51
-[e $ ! == -> _type `i -> . `E2011 0 `i 219  ]
+[e $ ! == -> _type `i -> . `E2021 0 `i 219  ]
 [; ;hd44780.c: 52: LATAbits.LATA2 = 0;
 "52
 [e = . . _LATAbits 0 2 -> -> 0 `i `uc ]
@@ -2835,7 +2842,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e =+ _address -> - -> _x `i -> 1 `i `uc ]
 [; ;hd44780.c: 85: lcdWrite(0x80 | address, COMMAND);
 "85
-[e ( _lcdWrite (2 , -> | -> 128 `i -> _address `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> | -> 128 `i -> _address `i `uc . `E2021 0 ]
 [; ;hd44780.c: 86: }
 "86
 [e :UE 222 ]
@@ -2849,7 +2856,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [f ]
 [; ;hd44780.c: 92: lcdWrite(c, DATA);
 "92
-[e ( _lcdWrite (2 , _c . `E2011 1 ]
+[e ( _lcdWrite (2 , _c . `E2021 1 ]
 [; ;hd44780.c: 93: }
 "93
 [e :UE 225 ]
@@ -2875,7 +2882,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 232 ]
 [; ;hd44780.c: 100: lcdWrite(1, COMMAND);
 "100
-[e ( _lcdWrite (2 , -> -> 1 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> -> 1 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 101: _delay((unsigned long)((2)*(8000000/4000.0)));
 "101
 [e ( __delay (1 -> * -> -> 2 `i `d / -> -> 8000000 `l `d .4000.0 `ul ]
@@ -2896,7 +2903,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U 234 ]
 [; ;hd44780.c: 109: lcdWrite(0x10, COMMAND);
 "109
-[e ( _lcdWrite (2 , -> -> 16 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> -> 16 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 110: break;
 "110
 [e $U 230  ]
@@ -2909,7 +2916,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;hd44780.c: 114: lcdWrite(*t, DATA);
 "114
-[e ( _lcdWrite (2 , *U _t . `E2011 1 ]
+[e ( _lcdWrite (2 , *U _t . `E2021 1 ]
 "115
 }
 [; ;hd44780.c: 115: } else {
@@ -2918,7 +2925,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;hd44780.c: 116: lcdWrite(HD44780_CYR[(unsigned char) (*t) - 0xC0], DATA);
 "116
-[e ( _lcdWrite (2 , *U + &U _HD44780_CYR * -> -> - -> *U _t `i -> 192 `i `ui `ux -> -> # *U &U _HD44780_CYR `ui `ux . `E2011 1 ]
+[e ( _lcdWrite (2 , *U + &U _HD44780_CYR * -> -> - -> *U _t `i -> 192 `i `ui `ux -> -> # *U &U _HD44780_CYR `ui `ux . `E2021 1 ]
 "117
 }
 [e :U 237 ]
@@ -2965,7 +2972,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;hd44780.c: 128: uint8_t i;
 [; ;hd44780.c: 129: lcdWrite(0x40 | (address * 8), COMMAND);
 "129
-[e ( _lcdWrite (2 , -> | -> 64 `i * -> _address `i -> 8 `i `uc . `E2011 0 ]
+[e ( _lcdWrite (2 , -> | -> 64 `i * -> _address `i -> 8 `i `uc . `E2021 0 ]
 [; ;hd44780.c: 130: for (i = 0; i < 8; i++)
 "130
 {
@@ -2975,7 +2982,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 "131
 [e :U 239 ]
 [; ;hd44780.c: 131: lcdWrite(*symbol++, DATA);
-[e ( _lcdWrite (2 , *U ++ _symbol * -> -> 1 `i `x -> -> # *U _symbol `i `x . `E2011 1 ]
+[e ( _lcdWrite (2 , *U ++ _symbol * -> -> 1 `i `x -> -> # *U _symbol `i `x . `E2021 1 ]
 "130
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 239  ]

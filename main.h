@@ -74,6 +74,7 @@
 #include "ds18b20.h"
 #include "onewire.h"
 #include "eeprom.h"
+#include "eusart.h"
 
 #define FALSE 0
 #define TRUE 1
@@ -118,6 +119,8 @@
 #define SND_PAUSE_B 50 // пауза між виводом звуку
 #define SND_TIME_ALL 10 // Довжина звуку
 #define SND_PAUSE_ALL 25 // пауза між виводом звуку
+#define DEBUG_OUT
+
 
 void Main_init(void);
 void Delay_ms(uint16_t delay);

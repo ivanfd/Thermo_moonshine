@@ -42,7 +42,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ds18b20_crc8 `(uc ~T0 @X0 0 ef2`*uc`uc ]
 "7 eeprom.h
 [v _write_eep `(v ~T0 @X0 0 ef2`uc`uc ]
-"123 main.h
+"126 main.h
 [v _Delay_ms `(v ~T0 @X0 0 ef1`ui ]
 [; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
@@ -2611,8 +2611,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;hd44780.h: 108: void cgrom_char(uint8_t *symbol, uint8_t address);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
-[; ;main.h: 122: void Main_init(void);
-[; ;main.h: 123: void Delay_ms(uint16_t delay);
+[; ;eusart.h: 17: extern volatile uint8_t eusartRxCount;
+[; ;eusart.h: 19: void init_uart(void);
+[; ;eusart.h: 20: void putch(char data);
+[; ;eusart.h: 22: uint8_t EUSART_Read(void);
+[; ;eusart.h: 23: void EUSART_Write(uint8_t txData);
+[; ;eusart.h: 24: void reinit_rx();
+[; ;eusart.h: 25: void EUSART_Write_Str(const unsigned char *t);
+[; ;main.h: 125: void Main_init(void);
+[; ;main.h: 126: void Delay_ms(uint16_t delay);
 [; ;onewire.h: 12: uint8_t ow_reset(void);
 [; ;onewire.h: 13: uint8_t read_bit(void);
 [; ;onewire.h: 14: void write_bit(uint8_t bitval);
@@ -2650,9 +2657,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "4 ds18b20.c
 [v _scratch `uc ~T0 @X0 -> 9 `i e ]
 [; ;ds18b20.c: 4: uint8_t scratch[9];
-[v F2035 `uc ~T0 @X0 -> 8 `i t ]
+[v F2045 `uc ~T0 @X0 -> 8 `i t ]
 "7
-[v _rom_dq `F2035 ~T0 @X0 -> 2 `i e ]
+[v _rom_dq `F2045 ~T0 @X0 -> 2 `i e ]
 [; ;ds18b20.c: 7: uint8_t rom_dq[2][8];
 "8
 [v _temp_ready `ui ~T0 @X0 -> 2 `i e ]
@@ -2797,114 +2804,114 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e $U 231  ]
 [e :U 230 ]
 {
-[; ;ds18b20.c: 137: ow_reset();
+[; ;ds18b20.c: 137: (INTCONbits.GIE = 0);
 "137
-[e ( _ow_reset ..  ]
-[; ;ds18b20.c: 138: write_byte(0x55);
+[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
+[; ;ds18b20.c: 138: ow_reset();
 "138
-[e ( _write_byte (1 -> -> 85 `i `uc ]
-[; ;ds18b20.c: 139: for (i = 0; i < 8; i++) {
+[e ( _ow_reset ..  ]
+[; ;ds18b20.c: 139: write_byte(0x55);
 "139
+[e ( _write_byte (1 -> -> 85 `i `uc ]
+[; ;ds18b20.c: 140: for (i = 0; i < 8; i++) {
+"140
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 233  ]
 [e $U 234  ]
 [e :U 233 ]
 {
-[; ;ds18b20.c: 140: write_byte(rom_dq[j][i]);
-"140
-[e ( _write_byte (1 *U + &U *U + &U _rom_dq * -> _j `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux * -> _i `ux -> -> # *U &U *U + &U _rom_dq * -> _j `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux `ui `ux ]
+[; ;ds18b20.c: 141: write_byte(rom_dq[j][i]);
 "141
+[e ( _write_byte (1 *U + &U *U + &U _rom_dq * -> _j `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux * -> _i `ux -> -> # *U &U *U + &U _rom_dq * -> _j `ux -> * -> # *U &U *U &U _rom_dq `ui -> -> 8 `i `ui `ux `ui `ux ]
+"142
 }
-"139
+"140
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 233  ]
 [e :U 234 ]
-"141
-}
-[; ;ds18b20.c: 141: }
-[; ;ds18b20.c: 142: write_byte(0xBE);
 "142
-[e ( _write_byte (1 -> -> 190 `i `uc ]
-[; ;ds18b20.c: 143: (INTCONbits.GIE = 0);
+}
+[; ;ds18b20.c: 142: }
+[; ;ds18b20.c: 143: write_byte(0xBE);
 "143
-[e = . . _INTCONbits 1 7 -> -> 0 `i `uc ]
-[; ;ds18b20.c: 144: for (i = 0; i < 9; i++)
-"144
+[e ( _write_byte (1 -> -> 190 `i `uc ]
+[; ;ds18b20.c: 145: for (i = 0; i < 9; i++)
+"145
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 9 `i 236  ]
 [e $U 237  ]
-"145
-[e :U 236 ]
-[; ;ds18b20.c: 145: {
-{
-[; ;ds18b20.c: 146: scratch[i] = read_byte();
 "146
-[e = *U + &U _scratch * -> _i `ux -> -> # *U &U _scratch `ui `ux ( _read_byte ..  ]
+[e :U 236 ]
+[; ;ds18b20.c: 146: {
+{
+[; ;ds18b20.c: 147: scratch[i] = read_byte();
 "147
+[e = *U + &U _scratch * -> _i `ux -> -> # *U &U _scratch `ui `ux ( _read_byte ..  ]
+"148
 }
-"144
+"145
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 9 `i 236  ]
 [e :U 237 ]
-"147
+"148
 }
-[; ;ds18b20.c: 147: }
-[; ;ds18b20.c: 149: if (!(ds18b20_crc8(scratch, 9))) {
-"149
+[; ;ds18b20.c: 148: }
+[; ;ds18b20.c: 150: if (!(ds18b20_crc8(scratch, 9))) {
+"150
 [e $ ! ! != -> ( _ds18b20_crc8 (2 , &U _scratch -> -> 9 `i `uc `i -> -> -> 0 `i `uc `i 239  ]
 {
-[; ;ds18b20.c: 150: temp = (((uint16_t) scratch[1]) << 8) | ((uint16_t) scratch[0]);
-"150
-[e = _temp | << -> *U + &U _scratch * -> -> -> 1 `i `ui `ux -> -> # *U &U _scratch `ui `ux `ui -> 8 `i -> *U + &U _scratch * -> -> -> 0 `i `ui `ux -> -> # *U &U _scratch `ui `ux `ui ]
-[; ;ds18b20.c: 151: temp_ready[j] = temp;
+[; ;ds18b20.c: 151: temp = (((uint16_t) scratch[1]) << 8) | ((uint16_t) scratch[0]);
 "151
-[e = *U + &U _temp_ready * -> _j `ux -> -> # *U &U _temp_ready `ui `ux _temp ]
+[e = _temp | << -> *U + &U _scratch * -> -> -> 1 `i `ui `ux -> -> # *U &U _scratch `ui `ux `ui -> 8 `i -> *U + &U _scratch * -> -> -> 0 `i `ui `ux -> -> # *U &U _scratch `ui `ux `ui ]
+[; ;ds18b20.c: 152: temp_ready[j] = temp;
 "152
+[e = *U + &U _temp_ready * -> _j `ux -> -> # *U &U _temp_ready `ui `ux _temp ]
+"153
 }
-[; ;ds18b20.c: 152: }else
+[; ;ds18b20.c: 153: }else
 [e $U 240  ]
 [e :U 239 ]
-[; ;ds18b20.c: 153: temp_ready[j] = 32767;
-"153
+[; ;ds18b20.c: 154: temp_ready[j] = 32767;
+"154
 [e = *U + &U _temp_ready * -> _j `ux -> -> # *U &U _temp_ready `ui `ux -> -> 32767 `i `ui ]
 [e :U 240 ]
-[; ;ds18b20.c: 154: (INTCONbits.GIE = 1);
-"154
-[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+[; ;ds18b20.c: 155: (INTCONbits.GIE = 1);
 "155
+[e = . . _INTCONbits 1 7 -> -> 1 `i `uc ]
+"156
 }
 "136
 [e ++ _j -> -> 1 `i `uc ]
 [e $ < -> _j `i -> 2 `i 230  ]
 [e :U 231 ]
-"155
-}
-[; ;ds18b20.c: 155: }
-[; ;ds18b20.c: 156: *time_flag = 0;
 "156
-[e = *U _time_flag -> -> 0 `i `uc ]
-[; ;ds18b20.c: 157: return 1;
+}
+[; ;ds18b20.c: 156: }
+[; ;ds18b20.c: 157: *time_flag = 0;
 "157
+[e = *U _time_flag -> -> 0 `i `uc ]
+[; ;ds18b20.c: 158: return 1;
+"158
 [e ) -> -> 1 `i `uc ]
 [e $UE 224  ]
-[; ;ds18b20.c: 158: break;
-"158
-[e $U 225  ]
-[; ;ds18b20.c: 159: case 2:
+[; ;ds18b20.c: 159: break;
 "159
-[e :U 241 ]
-[; ;ds18b20.c: 160: return 0;
+[e $U 225  ]
+[; ;ds18b20.c: 160: case 2:
 "160
+[e :U 241 ]
+[; ;ds18b20.c: 161: return 0;
+"161
 [e ) -> -> 0 `i `uc ]
 [e $UE 224  ]
-[; ;ds18b20.c: 161: break;
-"161
+[; ;ds18b20.c: 162: break;
+"162
 [e $U 225  ]
-"163
+"164
 }
-[; ;ds18b20.c: 163: }
+[; ;ds18b20.c: 164: }
 [e $U 225  ]
 "122
 [e :U 226 ]
@@ -2912,265 +2919,265 @@ Version 3.2 HI-TECH Software Intermediate Code
  , $ -> -> 1 `i `uc 229
  , $ -> -> 2 `i `uc 241
  225 ]
-"163
-[e :U 225 ]
-[; ;ds18b20.c: 164: return 0;
 "164
+[e :U 225 ]
+[; ;ds18b20.c: 165: return 0;
+"165
 [e ) -> -> 0 `i `uc ]
 [e $UE 224  ]
-[; ;ds18b20.c: 165: }
-"165
+[; ;ds18b20.c: 166: }
+"166
 [e :UE 224 ]
 }
-"171
+"172
 [v _ds18b20_readrom `(uc ~T0 @X0 1 ef1`uc ]
 {
-[; ;ds18b20.c: 171: uint8_t ds18b20_readrom(uint8_t num_dq){
+[; ;ds18b20.c: 172: uint8_t ds18b20_readrom(uint8_t num_dq){
 [e :U _ds18b20_readrom ]
 [v _num_dq `uc ~T0 @X0 1 r1 ]
 [f ]
-"172
-[v _i `uc ~T0 @X0 1 a ]
 "173
+[v _i `uc ~T0 @X0 1 a ]
+"174
 [v _temp_rom `uc ~T0 @X0 -> 8 `i a ]
-[; ;ds18b20.c: 172: uint8_t i;
-[; ;ds18b20.c: 173: uint8_t temp_rom[8];
-[; ;ds18b20.c: 175: if (!ow_reset())
-"175
-[e $ ! ! != -> ( _ow_reset ..  `i -> -> -> 0 `i `uc `i 243  ]
-[; ;ds18b20.c: 176: {
+[; ;ds18b20.c: 173: uint8_t i;
+[; ;ds18b20.c: 174: uint8_t temp_rom[8];
+[; ;ds18b20.c: 176: if (!ow_reset())
 "176
-{
-[; ;ds18b20.c: 177: write_byte(0x33);
+[e $ ! ! != -> ( _ow_reset ..  `i -> -> -> 0 `i `uc `i 243  ]
+[; ;ds18b20.c: 177: {
 "177
-[e ( _write_byte (1 -> -> 51 `i `uc ]
-[; ;ds18b20.c: 178: for (i = 0; i < 8; i++) {
+{
+[; ;ds18b20.c: 178: write_byte(0x33);
 "178
+[e ( _write_byte (1 -> -> 51 `i `uc ]
+[; ;ds18b20.c: 179: for (i = 0; i < 8; i++) {
+"179
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 244  ]
 [e $U 245  ]
 [e :U 244 ]
 {
-[; ;ds18b20.c: 179: temp_rom[i] = read_byte();
-"179
-[e = *U + &U _temp_rom * -> _i `ux -> -> # *U &U _temp_rom `ui `ux ( _read_byte ..  ]
+[; ;ds18b20.c: 180: temp_rom[i] = read_byte();
 "180
+[e = *U + &U _temp_rom * -> _i `ux -> -> # *U &U _temp_rom `ui `ux ( _read_byte ..  ]
+"181
 }
-"178
+"179
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 244  ]
 [e :U 245 ]
-"180
-}
 "181
 }
-[e :U 243 ]
-[; ;ds18b20.c: 180: }
-[; ;ds18b20.c: 181: }
-[; ;ds18b20.c: 182: if (!(ds18b20_crc8(temp_rom, 8))) {
 "182
+}
+[e :U 243 ]
+[; ;ds18b20.c: 181: }
+[; ;ds18b20.c: 182: }
+[; ;ds18b20.c: 183: if (!(ds18b20_crc8(temp_rom, 8))) {
+"183
 [e $ ! ! != -> ( _ds18b20_crc8 (2 , &U _temp_rom -> -> 8 `i `uc `i -> -> -> 0 `i `uc `i 247  ]
 {
-[; ;ds18b20.c: 183: for (i = 0; i < 8; i++) {
-"183
+[; ;ds18b20.c: 184: for (i = 0; i < 8; i++) {
+"184
 {
 [e = _i -> -> 0 `i `uc ]
 [e $ < -> _i `i -> 8 `i 248  ]
 [e $U 249  ]
 [e :U 248 ]
 {
-[; ;ds18b20.c: 184: write_eep(((num_dq - 1)*8) + i, temp_rom[i]);
-"184
-[e ( _write_eep (2 , -> + * - -> _num_dq `i -> 1 `i -> 8 `i -> _i `i `uc *U + &U _temp_rom * -> _i `ux -> -> # *U &U _temp_rom `ui `ux ]
+[; ;ds18b20.c: 185: write_eep(((num_dq - 1)*8) + i, temp_rom[i]);
 "185
+[e ( _write_eep (2 , -> + * - -> _num_dq `i -> 1 `i -> 8 `i -> _i `i `uc *U + &U _temp_rom * -> _i `ux -> -> # *U &U _temp_rom `ui `ux ]
+"186
 }
-"183
+"184
 [e ++ _i -> -> 1 `i `uc ]
 [e $ < -> _i `i -> 8 `i 248  ]
 [e :U 249 ]
-"185
-}
-[; ;ds18b20.c: 185: }
-[; ;ds18b20.c: 186: Delay_ms(10);
 "186
-[e ( _Delay_ms (1 -> -> 10 `i `ui ]
-[; ;ds18b20.c: 187: return 1;
+}
+[; ;ds18b20.c: 186: }
+[; ;ds18b20.c: 187: Delay_ms(10);
 "187
+[e ( _Delay_ms (1 -> -> 10 `i `ui ]
+[; ;ds18b20.c: 188: return 1;
+"188
 [e ) -> -> 1 `i `uc ]
 [e $UE 242  ]
-"188
+"189
 }
 [e :U 247 ]
-[; ;ds18b20.c: 188: }
-[; ;ds18b20.c: 189: return 0;
-"189
+[; ;ds18b20.c: 189: }
+[; ;ds18b20.c: 190: return 0;
+"190
 [e ) -> -> 0 `i `uc ]
 [e $UE 242  ]
-[; ;ds18b20.c: 190: }
-"190
+[; ;ds18b20.c: 191: }
+"191
 [e :UE 242 ]
 }
-"197
+"198
 [v _ds18b20_get_temp `(ui ~T0 @X0 1 ef2`uc`*uc ]
 {
-[; ;ds18b20.c: 197: uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
+[; ;ds18b20.c: 198: uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
 [e :U _ds18b20_get_temp ]
 [v _num_dq `uc ~T0 @X0 1 r1 ]
 [v _minus `*uc ~T0 @X0 1 r2 ]
 [f ]
-"198
-[v _temp `ui ~T0 @X0 1 a ]
-[; ;ds18b20.c: 198: uint16_t temp = temp_ready[num_dq-1];
-[e = _temp *U + &U _temp_ready * -> -> - -> _num_dq `i -> 1 `i `ui `ux -> -> # *U &U _temp_ready `ui `ux ]
 "199
-[v _tmp `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 199: uint8_t tmp;
-[; ;ds18b20.c: 200: *minus = '+';
+[v _temp `ui ~T0 @X0 1 a ]
+[; ;ds18b20.c: 199: uint16_t temp = temp_ready[num_dq-1];
+[e = _temp *U + &U _temp_ready * -> -> - -> _num_dq `i -> 1 `i `ui `ux -> -> # *U &U _temp_ready `ui `ux ]
 "200
-[e = *U _minus -> -> 43 `ui `uc ]
-[; ;ds18b20.c: 201: if(temp == 32767)
+[v _tmp `uc ~T0 @X0 1 a ]
+[; ;ds18b20.c: 200: uint8_t tmp;
+[; ;ds18b20.c: 201: *minus = '+';
 "201
-[e $ ! == _temp -> -> 32767 `i `ui 252  ]
-[; ;ds18b20.c: 202: return temp;
+[e = *U _minus -> -> 43 `ui `uc ]
+[; ;ds18b20.c: 202: if(temp == 32767)
 "202
+[e $ ! == _temp -> -> 32767 `i `ui 252  ]
+[; ;ds18b20.c: 203: return temp;
+"203
 [e ) _temp ]
 [e $UE 251  ]
 [e :U 252 ]
-[; ;ds18b20.c: 203: if (temp & 0x8000) {
-"203
+[; ;ds18b20.c: 204: if (temp & 0x8000) {
+"204
 [e $ ! != & _temp -> 32768 `ui -> -> 0 `i `ui 253  ]
 {
-[; ;ds18b20.c: 204: temp = -temp;
-"204
-[e = _temp -U _temp ]
-[; ;ds18b20.c: 205: *minus = '-';
+[; ;ds18b20.c: 205: temp = -temp;
 "205
-[e = *U _minus -> -> 45 `ui `uc ]
+[e = _temp -U _temp ]
+[; ;ds18b20.c: 206: *minus = '-';
 "206
+[e = *U _minus -> -> 45 `ui `uc ]
+"207
 }
 [e :U 253 ]
-[; ;ds18b20.c: 206: }
-[; ;ds18b20.c: 208: tmp = temp & 0x0f;
-"208
-[e = _tmp -> & _temp -> -> 15 `i `ui `uc ]
-[; ;ds18b20.c: 209: tmp = fract[tmp];
+[; ;ds18b20.c: 207: }
+[; ;ds18b20.c: 209: tmp = temp & 0x0f;
 "209
-[e = _tmp *U + &U _fract * -> _tmp `ux -> -> # *U &U _fract `ui `ux ]
-[; ;ds18b20.c: 210: temp = temp >> 4;
+[e = _tmp -> & _temp -> -> 15 `i `ui `uc ]
+[; ;ds18b20.c: 210: tmp = fract[tmp];
 "210
-[e = _temp >> _temp -> 4 `i ]
-[; ;ds18b20.c: 211: temp = (temp & 0x00ff) * 10;
+[e = _tmp *U + &U _fract * -> _tmp `ux -> -> # *U &U _fract `ui `ux ]
+[; ;ds18b20.c: 211: temp = temp >> 4;
 "211
-[e = _temp * & _temp -> -> 255 `i `ui -> -> 10 `i `ui ]
-[; ;ds18b20.c: 212: temp = temp + tmp;
+[e = _temp >> _temp -> 4 `i ]
+[; ;ds18b20.c: 212: temp = (temp & 0x00ff) * 10;
 "212
+[e = _temp * & _temp -> -> 255 `i `ui -> -> 10 `i `ui ]
+[; ;ds18b20.c: 213: temp = temp + tmp;
+"213
 [e = _temp + _temp -> _tmp `ui ]
-[; ;ds18b20.c: 214: return temp;
-"214
+[; ;ds18b20.c: 215: return temp;
+"215
 [e ) _temp ]
 [e $UE 251  ]
-[; ;ds18b20.c: 216: }
-"216
+[; ;ds18b20.c: 217: }
+"217
 [e :UE 251 ]
 }
-"220
+"221
 [v _ds18b20_crc8 `(uc ~T0 @X0 1 ef2`*uc`uc ]
 {
-[; ;ds18b20.c: 220: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes) {
+[; ;ds18b20.c: 221: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes) {
 [e :U _ds18b20_crc8 ]
 [v _data_in `*uc ~T0 @X0 1 r1 ]
 [v _num_bytes `uc ~T0 @X0 1 r2 ]
 [f ]
-"221
-[v _crc `uc ~T0 @X0 1 a ]
 "222
-[v _loop_count `uc ~T0 @X0 1 a ]
+[v _crc `uc ~T0 @X0 1 a ]
 "223
-[v _bit_counter `uc ~T0 @X0 1 a ]
+[v _loop_count `uc ~T0 @X0 1 a ]
 "224
-[v _data `uc ~T0 @X0 1 a ]
+[v _bit_counter `uc ~T0 @X0 1 a ]
 "225
+[v _data `uc ~T0 @X0 1 a ]
+"226
 [v _feedback_bit `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 221: uint8_t crc;
-[; ;ds18b20.c: 222: uint8_t loop_count;
-[; ;ds18b20.c: 223: uint8_t bit_counter;
-[; ;ds18b20.c: 224: uint8_t data;
-[; ;ds18b20.c: 225: uint8_t feedback_bit;
-[; ;ds18b20.c: 227: crc = 0x00;
-"227
+[; ;ds18b20.c: 222: uint8_t crc;
+[; ;ds18b20.c: 223: uint8_t loop_count;
+[; ;ds18b20.c: 224: uint8_t bit_counter;
+[; ;ds18b20.c: 225: uint8_t data;
+[; ;ds18b20.c: 226: uint8_t feedback_bit;
+[; ;ds18b20.c: 228: crc = 0x00;
+"228
 [e = _crc -> -> 0 `i `uc ]
-[; ;ds18b20.c: 229: for (loop_count = 0; loop_count != num_bytes; loop_count++) {
-"229
+[; ;ds18b20.c: 230: for (loop_count = 0; loop_count != num_bytes; loop_count++) {
+"230
 {
 [e = _loop_count -> -> 0 `i `uc ]
 [e $U 258  ]
 [e :U 255 ]
 {
-[; ;ds18b20.c: 230: data = data_in[loop_count];
-"230
+[; ;ds18b20.c: 231: data = data_in[loop_count];
+"231
 [e = _data *U + _data_in * -> _loop_count `ux -> -> # *U _data_in `ui `ux ]
-[; ;ds18b20.c: 232: bit_counter = 8;
-"232
-[e = _bit_counter -> -> 8 `i `uc ]
-[; ;ds18b20.c: 233: do {
+[; ;ds18b20.c: 233: bit_counter = 8;
 "233
+[e = _bit_counter -> -> 8 `i `uc ]
+[; ;ds18b20.c: 234: do {
+"234
 [e :U 261 ]
 {
-[; ;ds18b20.c: 234: feedback_bit = (crc ^ data) & 0x01;
-"234
+[; ;ds18b20.c: 235: feedback_bit = (crc ^ data) & 0x01;
+"235
 [e = _feedback_bit -> & ^ -> _crc `i -> _data `i -> 1 `i `uc ]
-[; ;ds18b20.c: 236: if (feedback_bit == 0x01) {
-"236
+[; ;ds18b20.c: 237: if (feedback_bit == 0x01) {
+"237
 [e $ ! == -> _feedback_bit `i -> 1 `i 262  ]
 {
-[; ;ds18b20.c: 237: crc = crc ^ 0x18;
-"237
-[e = _crc -> ^ -> _crc `i -> 24 `i `uc ]
+[; ;ds18b20.c: 238: crc = crc ^ 0x18;
 "238
+[e = _crc -> ^ -> _crc `i -> 24 `i `uc ]
+"239
 }
 [e :U 262 ]
-[; ;ds18b20.c: 238: }
-[; ;ds18b20.c: 239: crc = (crc >> 1) & 0x7F;
-"239
-[e = _crc -> & >> -> _crc `i -> 1 `i -> 127 `i `uc ]
-[; ;ds18b20.c: 240: if (feedback_bit == 0x01) {
+[; ;ds18b20.c: 239: }
+[; ;ds18b20.c: 240: crc = (crc >> 1) & 0x7F;
 "240
+[e = _crc -> & >> -> _crc `i -> 1 `i -> 127 `i `uc ]
+[; ;ds18b20.c: 241: if (feedback_bit == 0x01) {
+"241
 [e $ ! == -> _feedback_bit `i -> 1 `i 263  ]
 {
-[; ;ds18b20.c: 241: crc = crc | 0x80;
-"241
-[e = _crc -> | -> _crc `i -> 128 `i `uc ]
+[; ;ds18b20.c: 242: crc = crc | 0x80;
 "242
+[e = _crc -> | -> _crc `i -> 128 `i `uc ]
+"243
 }
 [e :U 263 ]
-[; ;ds18b20.c: 242: }
-[; ;ds18b20.c: 244: data = data >> 1;
-"244
-[e = _data -> >> -> _data `i -> 1 `i `uc ]
-[; ;ds18b20.c: 245: bit_counter--;
+[; ;ds18b20.c: 243: }
+[; ;ds18b20.c: 245: data = data >> 1;
 "245
+[e = _data -> >> -> _data `i -> 1 `i `uc ]
+[; ;ds18b20.c: 246: bit_counter--;
+"246
 [e -- _bit_counter -> -> 1 `i `uc ]
-"247
-}
-[; ;ds18b20.c: 247: } while (bit_counter > 0);
-[e $ > -> _bit_counter `i -> 0 `i 261  ]
-[e :U 260 ]
 "248
 }
-"229
+[; ;ds18b20.c: 248: } while (bit_counter > 0);
+[e $ > -> _bit_counter `i -> 0 `i 261  ]
+[e :U 260 ]
+"249
+}
+"230
 [e ++ _loop_count -> -> 1 `i `uc ]
 [e :U 258 ]
 [e $ != -> _loop_count `i -> _num_bytes `i 255  ]
 [e :U 256 ]
-"248
+"249
 }
-[; ;ds18b20.c: 248: }
-[; ;ds18b20.c: 250: return crc;
-"250
+[; ;ds18b20.c: 249: }
+[; ;ds18b20.c: 251: return crc;
+"251
 [e ) _crc ]
 [e $UE 254  ]
-[; ;ds18b20.c: 251: }
-"251
+[; ;ds18b20.c: 252: }
+"252
 [e :UE 254 ]
 }

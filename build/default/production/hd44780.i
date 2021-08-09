@@ -3826,7 +3826,18 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
 
-# 122 "main.h"
+# 17 "eusart.h"
+extern volatile uint8_t eusartRxCount;
+
+void init_uart(void);
+void putch(char data);
+
+uint8_t EUSART_Read(void);
+void EUSART_Write(uint8_t txData);
+void reinit_rx();
+void EUSART_Write_Str(const unsigned char *t);
+
+# 125 "main.h"
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 
