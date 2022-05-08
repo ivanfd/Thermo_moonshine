@@ -25,7 +25,12 @@
 //#define KEY_DOWN_EVENT 3
 #define KEY_NULL 0
 
+#define KEY_LONG 1
+#define KEY_SHORT 0
+
 //extern uint8_t key_events;
+
+extern uint8_t keyLong;
 
 void key_press(void);
 uint8_t key_GetKey(void);

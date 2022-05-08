@@ -102,6 +102,8 @@
 #define SUB_MAIN_2 2
 
 
+enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
+
 
 #define EE_TMP1_UP 16  // адреси еепром
 #define EE_TMP1_DWN 17 // температури  
@@ -109,6 +111,28 @@
 #define EE_TMP2_LO 19
 #define EE_TMP1_FIX 20 //зафіксована температура датчика 1
 #define EE_TMP2_FIX 22 // зафіксована температура датчика 2
+
+#define EE_PRESET_1_H 23
+#define EE_PRESET_1_L 24
+#define EE_PRESET_2_H 25
+#define EE_PRESET_2_L 26
+#define EE_PRESET_3_H 27
+#define EE_PRESET_3_L 28
+#define EE_PRESET_4_H 29
+#define EE_PRESET_4_L 30
+#define EE_PRESET_5_H 31
+#define EE_PRESET_5_L 32
+#define EE_PRESET_6_H 33
+#define EE_PRESET_6_L 34
+#define EE_PRESET_7_H 35
+#define EE_PRESET_7_L 36
+#define EE_PRESET_8_H 37
+#define EE_PRESET_8_L 38
+#define EE_PRESET_9_H 39
+#define EE_PRESET_9_L 40
+#define EE_PRESET_10_H 41
+#define EE_PRESET_10_L 42
+
 
 
 #define SND LATCbits.LATC4 //порт динаміка
@@ -124,6 +148,7 @@
 
 void Main_init(void);
 void Delay_ms(uint16_t delay);
+void outValPreset(void);
 
 //
 #endif	

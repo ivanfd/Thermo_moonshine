@@ -1,6 +1,8 @@
 #include "key.h"
 volatile uint8_t key_pressed;
 
+uint8_t keyLong = KEY_SHORT;
+
 
 void key_press(void)
 {
@@ -20,11 +22,13 @@ void key_press(void)
         if (count > DELAYKEY2) {
             count = DELAYKEY2 - 10;
             key_pressed = key;
+            keyLong = KEY_LONG;
             return;
         } else count++;
 
         if (count == DELAYKEY) {
             key_pressed = key;
+            keyLong = KEY_SHORT;
             return;
         }
     } else count = 0;
