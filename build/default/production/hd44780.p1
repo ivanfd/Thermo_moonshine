@@ -2430,10 +2430,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;eusart.h: 23: void EUSART_Write(uint8_t txData);
 [; ;eusart.h: 24: void reinit_rx();
 [; ;eusart.h: 25: void EUSART_Write_Str(const unsigned char *t);
-[; ;main.h: 105: enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
-[; ;main.h: 149: void Main_init(void);
-[; ;main.h: 150: void Delay_ms(uint16_t delay);
-[; ;main.h: 151: void outValPreset(void);
+[; ;main.h: 106: enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
+[; ;main.h: 152: void Main_init(void);
+[; ;main.h: 153: void Delay_ms(uint16_t delay);
+[; ;main.h: 154: void outValPreset(void);
 [; ;hd44780.h: 9: typedef enum{
 [; ;hd44780.h: 10: COMMAND,
 [; ;hd44780.h: 11: DATA,

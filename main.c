@@ -39,16 +39,16 @@ const uint8_t symbol_4[8] = {0x06, 0x09, 0x09, 0x06, 0x00, 0x00, 0x00, 0x00};
 const uint8_t symbol_5[8] = {0x06, 0x09, 0x09, 0x06, 0x00, 0x00, 0x0F, 0x00};
 
 void main(void) {
-    Main_init();
+    Main_init();    // Ініціалізація контролера
 
     lcd_gotoxy(1, 1);
     lcdPrint("---ТЕРМОМЕТР---");
     lcd_gotoxy(1, 2);
-    lcdPrint("(c)Ivan_fd v1.5");
+    lcdPrint("(c)Ivan_fd v1.7");
     Delay_ms(2000);
     clearLCD();
-    if ((KEY_PORT & (1 << KEY_OK)) == 0) {
-        clearLCD();
+    if ((KEY_PORT & (1 << KEY_OK)) == 0) { // Якщо натиснута кнопка ОК
+        clearLCD();                         // йдемо зчитувати коди датчиків
         select = SEL_SET_DQ;
         lcd_gotoxy(1, 1);
         lcdPrint("Датчик 1, або 2");
@@ -59,13 +59,21 @@ void main(void) {
 
     set_t_dq1_up = read_eep(EE_TMP1_UP); // читаємо з еепром пороги
     set_t_dq1_dwn = read_eep(EE_TMP1_DWN); // температур
-    //set_t_dq2 = (uint16_t) read_eep(EE_TMP2_HI) << 8 | read_eep(EE_TMP2_LO);
     set_t_dq2 = (uint16_t) read_eep(EE_PRESET_1_H) << 8 | read_eep(EE_PRESET_1_L);
     temp1_fix = (uint16_t) read_eep(EE_TMP1_FIX) << 8 | read_eep(EE_TMP1_FIX + 1);
-    //temp2_fix = (uint16_t) read_eep(EE_TMP2_FIX) << 8 | read_eep(EE_TMP2_FIX + 1);
-    //temp2_fix = read_eep(EE_TMP2_FIX);
-        lcd_gotoxy(10, 2);
-        lcdPrint("1");
+    en_snd_k = read_eep(EE_PRESET_SND_K);
+    en_snd_b = read_eep(EE_PRESET_SND_B);
+
+    if (!(en_snd_k) && !(en_snd_b)) {
+        sound_yes = 0;
+    } else
+        sound_yes = 1;
+
+    lcd_gotoxy(10, 2);
+    lcdPrint("1");
+    //==========================
+    //       Вічний цикл
+    //==========================
     while (1) {
 
 
@@ -73,7 +81,7 @@ void main(void) {
             key_press();
             read_key = 0;
         }
-        pressed_key = key_GetKey(); // читаємо копку
+        pressed_key = key_GetKey(); // читаємо код копки
 
         switch (select) {
             case SEL_MAIN:
@@ -164,7 +172,7 @@ void main(void) {
                     lcd_putc(' ');
                     lcd_putc(' ');
                     lcd_putc(' ');
-                    //lcd_putc(' ');
+                    lcd_putc(' ');
                 }
                // lcd_gotoxy(16, 1);
                // (en_snd_k) ? lcd_putc(0xED) : lcd_putc(0xD5); // Значок звуку
@@ -323,12 +331,10 @@ void main(void) {
 
 
                 if (pressed_key == KEY_OK_EVENT) { // натиснули кнопку ОК
-                    clearLCD();
-                    select = SEL_DQ_SND;
-                    lcd_gotoxy(1, 1);
-                    lcdPrint("Порiг Сигн. Led");
-                    lcd_gotoxy(1, 2);
-                    lcdPrint("  1     2   1-2");
+                    sub_sel--;
+                    if (sub_sel == 255)
+                        sub_sel = VAL_9;
+                    outValPreset();
 
                 }
 
@@ -340,21 +346,15 @@ void main(void) {
                     outValPreset();
                 }
 
-                if (pressed_key == KEY_BOTH_EVENT) { //дві кнопки, фіксуємо температуру в колоні
+                if (pressed_key == KEY_BOTH_EVENT) { //дві кнопки, Меню
 
-                    switch (sub_main) {
-                        case SUB_MAIN_1:
-                            temp1_fix = temperature_1;
-                            write_eep(EE_TMP1_FIX, (temp1_fix >> 8));
-                            write_eep(EE_TMP1_FIX + 1, (uint8_t) temp1_fix);
-                            break;
-                        case SUB_MAIN_2:
-                            //                         temp2_fix = temperature_2;
-                            //                         write_eep(EE_TMP2_FIX, (temp2_fix >> 8));
-                            //                         write_eep(EE_TMP2_FIX + 1, (uint8_t) temp2_fix);
-                            break;
-                    }
-                    Delay_ms(10);
+                    clearLCD();
+                    select = SEL_DQ_SND;
+                    lcd_gotoxy(1, 1);
+                    lcdPrint("Порiг Сигн. Led");
+                    lcd_gotoxy(1, 2);
+                    lcdPrint("  1     2   1-2");
+                   // Delay_ms(10);
                 }
 
                 break;
@@ -391,7 +391,7 @@ void main(void) {
                     lcd_gotoxy(1, 1);
                     lcdPrint("   Границi   ");
                     lcd_gotoxy(1, 2);
-                    lcdPrint("Кол(1)/Куб(2):");
+                    lcdPrint(" Кол(1)  Куб(2)");
                 }
 
                 if (pressed_key == KEY_UP_EVENT) {
@@ -427,25 +427,15 @@ void main(void) {
                     } else
                         sound_yes = 1;
                     //                 sound_yes = !(sound_yes);
+                    write_eep(EE_PRESET_SND_K, en_snd_k);
+                    write_eep(EE_PRESET_SND_B, en_snd_b);
                     select = SEL_MAIN;
                     outValPreset();
                 }
                 break;
             case SEL_SET_TEMP:// вибір налаштування порогів
-                lcd_gotoxy(16, 2);
-                lcd_putc(dq_num + 48);
+
                 if (pressed_key == KEY_OK_EVENT) {
-                    dq_num++;
-                    if (dq_num == 3)
-                        dq_num = 1;
-                }
-                if (pressed_key == KEY_UP_EVENT) {
-                    dq_num--;
-                    if (dq_num == 0)
-                        dq_num = 2;
-                }
-                if (pressed_key == KEY_BOTH_EVENT) {
-                    if (dq_num == 1) {
                         select = SEL_SET_TEMP_DQ1;
                         sub_sel_kol = SUB_SEL_UP;
                         clearLCD();
@@ -453,7 +443,8 @@ void main(void) {
                         lcdPrint("    Колона  ");
                         lcd_gotoxy(1, 2);
                         lcdPrint("Темп Верх:");
-                    } else {
+                }
+                if (pressed_key == KEY_UP_EVENT) {
                         select = SEL_SET_TEMP_DQ2;
                         //sub_sel = SUB_SEL_UP;
                         clearLCD();
@@ -464,10 +455,8 @@ void main(void) {
                         set_t_dq2 = (uint16_t) read_eep(EE_PRESET_1_H) << 8 | read_eep(EE_PRESET_1_L);
                         pre_sub_sel = sub_sel;
                         sub_sel = VAL_1;
-                        //set_t_dq2_100 = set_t_dq2 / 10;
-                        //set_t_dq2_10 = set_t_dq2 % 10;
-                    }
                 }
+
 
                 break;
             case SEL_SET_TEMP_DQ1:// налаштовуємо пороги датчика колони
@@ -513,12 +502,27 @@ void main(void) {
                                 set_t_dq1_dwn = 10;
                         }
                         if (pressed_key == KEY_BOTH_EVENT) {
-                            select = SEL_MAIN;
+                            sub_sel_kol = SUB_SEL_FIX;
                             write_eep(EE_TMP1_UP, set_t_dq1_up);
                             write_eep(EE_TMP1_DWN, set_t_dq1_dwn);
+                            lcd_gotoxy(1, 1);
+                            lcdPrint(" Фiксацiя t кол.");                            
+                            lcd_gotoxy(1, 2);
+                            lcdPrint("Натиснiть дві кн");                            
+                            //outValPreset();
+                        }
+                        break;
+                    case SUB_SEL_FIX:// фіксація температури
+
+                        if (pressed_key == KEY_BOTH_EVENT) {
+                            select = SEL_MAIN;
+                            temp1_fix = temperature_1;
+                            write_eep(EE_TMP1_FIX, (temp1_fix >> 8));
+                            write_eep(EE_TMP1_FIX + 1, (uint8_t) temp1_fix);
                             outValPreset();
                         }
                         break;
+
                 }//end sub_sel
 
                 break;

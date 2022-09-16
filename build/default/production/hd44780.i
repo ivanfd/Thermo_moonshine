@@ -3839,10 +3839,10 @@ void EUSART_Write(uint8_t txData);
 void reinit_rx();
 void EUSART_Write_Str(const unsigned char *t);
 
-# 105 "main.h"
+# 106 "main.h"
 enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
 
-# 149
+# 152
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 void outValPreset(void);

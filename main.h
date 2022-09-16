@@ -97,6 +97,7 @@
 
 #define SUB_SEL_UP 1
 #define SUB_SEL_DWN 2
+#define SUB_SEL_FIX 3
 
 #define SUB_MAIN_1 1
 #define SUB_MAIN_2 2
@@ -133,6 +134,8 @@ enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL
 #define EE_PRESET_10_H 41
 #define EE_PRESET_10_L 42
 
+#define EE_PRESET_SND_K 43
+#define EE_PRESET_SND_B 44
 
 
 #define SND LATCbits.LATC4 //порт динаміка

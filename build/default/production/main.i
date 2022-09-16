@@ -3924,10 +3924,10 @@ void EUSART_Write(uint8_t txData);
 void reinit_rx();
 void EUSART_Write_Str(const unsigned char *t);
 
-# 105 "main.h"
+# 106 "main.h"
 enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
 
-# 149
+# 152
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 void outValPreset(void);
@@ -3982,13 +3982,21 @@ lcdPrint("Вибiр 18B20:");
 
 set_t_dq1_up = read_eep(16);
 set_t_dq1_dwn = read_eep(17);
-
 set_t_dq2 = (uint16_t) read_eep(23) << 8 | read_eep(24);
 temp1_fix = (uint16_t) read_eep(20) << 8 | read_eep(20 + 1);
+en_snd_k = read_eep(43);
+en_snd_b = read_eep(44);
 
+if (!(en_snd_k) && !(en_snd_b)) {
+sound_yes = 0;
+} else
+sound_yes = 1;
 
 lcd_gotoxy(10, 2);
 lcdPrint("1");
+
+
+
 while (1) {
 
 
@@ -4036,7 +4044,7 @@ EUSART_Write_Str("0000\r\n");
 }
 }
 
-# 120
+# 128
 lcd_gotoxy(1, 1);
 lcdPrint("Кл:");
 
@@ -4084,7 +4092,7 @@ lcd_putc('-');
 lcd_putc(' ');
 lcd_putc(' ');
 lcd_putc(' ');
-
+lcd_putc(' ');
 }
 
 
@@ -4155,7 +4163,7 @@ lcd_putc('.');
 lcd_putc(((set_t_dq2 % 10) + 48));
 (en_snd_b) ? lcd_putc(2) : lcd_putc(1);
 
-# 245
+# 253
 if (sound_yes) {
 
 
@@ -4237,12 +4245,10 @@ en_sound = 0;
 
 
 if (pressed_key == 1) {
-clearLCD();
-select = 7;
-lcd_gotoxy(1, 1);
-lcdPrint("Порiг Сигн. Led");
-lcd_gotoxy(1, 2);
-lcdPrint("  1     2   1-2");
+sub_sel--;
+if (sub_sel == 255)
+sub_sel = VAL_9;
+outValPreset();
 
 }
 
@@ -4256,19 +4262,13 @@ outValPreset();
 
 if (pressed_key == 3) {
 
-switch (sub_main) {
-case 1:
-temp1_fix = temperature_1;
-write_eep(20, (temp1_fix >> 8));
-write_eep(20 + 1, (uint8_t) temp1_fix);
-break;
-case 2:
+clearLCD();
+select = 7;
+lcd_gotoxy(1, 1);
+lcdPrint("Порiг Сигн. Led");
+lcd_gotoxy(1, 2);
+lcdPrint("  1     2   1-2");
 
-
-
-break;
-}
-Delay_ms(10);
 }
 
 break;
@@ -4305,7 +4305,7 @@ select = 4;
 lcd_gotoxy(1, 1);
 lcdPrint("   Границi   ");
 lcd_gotoxy(1, 2);
-lcdPrint("Кол(1)/Куб(2):");
+lcdPrint(" Кол(1)  Куб(2)");
 }
 
 if (pressed_key == 2) {
@@ -4341,25 +4341,15 @@ sound_yes = 0;
 } else
 sound_yes = 1;
 
+write_eep(43, en_snd_k);
+write_eep(44, en_snd_b);
 select = 1;
 outValPreset();
 }
 break;
 case 4:
-lcd_gotoxy(16, 2);
-lcd_putc(dq_num + 48);
+
 if (pressed_key == 1) {
-dq_num++;
-if (dq_num == 3)
-dq_num = 1;
-}
-if (pressed_key == 2) {
-dq_num--;
-if (dq_num == 0)
-dq_num = 2;
-}
-if (pressed_key == 3) {
-if (dq_num == 1) {
 select = 5;
 sub_sel_kol = 1;
 clearLCD();
@@ -4367,7 +4357,8 @@ lcd_gotoxy(1, 1);
 lcdPrint("    Колона  ");
 lcd_gotoxy(1, 2);
 lcdPrint("Темп Верх:");
-} else {
+}
+if (pressed_key == 2) {
 select = 6;
 
 clearLCD();
@@ -4378,10 +4369,8 @@ lcdPrint("Завдання");
 set_t_dq2 = (uint16_t) read_eep(23) << 8 | read_eep(24);
 pre_sub_sel = sub_sel;
 sub_sel = VAL_1;
-
-
 }
-}
+
 
 break;
 case 5:
@@ -4427,12 +4416,27 @@ if (set_t_dq1_dwn == 255)
 set_t_dq1_dwn = 10;
 }
 if (pressed_key == 3) {
-select = 1;
+sub_sel_kol = 3;
 write_eep(16, set_t_dq1_up);
 write_eep(17, set_t_dq1_dwn);
+lcd_gotoxy(1, 1);
+lcdPrint(" Фiксацiя t кол.");
+lcd_gotoxy(1, 2);
+lcdPrint("Натиснiть дві кн");
+
+}
+break;
+case 3:
+
+if (pressed_key == 3) {
+select = 1;
+temp1_fix = temperature_1;
+write_eep(20, (temp1_fix >> 8));
+write_eep(20 + 1, (uint8_t) temp1_fix);
 outValPreset();
 }
 break;
+
 }
 
 break;
