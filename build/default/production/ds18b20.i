@@ -3893,6 +3893,10 @@ void cgrom_char(uint8_t *symbol, uint8_t address);
 # 7 "eeprom.h"
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
+void write_eep_24(uint8_t address, uint24_t data);
+uint24_t read_eep_24(uint8_t address);
+void write_eep_16(uint8_t address, uint16_t data);
+uint16_t read_eep_16(uint8_t address);
 
 # 17 "eusart.h"
 extern volatile uint8_t eusartRxCount;
@@ -3905,10 +3909,10 @@ void EUSART_Write(uint8_t txData);
 void reinit_rx();
 void EUSART_Write_Str(const unsigned char *t);
 
-# 105 "main.h"
+# 106 "main.h"
 enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
 
-# 149
+# 142
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 void outValPreset(void);
@@ -4036,7 +4040,7 @@ return 0;
 
 # 198
 uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
-uint16_t temp = temp_ready[num_dq-1];
+uint32_t temp = temp_ready[num_dq-1];
 uint8_t tmp;
 *minus = '+';
 if(temp == 32767)
@@ -4046,13 +4050,10 @@ temp = -temp;
 *minus = '-';
 }
 
-tmp = temp & 0x0f;
-tmp = fract[tmp];
-temp = temp >> 4;
-temp = (temp & 0x00ff) * 10;
-temp = temp + tmp;
+temp = (temp * 625)/100;
 
-return temp;
+# 218
+return (uint16_t)temp;
 
 }
 

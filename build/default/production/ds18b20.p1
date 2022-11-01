@@ -42,7 +42,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _ds18b20_crc8 `(uc ~T0 @X0 0 ef2`*uc`uc ]
 "7 eeprom.h
 [v _write_eep `(v ~T0 @X0 0 ef2`uc`uc ]
-"150 main.h
+"143 main.h
 [v _Delay_ms `(v ~T0 @X0 0 ef1`ui ]
 [; ;xc8\pic\include\xc.h: 18: extern const char __xc8_OPTIM_SPEED;
 [; ;xc8\pic\include\xc.h: 20: extern double __fpnormalize(double);
@@ -2612,6 +2612,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;hd44780.h: 108: void cgrom_char(uint8_t *symbol, uint8_t address);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
+[; ;eeprom.h: 9: void write_eep_24(uint8_t address, uint24_t data);
+[; ;eeprom.h: 10: uint24_t read_eep_24(uint8_t address);
+[; ;eeprom.h: 11: void write_eep_16(uint8_t address, uint16_t data);
+[; ;eeprom.h: 12: uint16_t read_eep_16(uint8_t address);
 [; ;eusart.h: 17: extern volatile uint8_t eusartRxCount;
 [; ;eusart.h: 19: void init_uart(void);
 [; ;eusart.h: 20: void putch(char data);
@@ -2619,10 +2623,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;eusart.h: 23: void EUSART_Write(uint8_t txData);
 [; ;eusart.h: 24: void reinit_rx();
 [; ;eusart.h: 25: void EUSART_Write_Str(const unsigned char *t);
-[; ;main.h: 105: enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
-[; ;main.h: 149: void Main_init(void);
-[; ;main.h: 150: void Delay_ms(uint16_t delay);
-[; ;main.h: 151: void outValPreset(void);
+[; ;main.h: 106: enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
+[; ;main.h: 142: void Main_init(void);
+[; ;main.h: 143: void Delay_ms(uint16_t delay);
+[; ;main.h: 144: void outValPreset(void);
 [; ;onewire.h: 12: uint8_t ow_reset(void);
 [; ;onewire.h: 13: uint8_t read_bit(void);
 [; ;onewire.h: 14: void write_bit(uint8_t bitval);
@@ -2660,9 +2664,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 "4 ds18b20.c
 [v _scratch `uc ~T0 @X0 -> 9 `i e ]
 [; ;ds18b20.c: 4: uint8_t scratch[9];
-[v F2059 `uc ~T0 @X0 -> 8 `i t ]
+[v F2069 `uc ~T0 @X0 -> 8 `i t ]
 "7
-[v _rom_dq `F2059 ~T0 @X0 -> 2 `i e ]
+[v _rom_dq `F2069 ~T0 @X0 -> 2 `i e ]
 [; ;ds18b20.c: 7: uint8_t rom_dq[2][8];
 "8
 [v _temp_ready `ui ~T0 @X0 -> 2 `i e ]
@@ -3030,9 +3034,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [v _minus `*uc ~T0 @X0 1 r2 ]
 [f ]
 "199
-[v _temp `ui ~T0 @X0 1 a ]
-[; ;ds18b20.c: 199: uint16_t temp = temp_ready[num_dq-1];
-[e = _temp *U + &U _temp_ready * -> -> - -> _num_dq `i -> 1 `i `ui `ux -> -> # *U &U _temp_ready `ui `ux ]
+[v _temp `ul ~T0 @X0 1 a ]
+[; ;ds18b20.c: 199: uint32_t temp = temp_ready[num_dq-1];
+[e = _temp -> *U + &U _temp_ready * -> -> - -> _num_dq `i -> 1 `i `ui `ux -> -> # *U &U _temp_ready `ui `ux `ul ]
 "200
 [v _tmp `uc ~T0 @X0 1 a ]
 [; ;ds18b20.c: 200: uint8_t tmp;
@@ -3041,15 +3045,15 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e = *U _minus -> -> 43 `ui `uc ]
 [; ;ds18b20.c: 202: if(temp == 32767)
 "202
-[e $ ! == _temp -> -> 32767 `i `ui 252  ]
+[e $ ! == _temp -> -> -> 32767 `i `l `ul 252  ]
 [; ;ds18b20.c: 203: return temp;
 "203
-[e ) _temp ]
+[e ) -> _temp `ui ]
 [e $UE 251  ]
 [e :U 252 ]
 [; ;ds18b20.c: 204: if (temp & 0x8000) {
 "204
-[e $ ! != & _temp -> 32768 `ui -> -> 0 `i `ui 253  ]
+[e $ ! != & _temp -> -> 32768 `ui `ul -> -> 0 `i `ul 253  ]
 {
 [; ;ds18b20.c: 205: temp = -temp;
 "205
@@ -3061,126 +3065,114 @@ Version 3.2 HI-TECH Software Intermediate Code
 }
 [e :U 253 ]
 [; ;ds18b20.c: 207: }
-[; ;ds18b20.c: 209: tmp = temp & 0x0f;
+[; ;ds18b20.c: 209: temp = (temp * 625)/100;
 "209
-[e = _tmp -> & _temp -> -> 15 `i `ui `uc ]
-[; ;ds18b20.c: 210: tmp = fract[tmp];
-"210
-[e = _tmp *U + &U _fract * -> _tmp `ux -> -> # *U &U _fract `ui `ux ]
-[; ;ds18b20.c: 211: temp = temp >> 4;
-"211
-[e = _temp >> _temp -> 4 `i ]
-[; ;ds18b20.c: 212: temp = (temp & 0x00ff) * 10;
-"212
-[e = _temp * & _temp -> -> 255 `i `ui -> -> 10 `i `ui ]
-[; ;ds18b20.c: 213: temp = temp + tmp;
-"213
-[e = _temp + _temp -> _tmp `ui ]
-[; ;ds18b20.c: 215: return temp;
-"215
-[e ) _temp ]
+[e = _temp / * _temp -> -> -> 625 `i `l `ul -> -> -> 100 `i `l `ul ]
+[; ;ds18b20.c: 218: return (uint16_t)temp;
+"218
+[e ) -> _temp `ui ]
 [e $UE 251  ]
-[; ;ds18b20.c: 217: }
-"217
+[; ;ds18b20.c: 220: }
+"220
 [e :UE 251 ]
 }
-"221
+"224
 [v _ds18b20_crc8 `(uc ~T0 @X0 1 ef2`*uc`uc ]
 {
-[; ;ds18b20.c: 221: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes) {
+[; ;ds18b20.c: 224: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes) {
 [e :U _ds18b20_crc8 ]
 [v _data_in `*uc ~T0 @X0 1 r1 ]
 [v _num_bytes `uc ~T0 @X0 1 r2 ]
 [f ]
-"222
-[v _crc `uc ~T0 @X0 1 a ]
-"223
-[v _loop_count `uc ~T0 @X0 1 a ]
-"224
-[v _bit_counter `uc ~T0 @X0 1 a ]
 "225
-[v _data `uc ~T0 @X0 1 a ]
+[v _crc `uc ~T0 @X0 1 a ]
 "226
-[v _feedback_bit `uc ~T0 @X0 1 a ]
-[; ;ds18b20.c: 222: uint8_t crc;
-[; ;ds18b20.c: 223: uint8_t loop_count;
-[; ;ds18b20.c: 224: uint8_t bit_counter;
-[; ;ds18b20.c: 225: uint8_t data;
-[; ;ds18b20.c: 226: uint8_t feedback_bit;
-[; ;ds18b20.c: 228: crc = 0x00;
+[v _loop_count `uc ~T0 @X0 1 a ]
+"227
+[v _bit_counter `uc ~T0 @X0 1 a ]
 "228
+[v _data `uc ~T0 @X0 1 a ]
+"229
+[v _feedback_bit `uc ~T0 @X0 1 a ]
+[; ;ds18b20.c: 225: uint8_t crc;
+[; ;ds18b20.c: 226: uint8_t loop_count;
+[; ;ds18b20.c: 227: uint8_t bit_counter;
+[; ;ds18b20.c: 228: uint8_t data;
+[; ;ds18b20.c: 229: uint8_t feedback_bit;
+[; ;ds18b20.c: 231: crc = 0x00;
+"231
 [e = _crc -> -> 0 `i `uc ]
-[; ;ds18b20.c: 230: for (loop_count = 0; loop_count != num_bytes; loop_count++) {
-"230
+[; ;ds18b20.c: 233: for (loop_count = 0; loop_count != num_bytes; loop_count++) {
+"233
 {
 [e = _loop_count -> -> 0 `i `uc ]
 [e $U 258  ]
 [e :U 255 ]
 {
-[; ;ds18b20.c: 231: data = data_in[loop_count];
-"231
-[e = _data *U + _data_in * -> _loop_count `ux -> -> # *U _data_in `ui `ux ]
-[; ;ds18b20.c: 233: bit_counter = 8;
-"233
-[e = _bit_counter -> -> 8 `i `uc ]
-[; ;ds18b20.c: 234: do {
+[; ;ds18b20.c: 234: data = data_in[loop_count];
 "234
+[e = _data *U + _data_in * -> _loop_count `ux -> -> # *U _data_in `ui `ux ]
+[; ;ds18b20.c: 236: bit_counter = 8;
+"236
+[e = _bit_counter -> -> 8 `i `uc ]
+[; ;ds18b20.c: 237: do {
+"237
 [e :U 261 ]
 {
-[; ;ds18b20.c: 235: feedback_bit = (crc ^ data) & 0x01;
-"235
+[; ;ds18b20.c: 238: feedback_bit = (crc ^ data) & 0x01;
+"238
 [e = _feedback_bit -> & ^ -> _crc `i -> _data `i -> 1 `i `uc ]
-[; ;ds18b20.c: 237: if (feedback_bit == 0x01) {
-"237
+[; ;ds18b20.c: 240: if (feedback_bit == 0x01) {
+"240
 [e $ ! == -> _feedback_bit `i -> 1 `i 262  ]
 {
-[; ;ds18b20.c: 238: crc = crc ^ 0x18;
-"238
+[; ;ds18b20.c: 241: crc = crc ^ 0x18;
+"241
 [e = _crc -> ^ -> _crc `i -> 24 `i `uc ]
-"239
+"242
 }
 [e :U 262 ]
-[; ;ds18b20.c: 239: }
-[; ;ds18b20.c: 240: crc = (crc >> 1) & 0x7F;
-"240
+[; ;ds18b20.c: 242: }
+[; ;ds18b20.c: 243: crc = (crc >> 1) & 0x7F;
+"243
 [e = _crc -> & >> -> _crc `i -> 1 `i -> 127 `i `uc ]
-[; ;ds18b20.c: 241: if (feedback_bit == 0x01) {
-"241
+[; ;ds18b20.c: 244: if (feedback_bit == 0x01) {
+"244
 [e $ ! == -> _feedback_bit `i -> 1 `i 263  ]
 {
-[; ;ds18b20.c: 242: crc = crc | 0x80;
-"242
+[; ;ds18b20.c: 245: crc = crc | 0x80;
+"245
 [e = _crc -> | -> _crc `i -> 128 `i `uc ]
-"243
+"246
 }
 [e :U 263 ]
-[; ;ds18b20.c: 243: }
-[; ;ds18b20.c: 245: data = data >> 1;
-"245
-[e = _data -> >> -> _data `i -> 1 `i `uc ]
-[; ;ds18b20.c: 246: bit_counter--;
-"246
-[e -- _bit_counter -> -> 1 `i `uc ]
+[; ;ds18b20.c: 246: }
+[; ;ds18b20.c: 248: data = data >> 1;
 "248
+[e = _data -> >> -> _data `i -> 1 `i `uc ]
+[; ;ds18b20.c: 249: bit_counter--;
+"249
+[e -- _bit_counter -> -> 1 `i `uc ]
+"251
 }
-[; ;ds18b20.c: 248: } while (bit_counter > 0);
+[; ;ds18b20.c: 251: } while (bit_counter > 0);
 [e $ > -> _bit_counter `i -> 0 `i 261  ]
 [e :U 260 ]
-"249
+"252
 }
-"230
+"233
 [e ++ _loop_count -> -> 1 `i `uc ]
 [e :U 258 ]
 [e $ != -> _loop_count `i -> _num_bytes `i 255  ]
 [e :U 256 ]
-"249
+"252
 }
-[; ;ds18b20.c: 249: }
-[; ;ds18b20.c: 251: return crc;
-"251
+[; ;ds18b20.c: 252: }
+[; ;ds18b20.c: 254: return crc;
+"254
 [e ) _crc ]
 [e $UE 254  ]
-[; ;ds18b20.c: 252: }
-"252
+[; ;ds18b20.c: 255: }
+"255
 [e :UE 254 ]
 }

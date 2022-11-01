@@ -33,3 +33,34 @@ unsigned char read_eep( unsigned short address )
     EECON1bits.RD    = 1;
     return( EEDATA );
 }
+
+void write_eep_24(uint8_t address, uint24_t data) {
+    //write_eep(address, (uint8_t) (data >> 24));
+    write_eep(address, (uint8_t) (data >> 16));
+    write_eep(address + 1, (uint8_t) (data >> 8));
+    write_eep(address + 2, (uint8_t) data);
+}
+
+uint24_t read_eep_24(uint8_t address) {
+    uint32_t data = 0;
+
+    // data = read_eep(address) << 24;
+    data |= read_eep(address) << 16;
+    data |= read_eep(address + 1) << 8;
+    data |= read_eep(address + 2);
+    return data;
+}
+
+
+void write_eep_16(uint8_t address, uint16_t data) {
+    write_eep(address, (uint8_t) (data >> 8));
+    write_eep(address + 1, (uint8_t) data);
+}
+
+uint16_t read_eep_16(uint8_t address){
+    uint16_t data = 0;
+    
+    data = read_eep(address) << 8;
+    data |= read_eep(address+1);
+    return data;
+}

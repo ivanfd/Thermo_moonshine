@@ -196,7 +196,7 @@ uint8_t ds18b20_readrom(uint8_t num_dq){
 //-------------------------------
 
 uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
-    uint16_t temp = temp_ready[num_dq-1];
+    uint32_t temp = temp_ready[num_dq-1];
     uint8_t tmp;
     *minus = '+';
     if(temp == 32767)
@@ -206,13 +206,16 @@ uint16_t ds18b20_get_temp(uint8_t num_dq, uint8_t *minus) {
         *minus = '-';
     }
 
-    tmp = temp & 0x0f; // десяті вибираємо
-    tmp = fract[tmp]; //  цифра після коми
-    temp = temp >> 4; //  формуємо кінцеву температуру
-    temp = (temp & 0x00ff) * 10;
-    temp = temp + tmp;
+    temp = (temp * 625)/100;
+    //temp = temp * 625;
     
-    return temp;
+//    tmp = temp & 0x0f; // десяті вибираємо
+//    tmp = fract[tmp]; //  цифра після коми
+//    temp = temp >> 4; //  формуємо кінцеву температуру
+//    temp = (temp & 0x00ff) * 10;
+//    temp = temp + tmp;
+    
+    return (uint16_t)temp;
                       
 }
 

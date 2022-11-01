@@ -16,15 +16,15 @@
  Intel Hex-file ranges:
   0h - 3h		(dist/default/production\18f2320.production.hex)
   8h - Dh		(dist/default/production\18f2320.production.hex)
-  18h - 1BB3h		(dist/default/production\18f2320.production.hex)
-  1E6Ch - 1FFFh		(dist/default/production\18f2320.production.hex)
+  18h - 1B93h		(dist/default/production\18f2320.production.hex)
+  1E8Ch - 1FFEh		(dist/default/production\18f2320.production.hex)
   200000h - 200007h		(dist/default/production\18f2320.production.hex)
   300000h - 30000Dh		(dist/default/production\18f2320.production.hex)
  Unused ranges:
   4h - 7h
   Eh - 17h
-  1BB4h - 1E6Bh
-  2000h - 1FFFFFh
+  1B94h - 1E8Bh
+  1FFFh - 1FFFFFh
   200008h - 2FFFFFh
 
 ### Hex Memory Map ###
@@ -475,13 +475,9 @@
 00001B60 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001B70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001B80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00001B90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00001BA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00001BB0 | H1 H1 H1 H1 -- -- -- -- -- -- -- -- -- -- -- --
+00001B90 | H1 H1 H1 H1 -- -- -- -- -- -- -- -- -- -- -- --
 ----------------------------------------------------------
-00001E60 | -- -- -- -- -- -- -- -- -- -- -- -- H1 H1 H1 H1
-00001E70 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00001E80 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00001E80 | -- -- -- -- -- -- -- -- -- -- -- -- H1 H1 H1 H1
 00001E90 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001EA0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001EB0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
@@ -504,7 +500,7 @@
 00001FC0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001FD0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
 00001FE0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
-00001FF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1
+00001FF0 | H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 H1 --
 ----------------------------------------------------------
 00200000 | H1 H1 H1 H1 H1 H1 H1 H1 -- -- -- -- -- -- -- --
 ----------------------------------------------------------

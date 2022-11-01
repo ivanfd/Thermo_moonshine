@@ -20,7 +20,7 @@ void key_press(void)
 
     if (key) {// якщо перемінна key не нульова
         if (count > DELAYKEY2) {
-            count = DELAYKEY2 - 10;
+            count = DELAYKEY2 - 20;
             key_pressed = key;
             keyLong = KEY_LONG;
             return;

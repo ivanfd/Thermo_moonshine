@@ -3,17 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/main.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/main.h</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/hd44780.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/onewire.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/key.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/key.h</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eeprom.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/ds18b20.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eusart.c</file>
-            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eusart.h</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eeprom.h</file>
             <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/onewire.h</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/onewire.c</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/key.h</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eusart.c</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/hd44780.c</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/ds18b20.h</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/ds18b20.c</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eusart.h</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/main.h</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/key.c</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/main.c</file>
+            <file>file:/D:/Ivan/Electro/XC8/TEMPERATURE_SAMOGON/18f2320/eeprom.c</file>
         </group>
     </open-files>
 </project-private>

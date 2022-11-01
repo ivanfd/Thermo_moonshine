@@ -3827,6 +3827,10 @@ uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 # 7 "eeprom.h"
 void write_eep( unsigned char address, unsigned char data );
 unsigned char read_eep( unsigned short address );
+void write_eep_24(uint8_t address, uint24_t data);
+uint24_t read_eep_24(uint8_t address);
+void write_eep_16(uint8_t address, uint16_t data);
+uint16_t read_eep_16(uint8_t address);
 
 # 17 "eusart.h"
 extern volatile uint8_t eusartRxCount;
@@ -3842,7 +3846,7 @@ void EUSART_Write_Str(const unsigned char *t);
 # 106 "main.h"
 enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
 
-# 152
+# 142
 void Main_init(void);
 void Delay_ms(uint16_t delay);
 void outValPreset(void);

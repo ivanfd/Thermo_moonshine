@@ -2290,6 +2290,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;xc8\pic\include\pic18.h: 193: unsigned char __t3rd16on(void);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
+[; ;eeprom.h: 9: void write_eep_24(uint8_t address, uint24_t data);
+[; ;eeprom.h: 10: uint24_t read_eep_24(uint8_t address);
+[; ;eeprom.h: 11: void write_eep_16(uint8_t address, uint16_t data);
+[; ;eeprom.h: 12: uint16_t read_eep_16(uint8_t address);
 "5 eeprom.c
 [v _write_eep `(v ~T0 @X0 1 ef2`uc`uc ]
 "6
@@ -2390,4 +2394,96 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;eeprom.c: 35: }
 "35
 [e :UE 219 ]
+}
+"37
+[v _write_eep_24 `(v ~T0 @X0 1 ef2`uc`um ]
+{
+[; ;eeprom.c: 37: void write_eep_24(uint8_t address, uint24_t data) {
+[e :U _write_eep_24 ]
+[v _address `uc ~T0 @X0 1 r1 ]
+[v _data `um ~T0 @X0 1 r2 ]
+[f ]
+[; ;eeprom.c: 39: write_eep(address, (uint8_t) (data >> 16));
+"39
+[e ( _write_eep (2 , _address -> >> _data -> 16 `i `uc ]
+[; ;eeprom.c: 40: write_eep(address + 1, (uint8_t) (data >> 8));
+"40
+[e ( _write_eep (2 , -> + -> _address `i -> 1 `i `uc -> >> _data -> 8 `i `uc ]
+[; ;eeprom.c: 41: write_eep(address + 2, (uint8_t) data);
+"41
+[e ( _write_eep (2 , -> + -> _address `i -> 2 `i `uc -> _data `uc ]
+[; ;eeprom.c: 42: }
+"42
+[e :UE 223 ]
+}
+"44
+[v _read_eep_24 `(um ~T0 @X0 1 ef1`uc ]
+{
+[; ;eeprom.c: 44: uint24_t read_eep_24(uint8_t address) {
+[e :U _read_eep_24 ]
+[v _address `uc ~T0 @X0 1 r1 ]
+[f ]
+"45
+[v _data `ul ~T0 @X0 1 a ]
+[; ;eeprom.c: 45: uint32_t data = 0;
+[e = _data -> -> -> 0 `i `l `ul ]
+[; ;eeprom.c: 48: data |= read_eep(address) << 16;
+"48
+[e =| _data -> -> << -> ( _read_eep (1 -> _address `us `i -> 16 `i `l `ul ]
+[; ;eeprom.c: 49: data |= read_eep(address + 1) << 8;
+"49
+[e =| _data -> -> << -> ( _read_eep (1 -> + -> _address `i -> 1 `i `us `i -> 8 `i `l `ul ]
+[; ;eeprom.c: 50: data |= read_eep(address + 2);
+"50
+[e =| _data -> ( _read_eep (1 -> + -> _address `i -> 2 `i `us `ul ]
+[; ;eeprom.c: 51: return data;
+"51
+[e ) -> _data `um ]
+[e $UE 224  ]
+[; ;eeprom.c: 52: }
+"52
+[e :UE 224 ]
+}
+"55
+[v _write_eep_16 `(v ~T0 @X0 1 ef2`uc`ui ]
+{
+[; ;eeprom.c: 55: void write_eep_16(uint8_t address, uint16_t data) {
+[e :U _write_eep_16 ]
+[v _address `uc ~T0 @X0 1 r1 ]
+[v _data `ui ~T0 @X0 1 r2 ]
+[f ]
+[; ;eeprom.c: 56: write_eep(address, (uint8_t) (data >> 8));
+"56
+[e ( _write_eep (2 , _address -> >> _data -> 8 `i `uc ]
+[; ;eeprom.c: 57: write_eep(address + 1, (uint8_t) data);
+"57
+[e ( _write_eep (2 , -> + -> _address `i -> 1 `i `uc -> _data `uc ]
+[; ;eeprom.c: 58: }
+"58
+[e :UE 225 ]
+}
+"60
+[v _read_eep_16 `(ui ~T0 @X0 1 ef1`uc ]
+{
+[; ;eeprom.c: 60: uint16_t read_eep_16(uint8_t address){
+[e :U _read_eep_16 ]
+[v _address `uc ~T0 @X0 1 r1 ]
+[f ]
+"61
+[v _data `ui ~T0 @X0 1 a ]
+[; ;eeprom.c: 61: uint16_t data = 0;
+[e = _data -> -> 0 `i `ui ]
+[; ;eeprom.c: 63: data = read_eep(address) << 8;
+"63
+[e = _data -> << -> ( _read_eep (1 -> _address `us `i -> 8 `i `ui ]
+[; ;eeprom.c: 64: data |= read_eep(address+1);
+"64
+[e =| _data -> ( _read_eep (1 -> + -> _address `i -> 1 `i `us `ui ]
+[; ;eeprom.c: 65: return data;
+"65
+[e ) _data ]
+[e $UE 226  ]
+[; ;eeprom.c: 66: }
+"66
+[e :UE 226 ]
 }

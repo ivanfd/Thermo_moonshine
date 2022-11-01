@@ -2,7 +2,7 @@
  * File:   main.h
  * Author: User
  *
- * Created on 24 ноября 2020 г., 15:45
+ * Created on 
  */
 #ifndef MAIN_H
 #define	MAIN_H
@@ -107,46 +107,36 @@ enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL
 
 
 #define EE_TMP1_UP 16  // адреси еепром
-#define EE_TMP1_DWN 17 // температури  
-#define EE_TMP2_HI 18  // аварії
-#define EE_TMP2_LO 19
-#define EE_TMP1_FIX 20 //зафіксована температура датчика 1
-#define EE_TMP2_FIX 22 // зафіксована температура датчика 2
+#define EE_TMP1_DWN 18 // температури  
+#define EE_TMP_FIX 20  // фіксована температура датчика колони 16 біти
+//#define EE_TMP2_LO 19
+//#define EE_TMP1_FIX 20 //зафіксована температура датчика 1
+//#define EE_TMP2_FIX 22 // зафіксована температура датчика 2
 
-#define EE_PRESET_1_H 23
-#define EE_PRESET_1_L 24
-#define EE_PRESET_2_H 25
-#define EE_PRESET_2_L 26
-#define EE_PRESET_3_H 27
-#define EE_PRESET_3_L 28
-#define EE_PRESET_4_H 29
-#define EE_PRESET_4_L 30
-#define EE_PRESET_5_H 31
-#define EE_PRESET_5_L 32
-#define EE_PRESET_6_H 33
-#define EE_PRESET_6_L 34
-#define EE_PRESET_7_H 35
-#define EE_PRESET_7_L 36
-#define EE_PRESET_8_H 37
-#define EE_PRESET_8_L 38
-#define EE_PRESET_9_H 39
-#define EE_PRESET_9_L 40
-#define EE_PRESET_10_H 41
-#define EE_PRESET_10_L 42
+#define EE_PRESET_1 23
+#define EE_PRESET_2 25
+#define EE_PRESET_3 27
+#define EE_PRESET_4 29
+#define EE_PRESET_5 31
+#define EE_PRESET_6 33
+#define EE_PRESET_7 35
+#define EE_PRESET_8 37
+#define EE_PRESET_9 39
+#define EE_PRESET_10 41
 
-#define EE_PRESET_SND_K 43
-#define EE_PRESET_SND_B 44
+#define EE_PRESET_SND_K 53
+#define EE_PRESET_SND_B 54
 
 
 #define SND LATCbits.LATC4 //порт динаміка
 #define LED_ON LATCbits.LATC5 // підсвітка
-#define SND_TIME_K 10 // Довжина звуку
+#define SND_TIME_K 40 // Довжина звуку
 #define SND_PAUSE_K 80 // пауза між виводом звуку
 #define SND_TIME_B 15 // Довжина звуку
 #define SND_PAUSE_B 50 // пауза між виводом звуку
 #define SND_TIME_ALL 10 // Довжина звуку
 #define SND_PAUSE_ALL 25 // пауза між виводом звуку
-#define DEBUG_OUT
+//#define DEBUG_OUT
 
 
 void Main_init(void);

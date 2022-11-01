@@ -2600,6 +2600,10 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;ds18b20.h: 29: uint8_t ds18b20_crc8(uint8_t *data_in, uint8_t num_bytes);
 [; ;eeprom.h: 7: void write_eep( unsigned char address, unsigned char data );
 [; ;eeprom.h: 8: unsigned char read_eep( unsigned short address );
+[; ;eeprom.h: 9: void write_eep_24(uint8_t address, uint24_t data);
+[; ;eeprom.h: 10: uint24_t read_eep_24(uint8_t address);
+[; ;eeprom.h: 11: void write_eep_16(uint8_t address, uint16_t data);
+[; ;eeprom.h: 12: uint16_t read_eep_16(uint8_t address);
 [; ;eusart.h: 17: extern volatile uint8_t eusartRxCount;
 [; ;eusart.h: 19: void init_uart(void);
 [; ;eusart.h: 20: void putch(char data);
@@ -2608,9 +2612,9 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;eusart.h: 24: void reinit_rx();
 [; ;eusart.h: 25: void EUSART_Write_Str(const unsigned char *t);
 [; ;main.h: 106: enum menuCube{VAL_1, VAL_2, VAL_3, VAL_4, VAL_5, VAL_6, VAL_7, VAL_8, VAL_9, VAL_10};
-[; ;main.h: 152: void Main_init(void);
-[; ;main.h: 153: void Delay_ms(uint16_t delay);
-[; ;main.h: 154: void outValPreset(void);
+[; ;main.h: 142: void Main_init(void);
+[; ;main.h: 143: void Delay_ms(uint16_t delay);
+[; ;main.h: 144: void outValPreset(void);
 [; ;key.h: 33: extern uint8_t keyLong;
 [; ;key.h: 35: void key_press(void);
 [; ;key.h: 36: uint8_t key_GetKey(void);
@@ -2632,8 +2636,8 @@ Version 3.2 HI-TECH Software Intermediate Code
 [e :U _key_press ]
 [f ]
 "9
-[v F2059 `ui ~T0 @X0 1 s count ]
-[i F2059
+[v F2069 `ui ~T0 @X0 1 s count ]
+[i F2069
 -> -> 0 `i `ui
 ]
 "10
@@ -2678,11 +2682,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 {
 [; ;key.c: 22: if (count > 300) {
 "22
-[e $ ! > F2059 -> -> 300 `i `ui 224  ]
+[e $ ! > F2069 -> -> 300 `i `ui 224  ]
 {
-[; ;key.c: 23: count = 300 - 10;
+[; ;key.c: 23: count = 300 - 20;
 "23
-[e = F2059 -> - -> 300 `i -> 10 `i `ui ]
+[e = F2069 -> - -> 300 `i -> 20 `i `ui ]
 [; ;key.c: 24: key_pressed = key;
 "24
 [e = _key_pressed _key ]
@@ -2697,11 +2701,11 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;key.c: 27: } else count++;
 [e $U 225  ]
 [e :U 224 ]
-[e ++ F2059 -> -> 1 `i `ui ]
+[e ++ F2069 -> -> 1 `i `ui ]
 [e :U 225 ]
 [; ;key.c: 29: if (count == 15) {
 "29
-[e $ ! == F2059 -> -> 15 `i `ui 226  ]
+[e $ ! == F2069 -> -> 15 `i `ui 226  ]
 {
 [; ;key.c: 30: key_pressed = key;
 "30
@@ -2721,7 +2725,7 @@ Version 3.2 HI-TECH Software Intermediate Code
 [; ;key.c: 34: } else count = 0;
 [e $U 227  ]
 [e :U 223 ]
-[e = F2059 -> -> 0 `i `ui ]
+[e = F2069 -> -> 0 `i `ui ]
 [e :U 227 ]
 [; ;key.c: 48: }
 "48
